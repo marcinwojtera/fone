@@ -1,59 +1,38 @@
 /* eslint-disable no-underscore-dangle */
 // Startup point for client-side application
-
-import '@babel/core';
+import express from 'express';
+import "core-js/stable";
+import "regenerator-runtime/runtime";
 import { createStore, applyMiddleware } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import thunk from 'redux-thunk';
 import fetch from 'node-fetch';
-import reducers from './reducers';
-import { fetchSeasons, fetchData , BACK_FETCH_DRIVERS } from './actions';
+import backreducers from './reducers';
+import { fetchData } from './actions';
+const composeEnhancers = composeWithDevTools({ port: 3001 });
+export const backstore = createStore(backreducers, {}, composeEnhancers(applyMiddleware(thunk)));
 
-const composeEnhancers = composeWithDevTools({ realtime: true, port: 8000 });
-const backstore = createStore(reducer, {}, composeEnhancers(
-  applyMiddleware(thunk),
+const app = express();
+// backstore.subscribe(() => {
+//   console.log(backstore.getState().data)
+// });
 
-));
-
-const status = response => {
-  if (response.status >= 200 && response.status < 300) {
-    return Promise.resolve(response);
-  }
-  return Promise.reject(new Error(response.statusText));
-};
-
-export const loadRace = year => {
-  const json = response => response.json();
-
-  fetch(`http://ergast.com/api/f1/${year}.json?limit=1000`)
-    .then(status)
-    .then(json)
-    .then(data => {
-      backstore.dispatch({
-        type: BACK_FETCH_DRIVERS,
-        payload: data.MRData.RaceTable
-      });
-
-      // backstore.dispatch(fetchData(data.MRData.RaceTable));
-    })
-    .catch(error => console.log('Request failed', error));
+const loadRace = year => {
+  const raceTable = fetch(`https://ergast.com/api/f1/${year}.json?limit=1000`)
+    .then(data => data.json())
+    .then(data => data.MRData.RaceTable)
+    .catch(err => console.log(err))
+    
+    Promise.all([raceTable]).then(values => {
+      backstore.dispatch(fetchData(year, values))
+    });
 };
 
 export const loadData = () => {
-  const json = response => response.json();
-
   fetch('http://ergast.com/api/f1/seasons.json?limit=1000')
-    .then(status)
-    .then(json)
+    .then(response => response.json())
     .then(data => {
-      const test = ['2019', '2018'];
-      test.map(x => loadRace(x));
+      const test = [2018,2019,2017]//data.MRData.SeasonTable.Seasons; season
+      test.map(x => loadRace(x))
     })
-    .catch(error => {
-      console.log('Request failed', error);
-    });
-    
 };
-
-
-console.log(backstore.getState());

@@ -2,6 +2,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const autoprefixer = require('autoprefixer');
 const { StatsWriterPlugin } = require('webpack-stats-plugin');
 const PurgecssPlugin = require('purgecss-webpack-plugin')
+const TerserPlugin = require('terser-webpack-plugin');
 const path = require('path')
 const glob = require('glob')
 
@@ -10,14 +11,17 @@ const PATHS = {
 }
 
 module.exports = {
-  // Tell webpack to run babel on every file it runs through 
+  node: {
+    fs: 'empty'
+  },
   plugins: [
     new MiniCssExtractPlugin({
       filename: '[name].css',
       chunkFilename: '[name].css'
     }),
+    new TerserPlugin({}),
     new PurgecssPlugin({
-      paths: glob.sync(`${PATHS.src}/**/*`,  { nodir: true }),
+      paths: glob.sync(`${PATHS.src}/**/*`, { nodir: true }),
       only: ['bundle', 'vendor']
     }),
     new StatsWriterPlugin({ filename: 'stats.json' })
@@ -58,13 +62,13 @@ module.exports = {
       {
         test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
         use: [{
-            loader: 'file-loader',
-            options: {
-                name: '[name].[ext]',
-                outputPath: 'fonts/'
-            }
+          loader: 'file-loader',
+          options: {
+            name: '[name].[ext]',
+            outputPath: 'fonts/'
+          }
         }]
-    }
+      }
     ]
   },
 };

@@ -1,6 +1,8 @@
 import { combineReducers } from 'redux';
-import { backDriversReducer } from './reducers';
+import { backSeasons, backDriverList, backRaceResults } from './reducers';
 
 export default combineReducers({
-  data: backDriversReducer
+  seasons: backSeasons,
+  results: backRaceResults,
+  drivers: backDriverList
 });

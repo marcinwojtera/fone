@@ -1,16 +1,44 @@
 {
-  "extends": ["airbnb", "prettier", "react-app", "plugin:prettier/recommended"],
-  "plugins": ["prettier", "react-hooks"],
+  "parser": "babel-eslint",
+  "extends": "airbnb",
+  "env": {
+    "es6": true,
+    "node": true,
+    "browser": true,
+    "jest": true
+  },
+  "parserOptions": {
+    "ecmaVersion": 2017,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "settings": {
+    "import/resolver": { "webpack": { "config": "webpack.config.prod.js" } }
+  },
+  "plugins": [
+    "import",
+    "react"
+  ],
   "rules": {
-    "react-hooks/rules-of-hooks": "error",
-    "react-hooks/exhaustive-deps": "warn",
-    "prettier/prettier": ["error"],
-    "jsx-a11y/href-no-hash": [0],
-    "react/jsx-filename-extension": [
-      1,
-      {
-        "extensions": [".js", ".jsx"]
-      }
-    ]
+    "react/jsx-filename-extension": "off",
+    "object-curly-newline": "off",
+    "no-else-return": "off",
+    "no-underscore-dangle": "off",
+    "no-shadow": "off",
+    "arrow-parens": "off",
+    "max-len": ["error", 180, 2, {
+      "ignoreUrls": true,
+      "ignoreComments": false,
+      "ignoreRegExpLiterals": true,
+      "ignoreStrings": true,
+      "ignoreTemplateLiterals": true
+    }],
+    "import/prefer-default-export": "off",
+    "import/no-extraneous-dependencies": ["error", {
+      "devDependencies": true,
+      "optionalDependencies": false
+    }]
   }
 }

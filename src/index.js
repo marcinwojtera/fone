@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
-import '@babel/core';
+import "core-js/stable";
+import "regenerator-runtime/runtime";
 import express from 'express';
 import React from 'react';
 import fs from 'fs';
@@ -11,11 +12,11 @@ import Routes from './client/Routes';
 import fetch from 'node-fetch';
 import {createUrl} from './helper'
 
-import {loadData} from './serData/pool'
+import {loadData, backstore} from './serData/pool'
+
 
 const app = express();
-loadData()
-console.log('asdadsadasdasdasdas')
+
 function shouldCompress(req, res) {
   if (req.headers['x-no-compression']) return false;
   return compression.filter(req, res);
@@ -32,7 +33,13 @@ const port = process.env.PORT || 3001;
 
 // To be able to serve static files
 app.use(express.static('public'));
-
+app.get('/api/test/:year?', (req, res) => {
+  // const races = { 
+  //   races: backstore.getState().seasons[req.params.year],
+  //   results: backstore.getState().results[req.params.year]
+  // };
+  res.json(backstore.getState());
+});
 app.get('/api/seasons', async (req, res) => {
   const seasonsList = await fetch(`http://ergast.com/api/f1/seasons.json?limit=1000`)
     .then(rest => rest.json())
@@ -49,7 +56,7 @@ app.get('/api/call/:year?/:raceNr?', async (req, res) => {
   const { yearSearch, race } = params;
   let raceResults = [];
   if (race) {
-    raceResults = await fetch(`http://ergast.com/api/f1/${yearSearch}${race}/results.json`)
+    raceResults = await fetch(`http://ergast.com/api/f1/${yearSearch}${race}/results.json?limit=1000`)
       .then(rest => rest.json())
       .then(json => json.MRData.RaceTable.Races[0])
       .catch(err => {
@@ -122,5 +129,6 @@ app.get('*', (req, res) => {
 });
 
 app.listen(port, () => {
+  loadData();
   console.log(`Listening on port: ${port}`);
 });
