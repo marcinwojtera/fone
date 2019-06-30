@@ -8,14 +8,11 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import thunk from 'redux-thunk';
 import fetch from 'node-fetch';
 import backreducers from './reducers';
-import { fetchData } from './actions';
+
+import { fetchData, saveYear } from './actions';
+
 const composeEnhancers = composeWithDevTools({ port: 3001 });
 export const backstore = createStore(backreducers, {}, composeEnhancers(applyMiddleware(thunk)));
-
-const app = express();
-// backstore.subscribe(() => {
-//   console.log(backstore.getState().data)
-// });
 
 const loadRace = year => {
   const raceTable = fetch(`https://ergast.com/api/f1/${year}.json?limit=1000`)
@@ -32,7 +29,14 @@ export const loadData = () => {
   fetch('http://ergast.com/api/f1/seasons.json?limit=1000')
     .then(response => response.json())
     .then(data => {
-      const test = [2018,2019,2017]//data.MRData.SeasonTable.Seasons; season
-      test.map(x => loadRace(x))
-    })
+      const test = [2018, 2019 ]//data.MRData.SeasonTable.Seasons; season
+      test.map(x => {
+        loadRace(x);
+        backstore.dispatch(saveYear(x));
+      });
+    });
+
+    Promise.all([loadData]).then(values => {
+      // console.log(values)
+    });
 };

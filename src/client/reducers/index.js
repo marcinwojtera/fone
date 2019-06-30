@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
-import { driversReducer, navigationReducer, settingsReducer } from './reducers';
+import { loadedData } from './reducers';
 
 export default combineReducers({
-  data: driversReducer,
-  navigation: navigationReducer,
-  settings: settingsReducer
+  data: loadedData,
+  // navigation: navigationReducer,
+  // settings: settingsReducer,
 });

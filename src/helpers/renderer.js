@@ -17,6 +17,7 @@ export default (req, store, context, statsFile) => {
         </StaticRouter>
       </Provider>
     ),
+    state: store.getState(),
   });
 
   return html;

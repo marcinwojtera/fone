@@ -1,35 +1,9 @@
-import { FETCH_DRIVERS, SET_NAVIGATION, FETCH_SEASONS } from '../actions/index';
+import { FETCH_DATA } from '../actions/index';
 
-const settings = {
-  loader: true
-};
-
-export const driversReducer = (state = {}, action) => {
+export const loadedData = (state = [], action) => {
   switch (action.type) {
-    case FETCH_DRIVERS:
-      return { ...state, ...action.payload };
-    case FETCH_SEASONS:
-      return { ...state, ...action.payload };
-    default:
-      return state;
-  }
-};
-
-export const navigationReducer = (state = {}, action) => {
-  switch (action.type) {
-    case SET_NAVIGATION:
-      return action.payload;
-    case FETCH_DRIVERS:
-      return action.payload;
-    default:
-      return state;
-  }
-};
-
-export const settingsReducer = (state = settings, action) => {
-  switch (action.type) {
-    case FETCH_DRIVERS:
-      return { loader: false };
+    case FETCH_DATA:
+      return { ...state, ...action.payload.data };
     default:
       return state;
   }

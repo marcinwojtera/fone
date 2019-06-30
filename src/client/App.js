@@ -4,26 +4,24 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import ErrorBoundary from './components/ErrorBoundry';
 import Header from './components/Header';
-import { fetchSeasons, fetchData } from './actions';
+import { fetchData } from './actions';
 import './app.scss';
 
 class App extends Component {
   componentDidMount() {
     this.listenUrlChanges();
-    this.props.dispatch(fetchData(this.props.history.location.pathname));
-    this.props.dispatch(fetchSeasons());
-    
-
   }
 
   listenUrlChanges = () => {
     this.props.history.listen(location => {
-      this.props.dispatch(fetchData(location.pathname))
+      const season = location.pathname.split('/');
+      const year = location.pathname.split('/');
+      this.props.dispatch(fetchData(year[1], season[2]));
     });
   }
 
   render() {
-    const { route, loader } = this.props;
+    const { route } = this.props;
     return (
       <div>
         <Header />
@@ -45,7 +43,6 @@ App.defaultProps = {
 
 const mapStateToProps = state => ({
   navigation: state.navigation,
-  loader: state.settings.loader
 });
 export default {
   component: connect(mapStateToProps)(App)

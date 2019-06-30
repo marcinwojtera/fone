@@ -4,10 +4,10 @@ import { connect } from 'react-redux';
 
 class HomePage extends Component {
   render() {
-    const { route, loader } = this.props;
+    const { route } = this.props;
     return (
       <div>
-        ddd {loader && <div>asdasdasdada</div>}
+        ddd 
         <div className="container">
         </div>
       </div>
@@ -16,7 +16,6 @@ class HomePage extends Component {
 }
 const mapStateToProps = state => ({
   navigation: state.navigation,
-  loader: state.settings.loader
 });
 export default {
   component: connect(mapStateToProps)(HomePage)

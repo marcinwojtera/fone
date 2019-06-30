@@ -2,7 +2,6 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const autoprefixer = require('autoprefixer');
 const { StatsWriterPlugin } = require('webpack-stats-plugin');
 const PurgecssPlugin = require('purgecss-webpack-plugin')
-const TerserPlugin = require('terser-webpack-plugin');
 const path = require('path')
 const glob = require('glob')
 
@@ -19,7 +18,6 @@ module.exports = {
       filename: '[name].css',
       chunkFilename: '[name].css'
     }),
-    new TerserPlugin({}),
     new PurgecssPlugin({
       paths: glob.sync(`${PATHS.src}/**/*`, { nodir: true }),
       only: ['bundle', 'vendor']

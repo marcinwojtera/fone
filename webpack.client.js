@@ -1,8 +1,6 @@
 const path = require('path');
 const merge = require('webpack-merge');
 const baseConfig = require('./webpack.base');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const { StatsWriterPlugin } = require('webpack-stats-plugin');
 
 const config = {
   mode: 'development',
