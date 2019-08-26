@@ -6,10 +6,10 @@ import { backstore } from '../serData/pool';
 
 const _ = require('lodash/core');
 
-
 export const getCurrentYear = () => new Date().getFullYear();
 
 export const filterData = (data, season) => {
+
   if (season) {
     return _.filter(data, { round: season })[0];
   }
@@ -18,19 +18,18 @@ export const filterData = (data, season) => {
 };
 
 export const prepareAns = (year, season) => {
-  // const data = {
-  //   data: {
-  //     seasonsDrivers: backstore.getState().drivers[year || getCurrentYear()],
-  //     seasonsList: backstore.getState().seasons[year || getCurrentYear()],
-  //     seasonQualify: filterData(backstore.getState().qualify[year || getCurrentYear()], season),
-  //     seasonsResults: filterData(backstore.getState().results[year || getCurrentYear()], season),
-  //     seasonsYears: backstore.getState().seasonsYear,
-  //     statsBySeason: filterData(backstore.getState().stats[year || getCurrentYear()], season),
-  //   },
-  // };
-  const data = {};
+  const data = {
+    data: {
+      seasonsDrivers: backstore.getState().drivers[year || getCurrentYear()],
+      seasonsList: backstore.getState().seasons[year || getCurrentYear()],
+      seasonQualify: filterData(backstore.getState().qualify[year || getCurrentYear()], season),
+      seasonsResults: filterData(backstore.getState().results[year || getCurrentYear()], season),
+      seasonsYears: backstore.getState().seasonsYear,
+      statsBySeason: filterData(backstore.getState().stats[year || getCurrentYear()], season),
+    },
+  };
+
   return data;
 };
-export const initialLoads = (year, season) => {
-  return createStore(reducers, prepareAns(year, season), applyMiddleware(thunk));
-};
+
+export const initialLoads = (year, season) => createStore(reducers, prepareAns(year, season), applyMiddleware(thunk));

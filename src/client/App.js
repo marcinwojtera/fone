@@ -15,9 +15,9 @@ class App extends Component {
 
   listenUrlChanges = () => {
     this.props.history.listen(location => {
-      // const season = location.pathname.split('/');
-      // const year = location.pathname.split('/');
-      this.props.dispatch(fetchData());
+      const season = location.pathname.split('/')[2];
+      const year = location.pathname.split('/')[1];
+      this.props.dispatch(fetchData(year, season));
     });
   }
 

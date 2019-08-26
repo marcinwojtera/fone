@@ -26,7 +26,7 @@ class Header extends React.Component {
     return (
       <div>
         <div>
-          {/* {this.props.seasonsYears.map((x) => (
+          {this.props.seasonsYears.map((x) => (
             <Link
               key={x}
               to={{
@@ -35,11 +35,11 @@ class Header extends React.Component {
             >
               {x}
             </Link>
-          ))} */}
+          ))}
 
         </div>
 
-        {/* <Slider {...settings}>
+        <Slider {...settings}>
           {this.props.seasonsList.map(x => (
             <div key={x.raceName}>
            
@@ -60,23 +60,9 @@ class Header extends React.Component {
             </div>
           ))}
 
-        </Slider> */}
+        </Slider>
 
-<Link
-                onClick={this.changeUrlEvent}
-                to={`/12/12`}
-              >1231</Link>
-<br/>
 
-<Link
-                onClick={this.changeUrlEvent}
-                to={`/13/12`}
-                >3333</Link>
-<br/>
-      <Link
-                onClick={this.changeUrlEvent}
-                to={`/15/12`}
-                >3333</Link>
 
       </div>
     );

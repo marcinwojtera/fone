@@ -12,13 +12,13 @@ const NotFoundPage = ({ staticContext = {} }) => {
 };
 
 NotFoundPage.propTypes = {
-  staticContext: PropTypes.objectOf(PropTypes.any)
+  staticContext: PropTypes.objectOf(PropTypes.any),
 };
 
 NotFoundPage.defaultProps = {
-  staticContext: {}
+  staticContext: {},
 };
 
 export default {
-  component: NotFoundPage
+  component: NotFoundPage,
 };
