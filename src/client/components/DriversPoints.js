@@ -32,6 +32,6 @@ class DriversPoints extends Component {
 }
 
 const mapStateToProps = state => ({
-  seasonsResults: state.data,
+  seasonsResults: state.data.seasonsResults.Results,
 });
 export default connect(mapStateToProps)(DriversPoints);

@@ -4,8 +4,6 @@ import { BACK_FETCH_RESULTS } from '../actions/loadResults';
 import { BACK_FETCH_QUALIFY } from '../actions/loadQualify';
 import { BACK_FETCH_STATS } from '../actions/loadStats';
 
-
-
 export const backSeasons = (state = {}, action) => {
   switch (action.type) {
     case BACK_FETCH_SEASONS:
