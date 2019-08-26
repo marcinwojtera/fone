@@ -16,7 +16,6 @@ import Routes from './Routes';
 const state = window.__PRELOADED_STATE__;
 delete window.__PRELOADED_STATE__;
 
-// const store = createStore(reducers, state, applyMiddleware(thunk));
 const store = createStore(reducers, state, composeWithDevTools(applyMiddleware(thunk)));
 
 ReactDOM.hydrate(
@@ -25,5 +24,5 @@ ReactDOM.hydrate(
       <div>{renderRoutes(Routes)}</div>
     </BrowserRouter>
   </Provider>,
-  document.querySelector('#root')
+  document.querySelector('#root'),
 );

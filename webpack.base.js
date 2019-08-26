@@ -27,6 +27,10 @@ module.exports = {
   module: {
     rules: [
       {
+        test: /\.sql$/i,
+        use: 'raw-loader',
+      },
+      {
         test: /\.js?$/,
         loader: 'babel-loader',
         exclude: /node_modules/,
@@ -38,10 +42,18 @@ module.exports = {
         }
       },
       {
-        test: /\.(png|jpg|eot|woff|woff2|ttf|svg)$/,
+        test: /\.(png|jpg|eot|woff|woff2|ttf|svg|gif)$/,
         loader: 'file-loader',
         options: {
           name: '[hash].[ext]',
+          publicPath: '/'
+        }
+      },
+      {
+        test: /\.(sql)$/,
+        loader: 'file-loader',
+        options: {
+          name: '[name].[ext]',
           publicPath: '/'
         }
       },
@@ -57,16 +69,16 @@ module.exports = {
           'sass-loader'
         ]
       },
-      {
-        test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
-        use: [{
-          loader: 'file-loader',
-          options: {
-            name: '[name].[ext]',
-            outputPath: 'fonts/'
-          }
-        }]
-      }
+      // {
+      //   test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
+      //   use: [{
+      //     loader: 'file-loader',
+      //     options: {
+      //       name: '[name].[ext]',
+      //       outputPath: 'fonts/'
+      //     }
+      //   }]
+      // }
     ]
   },
 };

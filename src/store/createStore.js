@@ -1,30 +1,36 @@
+/* eslint-disable global-require */
 import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import reducers from '../client/reducers';
 import { backstore } from '../serData/pool';
+
 const _ = require('lodash/core');
 
-export const filterData = (data, season) => {
 
+export const getCurrentYear = () => new Date().getFullYear();
+
+export const filterData = (data, season) => {
   if (season) {
-    return _.filter(data, { round: season });
+    return _.filter(data, { round: season })[0];
   }
+
   return data;
 };
 
 export const prepareAns = (year, season) => {
-  const data = {
-    data: {
-      seasonsDrivers: backstore.getState().drivers[year || '2019'],
-      seasonsList: backstore.getState().seasons[year || '2019'],
-      seasonQualify: filterData(backstore.getState().qualify[year || '2019'], season),
-      seasonsResults: filterData(backstore.getState().results[year || '2019'], season),
-      seasonsYears: backstore.getState().seasonsYear,
-    },
-  };
+  // const data = {
+  //   data: {
+  //     seasonsDrivers: backstore.getState().drivers[year || getCurrentYear()],
+  //     seasonsList: backstore.getState().seasons[year || getCurrentYear()],
+  //     seasonQualify: filterData(backstore.getState().qualify[year || getCurrentYear()], season),
+  //     seasonsResults: filterData(backstore.getState().results[year || getCurrentYear()], season),
+  //     seasonsYears: backstore.getState().seasonsYear,
+  //     statsBySeason: filterData(backstore.getState().stats[year || getCurrentYear()], season),
+  //   },
+  // };
+  const data = {};
   return data;
-}
+};
 export const initialLoads = (year, season) => {
-  const store = createStore(reducers, prepareAns(year, season), applyMiddleware(thunk));
-  return store;
+  return createStore(reducers, prepareAns(year, season), applyMiddleware(thunk));
 };

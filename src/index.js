@@ -1,19 +1,14 @@
 /* eslint-disable no-unused-vars */
-import "core-js/stable";
-import "regenerator-runtime/runtime";
+import 'core-js/stable';
+import 'regenerator-runtime/runtime';
 import express from 'express';
-import React from 'react';
-import fs from 'fs';
-import { matchRoutes } from 'react-router-config';
 import compression from 'compression';
 import renderer from './helpers/renderer';
 import { initialLoads, prepareAns } from './store/createStore';
-import Routes from './client/Routes';
-import fetch from 'node-fetch';
-import {createUrl} from './helper';
 
 import { loadData, backstore } from './serData/pool';
 
+const fs = require('fs');
 
 const app = express();
 
@@ -23,7 +18,7 @@ function shouldCompress(req, res) {
 }
 function ignoreFavicon(req, res, next) {
   if (req.originalUrl === '/favicon.ico') {
-    res.status(204).json({nope: true});
+    res.status(204).json({ nope: true });
   } else {
     next();
   }
@@ -31,16 +26,21 @@ function ignoreFavicon(req, res, next) {
 app.use(
   compression({
     level: 7, // set compression level from 1 to 9 (6 by default)
-    filter: shouldCompress // set predicate to determine whether to compress
-  })
+    filter: shouldCompress, // set predicate to determine whether to compress
+  }),
 );
 
-const port = process.env.PORT || 3001;
+const port = process.env.PORT || 3002;
 
 // To be able to serve static files
 app.use(express.static('public'));
-app.get('/api/test/:year?/:raceNr?', (req, res) => {
-  res.json(prepareAns(req.params.year, req.params.raceNr));
+
+app.get('/api/test', async (req, res) => {
+  res.json(backstore.getState());
+});
+
+app.get('/api/:year?/:season?', (req, res) => {
+  res.json(prepareAns(req.params.year, req.params.season));
 });
 
 app.get('/api/seasons', async (req, res) => {
@@ -49,14 +49,12 @@ app.get('/api/seasons', async (req, res) => {
   res.json({ season, years });
 });
 
+
 app.use(ignoreFavicon);
 
-app.get('/:year?/:season?', (req, res) => {
-  // We create store before rendering html
-
-  console.log('pppppp express',req.params.year)
+app.get('*', (req, res) => {
   const store = initialLoads(req.params.year, req.params.season);
- 
+
   const statsFile = fs.readFileSync('public/stats.json', 'utf8');
   const context = {};
   const content = renderer(req, store, context, statsFile);
@@ -69,5 +67,8 @@ app.get('/:year?/:season?', (req, res) => {
 
 app.listen(port, () => {
   loadData();
+  // const dayInMilliseconds = 1000 * 60 * 60 * 24;
+  // setInterval(() => { loadData(); }, dayInMilliseconds);
+
   console.log(`Listening on port: ${port}`);
 });

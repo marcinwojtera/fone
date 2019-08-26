@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import ErrorBoundary from './components/ErrorBoundry';
 import Header from './components/Header';
+import Menu from './components/Menu';
 import { fetchData } from './actions';
 import './app.scss';
 
@@ -14,9 +15,9 @@ class App extends Component {
 
   listenUrlChanges = () => {
     this.props.history.listen(location => {
-      const season = location.pathname.split('/');
-      const year = location.pathname.split('/');
-      this.props.dispatch(fetchData(year[1], season[2]));
+      // const season = location.pathname.split('/');
+      // const year = location.pathname.split('/');
+      this.props.dispatch(fetchData());
     });
   }
 
@@ -26,6 +27,7 @@ class App extends Component {
       <div>
         <Header />
         <div className="container">
+          <Menu />
           <ErrorBoundary>{renderRoutes(route.routes)}</ErrorBoundary>
         </div>
       </div>
@@ -34,16 +36,16 @@ class App extends Component {
 }
 
 App.propTypes = {
-  route: PropTypes.objectOf(PropTypes.any)
+  route: PropTypes.objectOf(PropTypes.any),
 };
 
 App.defaultProps = {
-  route: null
+  route: null,
 };
 
 const mapStateToProps = state => ({
   navigation: state.navigation,
 });
 export default {
-  component: connect(mapStateToProps)(App)
+  component: connect(mapStateToProps)(App),
 };

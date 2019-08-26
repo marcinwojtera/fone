@@ -6,8 +6,8 @@ import App from './App';
 export default [
   {
     ...App,
-    routes: [  
-    
+    routes: [
+   
       {
         ...Race,
         path: '/:path/:race',
@@ -15,7 +15,8 @@ export default [
       },
       {
         ...HomePage,
-        path: '/:path',
+        path: '/:path?',
+        exact: true,
       },
       {
         ...HomePage,
@@ -25,6 +26,6 @@ export default [
       {
         ...NotFoundPage
       },
-    ]
-  }
+    ],
+  },
 ];

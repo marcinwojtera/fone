@@ -3,7 +3,7 @@ import fetch from 'node-fetch';
 export const BACK_FETCH_DRIVER = 'BACK_FETCH_DRIVER';
 
 export const loadDriver = year => dispatch => {
-  const driverTable = () => fetch(`https://ergast.com/api/f1/${year}/driverStandings.json`)
+  const driverTable = () => fetch(`https://ergast.com/api/f1/${year}/constructorStandings.json`)
     .then(data => data.json())
     .then(data => data.MRData.StandingsTable.StandingsLists[0].DriverStandings)
     .catch(err => console.log(err));

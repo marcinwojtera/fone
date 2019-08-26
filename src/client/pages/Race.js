@@ -1,17 +1,26 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import DriversPoints from '../components/DriversPoints';
 
 class Race extends Component {
+  
   render() {
-    const { route } = this.props;
     return (
       <div>
-race        <div className="container">
-        </div>
-      </div>
+        <DriversPoints />
+</div>
     );
   }
 }
+//
 
+const mapStateToProps = state => ({
+  seasonsDrivers: state.data.seasonsDrivers,
+});
 export default {
-  component: Race,
+  component: connect(mapStateToProps)(Race),
 };
+
+
+{ /*
+ */ }

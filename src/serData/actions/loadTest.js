@@ -3,15 +3,16 @@ import fetch from 'node-fetch';
 export const BACK_FETCH_DRIVER = 'BACK_FETCH_DRIVER';
 
 export const loadDriver = year => dispatch => {
-  const driverTable = () => fetch(`https://ergast.com/api/f1/${year}/driverStandings.json`)
+  const driverTable = () => fetch(`https://jsonplaceholder.typicode.com/posts`)
     .then(data => data.json())
-    .then(data => data.MRData.StandingsTable.StandingsLists[0].DriverStandings)
     .catch(err => console.log(err));
 
   Promise.all([driverTable(year)]).then(values => {
-    dispatch({
-      type: BACK_FETCH_DRIVER,
-      payload: { year, values },
-    });
+
+    console.log(values)
+    // dispatch({
+    //   type: BACK_FETCH_DRIVER,
+    //   payload: { year, values },
+    // });
   });
 };
