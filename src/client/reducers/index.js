@@ -1,6 +1,8 @@
 import { combineReducers } from 'redux';
-import { loadedData } from './reducers';
+import { loadedData, navigation, selectedTrack } from './reducers';
 
 export default combineReducers({
   data: loadedData,
+  navigation,
+  selectedTrack
 });

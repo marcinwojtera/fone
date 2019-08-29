@@ -1,16 +1,16 @@
 import fetch from 'node-fetch';
 
-export const BACK_FETCH_DRIVER = 'BACK_FETCH_DRIVER';
+export const BACK_FETCH_DRIVER_STANDINGS = 'BACK_FETCH_DRIVER_STANDINGS';
 
 export const loadDriver = year => dispatch => {
-  const driverTable = () => fetch(`https://ergast.com/api/f1/${year}/driverStandings.json`)
+  const driverStandings = () => fetch(`https://ergast.com/api/f1/${year}/driverStandings.json`)
     .then(data => data.json())
     .then(data => data.MRData.StandingsTable.StandingsLists[0].DriverStandings)
     .catch(err => console.log(err));
 
-  Promise.all([driverTable(year)]).then(values => {
+  Promise.all([driverStandings(year)]).then(values => {
     dispatch({
-      type: BACK_FETCH_DRIVER,
+      type: BACK_FETCH_DRIVER_STANDINGS,
       payload: { year, values },
     });
   });

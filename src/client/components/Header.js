@@ -1,18 +1,12 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router';
+import { withRouter } from 'react-router-dom';
 import Slider from 'react-slick';
+import { Label } from 'semantic-ui-react'
 
 
 class Header extends React.Component {
-  generateYearLink = () => {
-
-  };
-
-  changeUrlEvent = (e) => {
-    // e.preventDefault();
-  };
 
   render() {
     const settings = {
@@ -25,29 +19,19 @@ class Header extends React.Component {
 
     return (
       <div>
-        <div>
-          {this.props.seasonsYears.map((x) => (
-            <Link
-              key={x}
-              to={{
-                pathname: `/${x}`,
-              }}
-            >
-              {x}
-            </Link>
-          ))}
-
-        </div>
-
         <Slider {...settings}>
           {this.props.seasonsList.map(x => (
             <div key={x.raceName}>
-           
+
                 <h3>   <Link
-                onClick={this.changeUrlEvent}
                 key={`/${x.season}/${x.round}`}
-                to={`/${x.season}/${x.round}`}
-              >{x.raceName}</Link></h3> 
+                to={`/race/${x.season}/${x.round}`}
+              >{x.raceName}
+                  <Label color='red' key={x.round}>
+                    {' '} {x.date}
+                  </Label>
+
+                </Link></h3>
                 <h5>
                   {x.Circuit.circuitName}
                   -
@@ -56,7 +40,7 @@ class Header extends React.Component {
                   {' '}
                   {x.Circuit.Location.locality}
                 </h5>
-             
+
             </div>
           ))}
 

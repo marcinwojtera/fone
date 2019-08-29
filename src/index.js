@@ -5,8 +5,8 @@ import express from 'express';
 import compression from 'compression';
 import renderer from './helpers/renderer';
 import { initialLoads, prepareAns } from './store/createStore';
-
 import { loadData, backstore } from './serData/pool';
+import {loadInfo} from "./serData/reducers/reducers";
 
 const fs = require('fs');
 
@@ -17,7 +17,8 @@ function shouldCompress(req, res) {
   return compression.filter(req, res);
 }
 function ignoreFavicon(req, res, next) {
-  if (req.originalUrl === '/favicon.ico') {
+  console.log(req.originalUrl)
+  if (req.originalUrl.includes('favicon.ico')) {
     res.status(204).json({ nope: true });
   } else {
     next();
@@ -34,13 +35,12 @@ const port = process.env.PORT || 3002;
 
 // To be able to serve static files
 app.use(express.static('public'));
-
+app.use(ignoreFavicon);
 app.get('/api/test', async (req, res) => {
   res.json(backstore.getState());
 });
-
-app.get('/api/:year?/:season?', (req, res) => {
-  res.json(prepareAns(req.params.year, req.params.season));
+app.get('/api/state', (req, res) => {
+  res.send(backstore.getState().loadInfo);
 });
 
 app.get('/api/seasons', async (req, res) => {
@@ -49,12 +49,17 @@ app.get('/api/seasons', async (req, res) => {
   res.json({ season, years });
 });
 
+app.get('/api/race/:year/:season', (req, res) => {
+   res.json(prepareAns(req.params.year, req.params.season));
+});
 
-app.use(ignoreFavicon);
+// app.get('*/favicon.ico', (req, res) => res.status(204));
+app.get('/race/:year/:season', async (req, res) => {
 
-app.get('*', (req, res) => {
-  const store = initialLoads(req.params.year, req.params.season);
+  // res.json(prepareAns(req.params.year, req.params.season));
 
+  // console.log(req.params.year, req.params.season, req.params.page)
+  const store = initialLoads(req.params.year, req.params.season, req.params.page);
   const statsFile = fs.readFileSync('public/stats.json', 'utf8');
   const context = {};
   const content = renderer(req, store, context, statsFile);
@@ -65,8 +70,22 @@ app.get('*', (req, res) => {
   res.send(content);
 });
 
+
+
+app.get('*', async (req, res) => {
+  const store = initialLoads();
+  const statsFile = fs.readFileSync('public/stats.json', 'utf8');
+  const context = {};
+  const content = renderer(req, store, context, statsFile);
+
+  if (context.notFound) {
+    res.status(404);
+  }
+  res.send(content);
+});
+loadData();
 app.listen(port, () => {
-  loadData();
+
   // const dayInMilliseconds = 1000 * 60 * 60 * 24;
   // setInterval(() => { loadData(); }, dayInMilliseconds);
 

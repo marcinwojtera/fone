@@ -1,37 +1,42 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Icon, Table } from 'semantic-ui-react';
-
-
+import { Grid } from 'semantic-ui-react';
+import QualifyBlock from "./QualifyBlock";
+import ResultsBlock from "./ResultsBlock";
+import TrackBlock from "./TrackBlock";
+import { Tab } from 'semantic-ui-react'
+const panes = [
+  { menuItem:{ key: 'Results', icon: 'users', content: 'Results' }, render: () => <Tab.Pane><ResultsBlock /></Tab.Pane> },
+  { menuItem: { key: 'Qualify', icon: 'users', content: 'Qualify' }, render: () => <Tab.Pane> <QualifyBlock /></Tab.Pane> },
+]
+const panesMap = [
+  { menuItem: 'Track info', render: () => <Tab.Pane><TrackBlock /></Tab.Pane> },
+  { menuItem: 'Map', render: () => <Tab.Pane> <TrackBlock /></Tab.Pane> },
+]
 class DriversPoints extends Component {
   state = {
     rendered: false,
   }
 
-  shouldComponentUpdate() {
-    if (!this.state.rendered) {
-      this.setState({ rendered: true });
-      return true;
-    }
-    return false;
-  }
-
-  componentWillUpdate(nextProps) {
-    console.log(nextProps);
-  }
-
   render() {
-    console.log(this.props.seasonsResults);
     return (
       <div>
-        {/* {this.props.seasonsResults.map(x => (<div key={x.id}> {x.body} </div>))} */}
-
+          <Grid celled='internally'>
+            <Grid.Row>
+              <Grid.Column width={11}>
+                <Tab panes={panes} />
+              </Grid.Column>
+              <Grid.Column width={5}>
+                <Tab panes={panesMap} />
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
       </div>
     );
   }
 }
 
 const mapStateToProps = state => ({
-  seasonsResults: state.data.seasonsResults.Results,
+  selectedTrack: state.selectedTrack
 });
 export default connect(mapStateToProps)(DriversPoints);

@@ -9,9 +9,10 @@ import { createStore, applyMiddleware } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
-import { renderRoutes } from 'react-router-config';
+// import { renderRoutes } from 'react-router-config';
 import reducers from './reducers';
-import Routes from './Routes';
+// import Routes from './Routes';
+import App from './App';
 
 const state = window.__PRELOADED_STATE__;
 delete window.__PRELOADED_STATE__;
@@ -21,7 +22,8 @@ const store = createStore(reducers, state, composeWithDevTools(applyMiddleware(t
 ReactDOM.hydrate(
   <Provider store={store}>
     <BrowserRouter>
-      <div>{renderRoutes(Routes)}</div>
+      <App />
+      {/*<div>{renderRoutes(Routes)}</div>*/}
     </BrowserRouter>
   </Provider>,
   document.querySelector('#root'),

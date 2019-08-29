@@ -7,16 +7,16 @@ export default [
   {
     ...App,
     routes: [
-   
+      // {
+      //   ...Race,
+      //   path: '/:path/:race',
+      //    exact: true
+      // },
       {
         ...Race,
-        path: '/:path/:race',
-        // exact: true
-      },
-      {
-        ...HomePage,
-        path: '/:path?',
-        exact: true,
+        path: '/races/:path/:race',
+        match: '/races/:path/:race',
+        exact: true
       },
       {
         ...HomePage,

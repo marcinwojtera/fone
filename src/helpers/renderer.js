@@ -6,6 +6,7 @@ import { renderRoutes } from 'react-router-config';
 import { resolveAssets } from './assets';
 import renderHtml from './template';
 import Routes from '../client/Routes';
+import App from '../client/App';
 
 export default (req, store, context, statsFile) => {
   const html = renderHtml({
@@ -13,7 +14,8 @@ export default (req, store, context, statsFile) => {
     markup: renderToString(
       <Provider store={store}>
         <StaticRouter location={req.path} context={context}>
-          <div>{renderRoutes(Routes)}</div>
+          <App />
+          {/*<div>{renderRoutes(Routes)}</div>*/}
         </StaticRouter>
       </Provider>
     ),

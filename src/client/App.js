@@ -1,35 +1,32 @@
 import React, { Component } from 'react';
-import { renderRoutes } from 'react-router-config';
+import { Route } from "react-router-dom";
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import ErrorBoundary from './components/ErrorBoundry';
 import Header from './components/Header';
-import Menu from './components/Menu';
-import { fetchData } from './actions';
+import MenuComponent from './components/Menu';
+import HomePage from './pages/HomePage';
+import Race from './pages/Race';
 import './app.scss';
+import UrlWrapper from "./pages/urlWrapper";
 
 class App extends Component {
-  componentDidMount() {
-    this.listenUrlChanges();
-  }
-
-  listenUrlChanges = () => {
-    this.props.history.listen(location => {
-      const season = location.pathname.split('/')[2];
-      const year = location.pathname.split('/')[1];
-      this.props.dispatch(fetchData(year, season));
-    });
-  }
 
   render() {
-    const { route } = this.props;
     return (
       <div>
-        <Header />
-        <div className="container">
-          <Menu />
-          <ErrorBoundary>{renderRoutes(route.routes)}</ErrorBoundary>
-        </div>
+
+          <div>
+            <MenuComponent />
+            <Header />
+            <hr />
+
+            <ErrorBoundary>
+              <Route exact path="/" component={HomePage} />
+              <Route path="/race/:year/:season"  component={Race} />
+            </ErrorBoundary>
+          </div>
       </div>
     );
   }
@@ -46,6 +43,6 @@ App.defaultProps = {
 const mapStateToProps = state => ({
   navigation: state.navigation,
 });
-export default {
-  component: connect(mapStateToProps)(App),
-};
+// export default connect(mapStateToProps)(UrlWrapper(Race))
+
+export default withRouter(connect(mapStateToProps)(App));

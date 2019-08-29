@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-
+import UrlWrapper from "./urlWrapper";
 
 class HomePage extends Component {
 
   render() {
-    
     const { route } = this.props;
     return (
       <div>
-        <div className="container" style={{height: 500}}>
+         <div className="container" style={{height: 500}}>
 str glowna
         </div>
       </div>
@@ -19,6 +18,4 @@ str glowna
 const mapStateToProps = state => ({
   navigation: state.navigation,
 });
-export default {
-  component: connect(mapStateToProps)(HomePage)
-};
+export default connect(mapStateToProps)(UrlWrapper(HomePage))
