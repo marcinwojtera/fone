@@ -23,10 +23,7 @@
   "author": "ilker ALTIN",
   "license": "ISC",
   "dependencies": {
-    "@data-ui/xy-chart": "^0.0.79",
-    "@nivo/bump": "^0.59.1",
-    "@nivo/line": "^0.59.1",
-    "apexcharts": "^3.8.1",
+    "@nivo/line": "^0.59.3",
     "axios": "0.18.0",
     "chart.js": "^2.8.0",
     "core-js": "3.1.4",
@@ -40,7 +37,6 @@
     "primereact": "^3.1.7",
     "prop-types": "^15.7.2",
     "react": "16.8.2",
-    "react-apexcharts": "^1.3.3",
     "react-chartkick": "^0.3.2",
     "react-dom": "16.8.2",
     "react-heatmap-grid": "^0.8.1",
@@ -55,7 +51,8 @@
     "regenerator-runtime": "0.13.2",
     "semantic-ui-css": "^2.4.1",
     "semantic-ui-react": "^0.87.2",
-    "slick-carousel": "^1.8.1"
+    "slick-carousel": "^1.8.1",
+    "wtf_wikipedia": "^7.7.1"
   },
   "devDependencies": {
     "@babel/core": "^7.3.3",

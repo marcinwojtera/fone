@@ -9,6 +9,7 @@ class QualifyBlock extends Component {
   }
 
   render() {
+    console.log(this.props.seasonsDriversList)
     return (
       <div>
         <Grid celled='internally'>

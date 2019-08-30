@@ -2,30 +2,32 @@ import React, { Component }  from 'react';
 import { Input, Menu } from 'semantic-ui-react';
 import { withRouter } from 'react-router';
 import {connect} from "react-redux";
-import { Link } from 'react-router-dom';
 
 export class MenuComponent extends Component {
-  state = { activeItem: 'home' }
+  state = { activeItem: '2019' }
 
   handleItemClick = (e, { name }) => {
-    this.props.history.push(`/race/${Number(name)}/1`)
+    this.props.history.push(`/race/${name}/1`)
     this.setState({ activeItem: name })
   }
-
+  handleHompageClick = (e, { name }) => {
+    this.props.history.push(`/`)
+    this.setState({ activeItem: name })
+  }
   render() {
     const { activeItem } = this.state
-
     return (
       <div>
-        <Menu pointing>
+        <Menu pointing inverted>
           <Menu.Item
             name='home'
+            icon='home'
             active={activeItem === 'home'}
-            onClick={this.handleItemClick}
+            onClick={this.handleHompageClick}
           />
           {this.props.seasonsYears.map((x) => (
             <Menu.Item
-              name={x}
+              name={x.toString()}
               key={x}
               active={activeItem == x}
               onClick={this.handleItemClick}
@@ -47,6 +49,7 @@ export class MenuComponent extends Component {
 
 const mapStateToProps = state => ({
   seasonsYears: state.data.seasonsYears,
+  year: state.navigation.year,
 });
 
 export default withRouter(connect(mapStateToProps)(MenuComponent));

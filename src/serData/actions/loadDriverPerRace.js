@@ -10,8 +10,8 @@ export const loadDriverPerRace = year => (dispatch, getState) => {
     .then(data => ({season, data: data.MRData.StandingsTable.StandingsLists[0].DriverStandings}))
     .catch(err => console.log(err));
 
-  for (let i = 1; i < 10; i++) {
-    table.push(drivers(i))
+  for (let i = 1; i < 2; i++) {
+    table.push(drivers(i));
   }
 
   Promise.all(table).then(values => {

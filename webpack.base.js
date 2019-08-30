@@ -42,12 +42,12 @@ module.exports = {
         }
       },
       {
-        test: /\.(png|jpg|eot|woff|woff2|ttf|svg|gif)$/,
+        test: /\.(PNG|png|jpg|eot|woff|woff2|ttf|svg|gif)$/,
         loader: 'file-loader',
-        options: {
-          name: '[hash].[ext]',
-          publicPath: '/'
-        }
+        // options: {
+        //   name: '[hash].[ext]',
+        //   publicPath: '/'
+        // }
       },
       {
         test: /\.(sql)$/,

@@ -55,10 +55,6 @@ app.get('/api/race/:year/:season', (req, res) => {
 
 // app.get('*/favicon.ico', (req, res) => res.status(204));
 app.get('/race/:year/:season', async (req, res) => {
-
-  // res.json(prepareAns(req.params.year, req.params.season));
-
-  // console.log(req.params.year, req.params.season, req.params.page)
   const store = initialLoads(req.params.year, req.params.season, req.params.page);
   const statsFile = fs.readFileSync('public/stats.json', 'utf8');
   const context = {};

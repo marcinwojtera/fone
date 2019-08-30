@@ -15,13 +15,11 @@ class App extends Component {
 
   render() {
     return (
-      <div>
+      <div class="app-container">
 
           <div>
             <MenuComponent />
             <Header />
-            <hr />
-
             <ErrorBoundary>
               <Route exact path="/" component={HomePage} />
               <Route path="/race/:year/:season"  component={Race} />

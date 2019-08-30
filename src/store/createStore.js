@@ -17,31 +17,34 @@ export const filterData = (data, season) => {
   return data;
 };
 
-export const prepareAns = (year = getCurrentYear(), season = 1, page) => {
-  const selectedTrack = backstore.getState().seasons[year || getCurrentYear()][season -1];
+export const filterDataBySeason = (data, season) => {
 
-  const circuit = season ? selectedTrack.Circuit.url.split('/').slice(-1).pop() : false
-  const getDataTrackFromWiki = fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${circuit}`)
-    .then(rest => rest.data);
+  if (season) {
+    const driverData = _.filter(data, {season: parseInt(season, 10)} )[0]
+      return driverData ? driverData.data : [] ;
+    //;
+  }
+  return data;
+};
 
-  Promise.all([getDataTrackFromWiki]).then(values => {
-    console.log(values[0])
-  });
-
-
+export const prepareAns = (year = getCurrentYear(), season = 1) => {
+  const driversList = {}
+  backstore.getState().drivers[year || getCurrentYear()].map(x => driversList[[x.Driver.driverId]]= x)
   const data = {
     data: {
       seasonsDrivers: backstore.getState().drivers[year || getCurrentYear()],
-      seasonsDriversList: backstore.getState().driversList[year || getCurrentYear()],
+      seasonsDriversList: filterDataBySeason(backstore.getState().driversList[year || getCurrentYear()], season),
+      seasonsDriversListPerYear: backstore.getState().driversList[year || getCurrentYear()],
       seasonsList: backstore.getState().seasons[year || getCurrentYear()],
       seasonQualify: filterData(backstore.getState().qualify[year || getCurrentYear()], season),
       seasonsResults: filterData(backstore.getState().results[year || getCurrentYear()], season),
       seasonsYears: backstore.getState().seasonsYear,
       statsBySeason: filterData(backstore.getState().stats[year || getCurrentYear()], season),
       loadInfo: backstore.getState().loadInfo,
+      driversList
     },
     navigation: {
-     season, year, page
+     season, year
     },
     selectedTrack: backstore.getState().seasons[year || getCurrentYear()][season -1]
   };
@@ -49,4 +52,4 @@ export const prepareAns = (year = getCurrentYear(), season = 1, page) => {
   return data;
 };
 
-export const initialLoads = (year, season, page) => createStore(reducers, prepareAns(year, season, page), applyMiddleware(thunk));
+export const initialLoads = (year, season) => createStore(reducers, prepareAns(year, season), applyMiddleware(thunk));
