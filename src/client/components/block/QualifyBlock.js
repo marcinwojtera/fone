@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Grid } from 'semantic-ui-react';
-import { Table } from 'semantic-ui-react'
+import { Table, Grid } from 'semantic-ui-react';
+import DriverRow from './DriverRow';
 
 class QualifyBlock extends Component {
   state = {
@@ -15,10 +15,10 @@ class QualifyBlock extends Component {
         <Grid celled='internally'>
           <Grid.Row>
             <Grid.Column width={16}>
-              <Table striped>
+              <Table striped color='purple'>
                 <Table.Header>
                   <Table.Row>
-                    <Table.HeaderCell>Pos</Table.HeaderCell>
+                    <Table.HeaderCell style={{width: 60}}>Place</Table.HeaderCell>
                     <Table.HeaderCell>Driver</Table.HeaderCell>
                     <Table.HeaderCell>Q1</Table.HeaderCell>
                     <Table.HeaderCell>Q2</Table.HeaderCell>
@@ -29,11 +29,11 @@ class QualifyBlock extends Component {
                 <Table.Body>
                   {this.props.seasonQualify.map(x => (
                     <Table.Row key={x.number}>
-                      <Table.Cell>{x.position} </Table.Cell>
-                      <Table.Cell>{x.Driver.givenName} {x.Driver.familyName} <i>{x.Constructor.name}</i> {x.number}</Table.Cell>
+                      <Table.Cell><b>{x.position} </b></Table.Cell>
+                      <Table.Cell><DriverRow driver={x}/></Table.Cell>
                       <Table.Cell>{x.Q1 && x.Q1}</Table.Cell>
-                      <Table.Cell>{x.Q2 && x.Q2}</Table.Cell>
-                      <Table.Cell>{x.Q3 && x.Q3}</Table.Cell>
+                      <Table.Cell negative={!x.Q2}>{x.Q2 && x.Q2}</Table.Cell>
+                      <Table.Cell negative={!x.Q3}>{x.Q3 && x.Q3}</Table.Cell>
                     </Table.Row>
                   ))}
                 </Table.Body>

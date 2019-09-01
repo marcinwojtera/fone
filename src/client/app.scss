@@ -5,6 +5,115 @@
 
 .app-container {
   background: #e6e6e6;
+
+
+.race-timming {
+  display: flex;
+  border-top: .2em solid #a333c8;
+  border-radius: 5px;
+  margin: 10px;
+  overflow: hidden;
+
+  .race-timming-sticky {
+    width: 55px;
+    margin-top: 43px;
+    box-shadow: 1px 18px 20px 5px #999;
+
+    .race-driver {
+      height: 43px;
+      line-height: 35px;
+      padding: 6px 8px;
+      font-weight: bold;
+      border-bottom: 1px solid rgba(34,36,38,0.1);
+    }
+
+  }
+
+
+  .race-timming-slide {
+    width: calc(100% - 50px);
+    display: block;
+    overflow-y: hidden;
+
+    .timming-row {
+      display: inline-flex;
+
+      &:hover {
+        background: #efefef;
+      }
+      .race-lap {
+        text-align: center;
+        display: grid;
+        padding: 6px;
+        border-bottom: 1px solid rgba(34,36,38,.1);
+      }
+      .race-time-box {
+        display: grid;
+        height: 43px;
+        line-height: 35px;
+        width:85px;
+        padding: 6px 8px;
+        border-bottom: 1px solid rgba(34, 36, 38, .1);
+        text-align: center;
+        position: relative;
+        &:hover {
+          background: #fafafb
+        }
+        .box-place {
+          position: absolute;;
+          bottom: 0;
+          right: 0;
+        }
+        &.best-time {
+          background: #21ba45;
+          color: #fff;
+          text-shadow: 0px 0px 3px #065017;
+        }
+        &.last-time {
+          background: #db2828;
+          color: #fff;
+        }
+        .race-driver{
+          font-size: 12px;
+          color: #848181;
+        }
+        .race-time{
+          font-weight: bold;
+        }
+      }
+    }
+  }
+
+
+
+
+
+}
+
+
+  .grid-place {
+    float: left;
+    display: block;
+    width: 15px;
+    line-height: 20px;
+    font-size: 10px;
+    font-weight: bold;
+    position: relative;
+
+    b {
+      font-size: 16px;
+    }
+    i.up {
+      font-size: 18px;
+      color: #49ab2f;
+      width: 3px;
+    }
+    i.down {
+      font-size: 18px;
+      color: #dc2929;
+      width: 3px;
+    }
+  }
 }
  .ui.segment.dimmable {
    background: #e6e6e6;

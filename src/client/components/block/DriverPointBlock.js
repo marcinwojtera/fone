@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Grid } from 'semantic-ui-react';
 import { Table } from 'semantic-ui-react'
+import DriverRow from "./DriverRow";
 
 class DriverPointBlock extends Component {
   state = {
@@ -14,7 +15,7 @@ class DriverPointBlock extends Component {
         <Grid celled='internally'>
           <Grid.Row>
             <Grid.Column width={16}>
-              <Table striped>
+              <Table striped color='purple'>
                 <Table.Header>
                   <Table.Row>
                     <Table.HeaderCell>Point</Table.HeaderCell>
@@ -29,7 +30,7 @@ class DriverPointBlock extends Component {
                     <Table.Row key={x.position}>
                       <Table.Cell>{x.points} </Table.Cell>
                       <Table.Cell>{x.wins}</Table.Cell>
-                      <Table.Cell>{x.Driver.givenName} {x.Driver.familyName} <i>{x.Constructors[0].name}</i></Table.Cell>
+                      <Table.Cell><DriverRow driver={x}/></Table.Cell>
                     </Table.Row>
                   ))}
                 </Table.Body>

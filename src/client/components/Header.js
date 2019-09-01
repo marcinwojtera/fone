@@ -34,7 +34,7 @@ class Header extends React.Component {
       infinite: true,
       centerPadding: "60px",
       speed: 500,
-      slidesToShow: 4,
+      slidesToShow: 5,
       slidesToScroll: 4,
       nextArrow: <SampleNextArrow />,
       prevArrow: <SamplePrevArrow />
@@ -73,6 +73,7 @@ const mapStateToProps = state => ({
   seasonsYears: state.data.seasonsYears,
   selectedSeason: state.navigation.season,
   seasonsList: state.data.seasonsList || [],
+  slide: state.navigation.season || 1,
 });
 
 export default withRouter(connect(mapStateToProps)(Header));

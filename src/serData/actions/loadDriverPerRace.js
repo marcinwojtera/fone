@@ -1,5 +1,4 @@
 import fetch from 'node-fetch';
-import {backstore} from "../pool";
 
 export const BACK_FETCH_DRIVER = 'BACK_FETCH_DRIVER';
 
@@ -10,7 +9,7 @@ export const loadDriverPerRace = year => (dispatch, getState) => {
     .then(data => ({season, data: data.MRData.StandingsTable.StandingsLists[0].DriverStandings}))
     .catch(err => console.log(err));
 
-  for (let i = 1; i < 2; i++) {
+  for (let i = 1; i < 1; i++) {
     table.push(drivers(i));
   }
 
@@ -20,6 +19,5 @@ export const loadDriverPerRace = year => (dispatch, getState) => {
       payload: { year, values },
     });
   });
-
 
 };
