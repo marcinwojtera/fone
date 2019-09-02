@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import Slider from 'react-slick';
 import { Label, Icon } from 'semantic-ui-react'
-import {img} from '../img/f1-car.jpg';
 
 const SampleNextArrow = (props) => {
   const { className, style, onClick } = props;
@@ -34,8 +33,8 @@ class Header extends React.Component {
       infinite: true,
       centerPadding: "60px",
       speed: 500,
-      slidesToShow: 5,
-      slidesToScroll: 4,
+      slidesToShow: 7,
+      slidesToScroll: 6,
       nextArrow: <SampleNextArrow />,
       prevArrow: <SamplePrevArrow />
     };
@@ -52,15 +51,12 @@ class Header extends React.Component {
               <div key={x.raceName} >
                 <span className="round">{x.round}</span>
                 <h5>{x.raceName}{' '}</h5>
-                <Label color='red' key={x.round} size={'small'}>
-                  <Icon name='calendar alternate outline' /> {x.date}
-                </Label>
+
                 <small>
                   {x.Circuit.circuitName}
                 </small>
                 {this.props.selectedSeason === x.round && <span className="round-see"><Icon name="caret up" /></span>}
-<img src={img}/>
-                <span className="round-city"> <Icon name='map marker alternate' /> {x.Circuit.Location.locality}</span>
+                <span className="round-city">  {x.date} <Icon name='map marker alternate' /> {x.Circuit.Location.locality}</span>
             </div> </Link>
           ))}
         </Slider>

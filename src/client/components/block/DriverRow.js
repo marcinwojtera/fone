@@ -19,17 +19,24 @@ export class DriverRow extends Component {
     this.setState( { open: false })
   }
   render() {
-    const { driver } = this.props
+    const { driversList, driver } = this.props
     return (
-      <div onClick={this.loadDriverData}>
-        {driver.Driver.givenName} {driver.Driver.familyName} <small><i> ({driver.number || driver.Driver.permanentNumber}) </i></small>
-        {this.state.open && <ModalDriver close={this.closeModal} open={this.state.open} data={<WikiData data={this.state.text}/>}/>}
-      </div>
+      <div className="driver-box">
+        <span className="info">
+          {driversList[driver].Driver.givenName} {driversList[driver].Driver.familyName}
+          <small><i> ({driversList[driver].number || driversList[driver].Driver.permanentNumber})
+            <small> {driversList[driver].Driver.code}</small></i></small>
+        </span>
+        <span className="constructor-box">{driversList[driver].Constructors[0].name}</span>
+      {this.state.open && <ModalDriver close={this.closeModal} open={this.state.open} data={<WikiData data={this.state.text}/>}/>}
+    </div>
     );
   }
 }
 
 const mapStateToProps = state => ({
-  selectedTrack: state.selectedTrack
+  selectedTrack: state.selectedTrack,
+  driversList: state.data.driversList
 });
 export default connect(mapStateToProps)(DriverRow);
+

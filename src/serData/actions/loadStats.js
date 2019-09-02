@@ -21,7 +21,7 @@ export const loadStats = year => dispatch => {
         })
 
 
-        const data = { round: (index + 1).toString(), value, test};
+        const data = { round: (index + 1).toString(), test};
         values.push(data);
       } catch (e) {
         const data = false;

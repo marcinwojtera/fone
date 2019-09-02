@@ -4,6 +4,7 @@ import { BACK_FETCH_RESULTS } from '../actions/loadResults';
 import { BACK_FETCH_QUALIFY } from '../actions/loadQualify';
 import { BACK_FETCH_STATS } from '../actions/loadStats';
 import { BACK_FETCH_DRIVER } from '../actions/loadDriverPerRace';
+import { BACK_FETCH_PITS } from '../actions/loadPitStops';
 
 export const backSeasons = (state = {}, action) => {
   switch (action.type) {
@@ -32,6 +33,14 @@ export const backDriverList = (state = {}, action) => {
   }
 };
 
+export const backPitStop = (state = {}, action) => {
+  switch (action.type) {
+    case BACK_FETCH_PITS:
+      return { ...state, ...{ [action.payload.year]: action.payload.values } };
+    default:
+      return state;
+  }
+};
 export const backDrivers = (state = {}, action) => {
   switch (action.type) {
     case BACK_FETCH_DRIVER:

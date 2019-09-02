@@ -7,20 +7,19 @@ import renderer from './helpers/renderer';
 import { initialLoads, prepareAns } from './store/createStore';
 import { loadData, backstore } from './serData/pool';
 import {loadInfo} from "./serData/reducers/reducers";
-require('streammagic')();
 
 const fs = require('fs');
 
 const app = express();
 
 
-const cache = require('express-redis-cache')({
-  host: 'redis-12193.c83.us-east-1-2.ec2.cloud.redislabs.com', port: 12193, auth_pass: 'WKS7KuCA1cilK4F1z1uqv1f0WR3fnGXN',
-});
-
-cache.on('connected', () => {
-  console.log('Redis Conn', cache.prefix);
-});
+// const cache = require('express-redis-cache')({
+//   host: 'redis-12193.c83.us-east-1-2.ec2.cloud.redislabs.com', port: 12193, auth_pass: 'WKS7KuCA1cilK4F1z1uqv1f0WR3fnGXN',
+// });
+//
+// cache.on('connected', () => {
+//   console.log('Redis Conn', cache.prefix);
+// });
 function shouldCompress(req, res) {
   if (req.headers['x-no-compression']) return false;
   return compression.filter(req, res);

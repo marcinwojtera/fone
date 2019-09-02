@@ -28,7 +28,7 @@ export const loadData = () => {
   fetch('http://ergast.com/api/f1/seasons.json?limit=1000')
     .then(response => response.json())
     .then(data => {
-      const test = [2019,2018,2017,2016,2015,2014,2013,2012,2011,2010,2009,2008,2007,2006,2005,2004,2003];// data.MRData.SeasonTable.Seasons; season
+      const test = [2019];// data.MRData.SeasonTable.Seasons; season
       test.map(x => {
         loadRace(x);
         backstore.dispatch(saveYear(x));

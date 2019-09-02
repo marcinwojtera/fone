@@ -15,22 +15,20 @@ class DriverPointBlock extends Component {
         <Grid celled='internally'>
           <Grid.Row>
             <Grid.Column width={16}>
-              <Table striped color='purple'>
+              <Table striped color='purple' selectable>
                 <Table.Header>
                   <Table.Row>
                     <Table.HeaderCell>Point</Table.HeaderCell>
-                    <Table.HeaderCell>Wins</Table.HeaderCell>
                     <Table.HeaderCell>Driver</Table.HeaderCell>
-
+                    <Table.HeaderCell>Wins</Table.HeaderCell>
                   </Table.Row>
                 </Table.Header>
-
                 <Table.Body>
                   {this.props.seasonsDrivers.map(x => (
-                    <Table.Row key={x.position}>
+                    <Table.Row key={x.position +'-' +this.props.season}>
                       <Table.Cell>{x.points} </Table.Cell>
+                      <Table.Cell><DriverRow driver={x.Driver.driverId}/></Table.Cell>
                       <Table.Cell>{x.wins}</Table.Cell>
-                      <Table.Cell><DriverRow driver={x}/></Table.Cell>
                     </Table.Row>
                   ))}
                 </Table.Body>
@@ -46,6 +44,7 @@ class DriverPointBlock extends Component {
 }
 
 const mapStateToProps = state => ({
-  seasonsDrivers: state.data.seasonsDrivers
+  seasonsDrivers: state.data.seasonsDrivers,
+  season: state.navigation.season,
 });
 export default connect(mapStateToProps)(DriverPointBlock);

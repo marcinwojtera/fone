@@ -15,7 +15,7 @@ class QualifyBlock extends Component {
         <Grid celled='internally'>
           <Grid.Row>
             <Grid.Column width={16}>
-              <Table striped color='purple'>
+              <Table striped color='purple' selectable>
                 <Table.Header>
                   <Table.Row>
                     <Table.HeaderCell style={{width: 60}}>Place</Table.HeaderCell>
@@ -28,9 +28,9 @@ class QualifyBlock extends Component {
 
                 <Table.Body>
                   {this.props.seasonQualify.map(x => (
-                    <Table.Row key={x.number}>
+                    <Table.Row key={x.number+'-' +this.props.season}>
                       <Table.Cell><b>{x.position} </b></Table.Cell>
-                      <Table.Cell><DriverRow driver={x}/></Table.Cell>
+                      <Table.Cell><DriverRow driver={x.Driver.driverId}/></Table.Cell>
                       <Table.Cell>{x.Q1 && x.Q1}</Table.Cell>
                       <Table.Cell negative={!x.Q2}>{x.Q2 && x.Q2}</Table.Cell>
                       <Table.Cell negative={!x.Q3}>{x.Q3 && x.Q3}</Table.Cell>
@@ -50,5 +50,6 @@ class QualifyBlock extends Component {
 
 const mapStateToProps = state => ({
   seasonQualify: state.data.seasonQualify ? state.data.seasonQualify.QualifyingResults : [],
+  season: state.navigation.season,
 });
 export default connect(mapStateToProps)(QualifyBlock);
