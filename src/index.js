@@ -64,26 +64,26 @@ app.get('/api/seasons', async (req, res) => {
 // app.get('*/favicon.ico', (req, res) => res.status(204));
 app.get(
   '/api/race/:year/:season',
-  (req, res, next) => {
-    const { year, season } = req.params;
-    res.express_redis_cache_name = `json:${year}:${season}`;
-    next();
-  },
-  cache.route(),
+  // (req, res, next) => {
+  //   const { year, season } = req.params;
+  //   res.express_redis_cache_name = `json:${year}:${season}`;
+  //   next();
+  // },
+  // cache.route(),
   (req, res) => {
     res.json(prepareAns(req.params.year, req.params.season));
   },
 );
 
 app.get(
-  '/race/:year/:season',
-  (req, res, next) => {
-    const { year, season } = req.params;
-    res.express_redis_cache_name = `race:${year}:${season}`;
-    res.set('X-Redis', 'Exist');
-    next();
-  },
-  cache.route(),
+  // '/race/:year/:season',
+  // (req, res, next) => {
+  //   const { year, season } = req.params;
+  //   res.express_redis_cache_name = `race:${year}:${season}`;
+  //   res.set('X-Redis', 'Exist');
+  //   next();
+  // },
+  // cache.route(),
   (req, res) => {
     const store = initialLoads(req.params.year, req.params.season, req.params.page);
     const statsFile = fs.readFileSync('public/stats.json', 'utf8');
