@@ -7,17 +7,25 @@ import renderer from './helpers/renderer';
 import { initialLoads, prepareAns } from './store/createStore';
 import { loadData, backstore } from './serData/pool';
 import {loadInfo} from "./serData/reducers/reducers";
+require('streammagic')();
 
 const fs = require('fs');
 
 const app = express();
 
+
+const cache = require('express-redis-cache')({
+  host: 'redis-12193.c83.us-east-1-2.ec2.cloud.redislabs.com', port: 12193, auth_pass: 'WKS7KuCA1cilK4F1z1uqv1f0WR3fnGXN',
+});
+
+cache.on('connected', () => {
+  console.log('Redis Conn', cache.prefix);
+});
 function shouldCompress(req, res) {
   if (req.headers['x-no-compression']) return false;
   return compression.filter(req, res);
 }
 function ignoreFavicon(req, res, next) {
-  console.log(req.originalUrl)
   if (req.originalUrl.includes('favicon.ico')) {
     res.status(204).json({ nope: true });
   } else {
@@ -49,11 +57,45 @@ app.get('/api/seasons', async (req, res) => {
   res.json({ season, years });
 });
 
-app.get('/api/race/:year/:season', (req, res) => {
-   res.json(prepareAns(req.params.year, req.params.season));
-});
+// app.get('/api/race/:year/:season', (req, res) => {
+//  res.json(prepareAns(req.params.year, req.params.season));
+// });
 
 // app.get('*/favicon.ico', (req, res) => res.status(204));
+app.get(
+  '/api/race/:year/:season',
+  (req, res, next) => {
+    const { year, season } = req.params;
+    res.express_redis_cache_name = `json:${year}:${season}`;
+    next();
+  },
+  cache.route(),
+  (req, res) => {
+    res.json(prepareAns(req.params.year, req.params.season));
+  },
+);
+
+app.get(
+  '/race/:year/:season',
+  (req, res, next) => {
+    const { year, season } = req.params;
+    res.express_redis_cache_name = `race:${year}:${season}`;
+    res.set('X-Redis', 'Exist');
+    next();
+  },
+  cache.route(),
+  (req, res) => {
+    const store = initialLoads(req.params.year, req.params.season, req.params.page);
+    const statsFile = fs.readFileSync('public/stats.json', 'utf8');
+    const context = {};
+    const content = renderer(req, store, context, statsFile);
+
+    if (context.notFound) {
+      res.status(404);
+    }
+    res.send(content);
+  },
+);
 app.get('/race/:year/:season', async (req, res) => {
   const store = initialLoads(req.params.year, req.params.season, req.params.page);
   const statsFile = fs.readFileSync('public/stats.json', 'utf8');

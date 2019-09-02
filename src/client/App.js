@@ -22,7 +22,7 @@ class App extends Component {
             <Header />
             <ErrorBoundary>
               <Route exact path="/" component={HomePage} />
-              <Route path="/race/:year/:season"  component={Race} />
+              <Route path="/race/:year/:season/:tab?"  component={Race} />
             </ErrorBoundary>
           </div>
       </div>

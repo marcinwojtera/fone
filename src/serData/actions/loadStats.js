@@ -9,7 +9,6 @@ export const loadStats = year => dispatch => {
         // eslint-disable-next-line import/no-dynamic-require
         // a path we KNOW is totally bogus and not a module
         const jsonData = require(`../jsons/${prepareFile}`);
-        console.log(jsonData)
         const value = jsonData.MRData.RaceTable.Races[0].Laps;
         const test = value.map(c => {
           const times = {};

@@ -4,9 +4,9 @@ const template = `
   <!DOCTYPE html>
              <head>
                  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-                 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
+                 <link rel="preload" as="style" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
                  <link rel="icon" href="favicon.ico" type="image/x-icon" />
-                 <% css.forEach(function(cssUrl) { %><link href="../../<%= cssUrl %>" rel="stylesheet" type="text/css"><% }); %>
+                 <% css.forEach(function(cssUrl) { %><link href="../../../../<%= cssUrl %>" rel="stylesheet" type="text/css"><% }); %>
                  <script>
                  var favIcon = "favicon.ico";
                   var docHead = document.getElementsByTagName('head')[0];       
@@ -21,7 +21,7 @@ const template = `
                  let script = js.split(',');
                  script.forEach(function(elem){
                    let chunk = document.createElement('script');
-                   chunk.async = false;
+                   chunk.async = true;
                    chunk.src = "../../"+elem;
                    document.head.appendChild(chunk);
                  });

@@ -5,9 +5,9 @@ import { changeUrl } from '../actions';
 
 function UrlWrapper(HocComponent, props){
   class Wrapp extends  Component {
-    componentDidMount() {
-      this.setUrl(this.props.match.params)
-    }
+    // componentDidMount() {
+    //   this.setUrl(this.props.match.params)
+    // }
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (prevProps.match.params !== this.props.navigation) {
           this.setUrl(this.props.match.params)
