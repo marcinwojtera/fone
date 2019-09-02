@@ -14,7 +14,7 @@ export const fetchData = (navigation) => (dispatch) => {
       payload: {data: values[0].data, navigation: navigation, selectedTrack: false},
     });
   });
-  // dispatch(fetchDataWiki(navigation))
+  dispatch(fetchDataWiki(navigation))
 };
 
 export const fetchDataWiki = (navigation) => (dispatch, getState) => {
