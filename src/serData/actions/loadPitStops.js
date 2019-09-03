@@ -9,7 +9,7 @@ export const loadPits = year => (dispatch) => {
     .then(data => ({season, data: data.MRData.RaceTable.Races[0]}))
     .catch(err => console.log(err));
 
-  for (let i =  1; i < 21; i++) {
+  for (let i =  1; i < 5; i++) {
     pits.push(fetchPits(i));
   }
 

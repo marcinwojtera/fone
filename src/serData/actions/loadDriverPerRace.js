@@ -9,16 +9,25 @@ export const loadDriverPerRace = year => (dispatch, getState) => {
     .then(data => ({season, data: data.MRData.StandingsTable.StandingsLists[0].DriverStandings}))
     .catch(err => console.log(err));
 
-  for (let i = 1; i < 1; i++) {
-    table.push(drivers(i));
+  function sleep(time) {
+    return new Promise((resolve) => setTimeout(resolve, time))
   }
+
+  (async ()=> {
+    for (let i = 1; i < 20; i++) {
+      await sleep(3000)
+      table.push(drivers(i))
+    }
+  })()
+
 
   Promise.all(table).then(values => {
     dispatch({
       type: BACK_FETCH_DRIVER,
       payload: { year, values },
     });
-  }).catch(function(err) {
+  }).then(x=> console.log('Load DriverPerRace', year))
+    .catch(function(err) {
     console.log(err.message);
   });
 

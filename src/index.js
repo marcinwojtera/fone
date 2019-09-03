@@ -12,6 +12,7 @@ const fs = require('fs');
 
 const app = express();
 
+loadData();
 
 // const cache = require('express-redis-cache')({
 //   host: 'redis-12193.c83.us-east-1-2.ec2.cloud.redislabs.com', port: 12193, auth_pass: 'WKS7KuCA1cilK4F1z1uqv1f0WR3fnGXN',
@@ -120,11 +121,16 @@ app.get('*', async (req, res) => {
   }
   res.send(content);
 });
-loadData();
+
 app.listen(port, () => {
+
+  loadData().then(x=> {
+    console.log(`-------------------------START----------------------`);
+  });
 
   // const dayInMilliseconds = 1000 * 60 * 60 * 24;
   // setInterval(() => { loadData(); }, dayInMilliseconds);
-
+  console.log(`-------------------------START----------------------`);
   console.log(`Listening on port: ${port}`);
 });
+
