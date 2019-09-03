@@ -13,5 +13,7 @@ export const loadQualify = year => dispatch => {
       type: BACK_FETCH_QUALIFY,
       payload: { year, values },
     });
+  }).catch(function(err) {
+    console.log(err.message);
   });
 };

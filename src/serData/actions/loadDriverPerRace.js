@@ -18,6 +18,8 @@ export const loadDriverPerRace = year => (dispatch, getState) => {
       type: BACK_FETCH_DRIVER,
       payload: { year, values },
     });
+  }).catch(function(err) {
+    console.log(err.message);
   });
 
 };

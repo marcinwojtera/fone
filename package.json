@@ -12,7 +12,7 @@
     "start-client": "node build/bundle.js",
     "start": "rm -rf build && rm -rf public && webpack  --config webpack.server.js && webpack -p --config webpack.client.prod.js --mode production && npm run start-client",
     "webpack-prod": "rm -rf build && rm -rf public && webpack -p --progress --config webpack.client.prod.js --mode production",
-    "dev": "npm run build-server && npm-run-all --parallel dev:*",
+    "dev": "npm-run-all --parallel dev:*",
     "build-server": "webpack --config webpack.server.js",
     "dev:build-server": "webpack --config webpack.server.js --watch",
     "dev:build-client": "webpack --config webpack.client.js --watch",

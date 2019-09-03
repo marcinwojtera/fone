@@ -13,5 +13,7 @@ export const loadRace = year => dispatch => {
       type: BACK_FETCH_RESULTS,
       payload: { year, values },
     });
+  }).catch(function(err) {
+    console.log(err.message);
   });
 };

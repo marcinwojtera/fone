@@ -17,18 +17,13 @@ const panes = [
   { menuItem: { key: 'Qualify', icon: 'flag checkered', content: 'Qualify' }, render: () => <Tab.Pane> <QualifyBlock /></Tab.Pane> },
   { menuItem: { key: 'Pit Stops', icon: 'wait', content: 'Pit Stops' }, render: () => <Tab.Pane> <PitStops /></Tab.Pane> },
   { menuItem: { key: 'Driver points', icon: 'area graph', content: 'Driver points' }, render: () => <Tab.Pane> <DriverPointBlock /></Tab.Pane> },
-  { menuItem: { key: 'RaceTimming', icon: 'line graph', content: 'Race timming' }, render: (props) => <Tab.Pane> {props.showStats ? <RaceTimming /> :
-  <span> <Message
-    icon='ban'
-    header={`Brak Danych wyscigu`}
-    content='Lorem ipsum nie ma danych. '
-  /><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/></span>}</Tab.Pane> },
+  { menuItem: { key: 'RaceTimming', icon: 'line graph', content: 'Race timming' }, render: () => <Tab.Pane> <RaceTimming /></Tab.Pane> },
 
   // { menuItem: { key: 'MyResponsiveLine', icon: 'line graph', content: 'Driver points per year' }, render: () => <Tab.Pane> <MyResponsiveLine /></Tab.Pane> },
 ]
 const panesMap = [
-  { menuItem: 'Track info', render: () => <Tab.Pane><TrackBlock /></Tab.Pane> },
   { menuItem: 'Map', render: () => <Tab.Pane> <MapBlock /></Tab.Pane> },
+  { menuItem: 'Track info', render: () => <Tab.Pane><TrackBlock /></Tab.Pane> },
 ]
 class DriversPoints extends Component {
   state = {
@@ -73,6 +68,5 @@ class DriversPoints extends Component {
 
 const mapStateToProps = state => ({
   selectedTrack: state.selectedTrack,
-  showStats: state.data.statsBySeason ? true : false,
 });
 export default connect(mapStateToProps)(DriversPoints);

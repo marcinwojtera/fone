@@ -9,8 +9,7 @@ export const loadPits = year => (dispatch) => {
     .then(data => ({season, data: data.MRData.RaceTable.Races[0]}))
     .catch(err => console.log(err));
 
-  for (let i =  1; i < 22; i++) {
-
+  for (let i =  1; i < 21; i++) {
     pits.push(fetchPits(i));
   }
 
@@ -18,7 +17,9 @@ export const loadPits = year => (dispatch) => {
     dispatch({
       type: BACK_FETCH_PITS,
       payload: { year, values },
-    });
+    })
+  }).catch(function(err) {
+    console.log(err.message);
   });
 
 };

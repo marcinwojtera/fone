@@ -19,7 +19,6 @@ class TrackBlock extends Component {
                 <iframe width="100%" height="600"
 src={mapUrl}                        frameBorder="0" scrolling="no" marginHeight="0"
                         marginWidth="0"/>
-
             </Grid.Column>
           </Grid.Row>
         </Grid>

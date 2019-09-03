@@ -13,5 +13,7 @@ export const loadDriver = year => dispatch => {
       type: BACK_FETCH_DRIVER,
       payload: { year, values },
     });
+  }).catch(function(err) {
+    console.log(err.message);
   });
 };
