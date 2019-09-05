@@ -42,9 +42,9 @@ export const prepareAns = (year = getCurrentYear(), season = 1) => {
   backstore.getState().drivers[year || getCurrentYear()].map(x => driversList[[x.Driver.driverId]]= x)
   const data = {
     data: {
+      seasonConstructors: filterDataBySeason([year || getCurrentYear()], season),
       seasonsDrivers: backstore.getState().drivers[year || getCurrentYear()],
       seasonsDriversList: filterDataBySeason(backstore.getState().driversList[year || getCurrentYear()], season),
-      seasonsDriversListPerYear: backstore.getState().driversList[year || getCurrentYear()],
       seasonsList: backstore.getState().seasons[year || getCurrentYear()],
       seasonQualify: filterData(backstore.getState().qualify[year || getCurrentYear()], season),
       seasonsResults: filterData(backstore.getState().results[year || getCurrentYear()], season),

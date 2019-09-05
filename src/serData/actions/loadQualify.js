@@ -1,5 +1,4 @@
 import fetch from 'node-fetch';
-
 export const BACK_FETCH_QUALIFY = 'BACK_FETCH_QUALIFY';
 
 export const loadQualify = year => dispatch => {

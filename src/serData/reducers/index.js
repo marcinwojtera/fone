@@ -1,8 +1,9 @@
 import { combineReducers } from 'redux';
-import { backPitStop, backSeasons, backDriverList, backRaceResults, backQualifyList, backYears, backStatsBySeason, backDrivers, loadInfo } from './reducers';
+import { backConstructors, backPitStop, backSeasons, backDriverList, backRaceResults, backQualifyList, backYears, backStatsBySeason, backDrivers, loadInfo } from './reducers';
 
 export default combineReducers({
   seasons: backSeasons,
+  constructors: backConstructors,
   seasonsYear: backYears,
   results: backRaceResults,
   drivers: backDriverList,

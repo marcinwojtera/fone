@@ -1,15 +1,26 @@
-import { BACK_FETCH_SEASONS, BACK_YEARS_SEASONS } from '../actions/index';
+import { BACK_FETCH_SEASONS, BACK_YEARS_SEASONS } from '../actions/loadSeasons';
 import { BACK_FETCH_DRIVER_STANDINGS } from '../actions/loadDriver';
 import { BACK_FETCH_RESULTS } from '../actions/loadResults';
 import { BACK_FETCH_QUALIFY } from '../actions/loadQualify';
 import { BACK_FETCH_STATS } from '../actions/loadStats';
 import { BACK_FETCH_DRIVER } from '../actions/loadDriverPerRace';
 import { BACK_FETCH_PITS } from '../actions/loadPitStops';
+import { BACK_FETCH_CONSTRUCTORS } from '../actions/loadConstructors';
+
+
+export const backConstructors = (state = {}, action) => {
+  switch (action.type) {
+    case BACK_FETCH_CONSTRUCTORS:
+      return { ...state, ...{ [action.payload.year]: action.payload.values } };
+    default:
+      return state;
+  }
+};
 
 export const backSeasons = (state = {}, action) => {
   switch (action.type) {
     case BACK_FETCH_SEASONS:
-      return { ...state, ...action.payload };
+      return { ...state, ...{ [action.payload.year]: action.payload.values[0] } };
     default:
       return state;
   }

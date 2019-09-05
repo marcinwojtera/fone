@@ -6,13 +6,10 @@ import compression from 'compression';
 import renderer from './helpers/renderer';
 import { initialLoads, prepareAns } from './store/createStore';
 import { loadData, backstore } from './serData/pool';
-import {loadInfo} from "./serData/reducers/reducers";
 
 const fs = require('fs');
 
 const app = express();
-
-loadData();
 
 // const cache = require('express-redis-cache')({
 //   host: 'redis-12193.c83.us-east-1-2.ec2.cloud.redislabs.com', port: 12193, auth_pass: 'WKS7KuCA1cilK4F1z1uqv1f0WR3fnGXN',
@@ -96,6 +93,8 @@ app.get(
     res.send(content);
   },
 );
+
+
 app.get('/race/:year/:season', async (req, res) => {
   const store = initialLoads(req.params.year, req.params.season, req.params.page);
   const statsFile = fs.readFileSync('public/stats.json', 'utf8');
@@ -107,8 +106,6 @@ app.get('/race/:year/:season', async (req, res) => {
   }
   res.send(content);
 });
-
-
 
 app.get('*', async (req, res) => {
   const store = initialLoads();
@@ -122,15 +119,15 @@ app.get('*', async (req, res) => {
   res.send(content);
 });
 
-app.listen(port, () => {
-
-  loadData().then(x=> {
+export const startServer = () =>{
+  app.listen(port, () => {
+    // const dayInMilliseconds = 1000 * 60 * 60 * 24;
+    // setInterval(() => { loadData(); }, dayInMilliseconds);
     console.log(`-------------------------START----------------------`);
+    console.log(`Listening on port: ${port}`);
   });
+}
 
-  // const dayInMilliseconds = 1000 * 60 * 60 * 24;
-  // setInterval(() => { loadData(); }, dayInMilliseconds);
-  console.log(`-------------------------START----------------------`);
-  console.log(`Listening on port: ${port}`);
-});
+loadData()
+
 
