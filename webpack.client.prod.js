@@ -5,6 +5,7 @@ const CompressionPlugin = require('compression-webpack-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const baseConfig = require('./webpack.base');
+const BrotliPlugin = require('brotli-webpack-plugin');
 
 const config = {
   mode: 'production',
@@ -52,6 +53,12 @@ const config = {
   plugins: [
     // new BundleAnalyzerPlugin(),
     new CompressionPlugin(),
+    new BrotliPlugin({
+      asset: '[path].br[query]',
+      test: /\.(js|css|html|svg)$/,
+      threshold: 10240,
+      minRatio: 0.8
+    }),
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: JSON.stringify('production')

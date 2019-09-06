@@ -1,5 +1,5 @@
 import fetch from 'node-fetch'
-import { BACK_FETCH_CONSTRUCTORS } from './loadConstructors'
+import { BACK_FETCH_CONSTRUCTORS } from './loadConstructorsPerRace'
 export const BACK_FETCH_STATS = 'BACK_FETCH_STATS';
 
 export const loadStats = year => dispatch => {

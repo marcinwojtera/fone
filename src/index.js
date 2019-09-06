@@ -8,16 +8,29 @@ import { initialLoads, prepareAns } from './store/createStore';
 import { loadData, backstore } from './serData/pool';
 const path = require('path');
 const fs = require('fs');
-
+const mcache = require('memory-cache');
 const app = express();
 
-// const cache = require('express-redis-cache')({
-//   host: 'redis-12193.c83.us-east-1-2.ec2.cloud.redislabs.com', port: 12193, auth_pass: 'WKS7KuCA1cilK4F1z1uqv1f0WR3fnGXN',
-// });
-//
-// cache.on('connected', () => {
-//   console.log('Redis Conn', cache.prefix);
-// });
+
+const cache = (duration) => {
+  return (req, res, next) => {
+    let key = 'fi-Stats' + req.originalUrl || req.url
+    let cachedBody = mcache.get(key)
+    if (cachedBody) {
+      res.header('from-cache', key)
+      res.send(cachedBody)
+      return
+    } else {
+      res.sendResponse = res.send
+      res.send = (body) => {
+        mcache.put(key, body, duration * 1000);
+        res.sendResponse(body)
+      }
+      next()
+    }
+  }
+}
+
 function shouldCompress(req, res) {
   if (req.headers['x-no-compression']) return false;
   return compression.filter(req, res);
@@ -41,6 +54,18 @@ const port = process.env.PORT || 3002;
 // To be able to serve static files
 app.use(express.static('public'));
 app.use(ignoreFavicon);
+app.get('/api/cache-stats', async (req, res) => {
+  let size = mcache.size();
+  let hits = mcache.hits();
+  let keys = mcache.keys();
+  let memsize = mcache.memsize();
+
+  res.json({memsize, size, hits, keys });
+});
+app.get('/api/cache-clear', async (req, res) => {
+  let cachedBody = mcache.clear()
+  res.json({clear : true});
+});
 app.get('/api/test', async (req, res) => {
   res.json(backstore.getState());
 });
@@ -50,12 +75,6 @@ app.get('/api/state', (req, res) => {
 
 app.get(
   '/api/stats/:year',
-  // (req, res, next) => {
-  //   const { year, season } = req.params;
-  //   res.express_redis_cache_name = `json:${year}:${season}`;
-  //   next();
-  // },
-  // cache.route(),
   (req, res) => {
 
     const { year } = req.params;
@@ -96,48 +115,38 @@ app.get('/api/seasons', async (req, res) => {
   res.json({ season, years });
 });
 
-// app.get('/api/race/:year/:season', (req, res) => {
-//  res.json(prepareAns(req.params.year, req.params.season));
-// });
-
-// app.get('*/favicon.ico', (req, res) => res.status(204));
 app.get(
   '/api/race/:year/:season',
-  // (req, res, next) => {
-  //   const { year, season } = req.params;
-  //   res.express_redis_cache_name = `json:${year}:${season}`;
-  //   next();
-  // },
-  // cache.route(),
+  cache(1000),
   (req, res) => {
     res.json(prepareAns(req.params.year, req.params.season));
   },
 );
 
-app.get(
-  // '/race/:year/:season',
-  // (req, res, next) => {
-  //   const { year, season } = req.params;
-  //   res.express_redis_cache_name = `race:${year}:${season}`;
-  //   res.set('X-Redis', 'Exist');
-  //   next();
-  // },
-  // cache.route(),
-  (req, res) => {
-    const store = initialLoads(req.params.year, req.params.season, req.params.page);
-    const statsFile = fs.readFileSync('public/stats.json', 'utf8');
-    const context = {};
-    const content = renderer(req, store, context, statsFile);
+// app.get(
+//   // '/race/:year/:season',
+//   // (req, res, next) => {
+//   //   const { year, season } = req.params;
+//   //   res.express_redis_cache_name = `race:${year}:${season}`;
+//   //   res.set('X-Redis', 'Exist');
+//   //   next();
+//   // },
+//   // cache.route(),
+//   (req, res) => {
+//     const store = initialLoads(req.params.year, req.params.season, req.params.page);
+//     const statsFile = fs.readFileSync('public/stats.json', 'utf8');
+//     const context = {};
+//     const content = renderer(req, store, context, statsFile);
+//
+//     if (context.notFound) {
+//       res.status(404);
+//     }
+//     res.send(content);
+//   },
+// );
 
-    if (context.notFound) {
-      res.status(404);
-    }
-    res.send(content);
-  },
-);
 
-
-app.get('/race/:year/:season', async (req, res) => {
+app.get('/race/:year/:season', cache(1000), async (req, res) => {
   const store = initialLoads(req.params.year, req.params.season, req.params.page);
   const statsFile = fs.readFileSync('public/stats.json', 'utf8');
   const context = {};
