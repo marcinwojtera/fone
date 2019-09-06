@@ -4,7 +4,7 @@ const { StatsWriterPlugin } = require('webpack-stats-plugin');
 const PurgecssPlugin = require('purgecss-webpack-plugin')
 const path = require('path')
 const glob = require('glob')
-
+const CopyPlugin = require('copy-webpack-plugin');
 const PATHS = {
   src: path.resolve(__dirname, 'public')
 }
@@ -22,14 +22,24 @@ module.exports = {
       paths: glob.sync(`${PATHS.src}/**/*`, { nodir: true }),
       only: ['bundle', 'vendor']
     }),
-    new StatsWriterPlugin({ filename: 'stats.json' })
+    new StatsWriterPlugin({ filename: 'stats.json' }),
   ],
+
   module: {
     rules: [
-      // {
-      //   test: /\.sql$/i,
-      //   use: 'raw-loader',
-      // },
+      {
+        type: 'javascript/auto',
+        exclude: /node_modules/,
+        test: /\.json$/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: "jsons/[name].[ext]",
+            }
+          }
+        ]
+      },
       {
         test: /\.js?$/,
         loader: 'babel-loader',
@@ -45,15 +55,6 @@ module.exports = {
         test: /\.(PNG|png|jpg|eot|woff|woff2|ttf|svg|gif)$/,
         loader: 'file-loader',
       },
-      // {
-      //   test: /\.json$/,
-      //   exclude: /node_modules/,
-      //   loader: 'json-loader',
-      //   options: {
-      //     name: '[name].[ext]',
-      //     // outputPath: 'jsons',
-      //   },
-      // },
       {
         test: /\.s?[ac]ss$/,
         use: [

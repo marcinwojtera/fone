@@ -24,7 +24,7 @@ export const loadConstructors = year => (dispatch) => {
     });
 
   for (let i =  1; i < 22; i++) {
-    wait.for.time(0.3);
+    wait.for.time(0.1);
     fetchConstructors(i)
   }
 

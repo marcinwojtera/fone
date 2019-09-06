@@ -12,16 +12,14 @@ const wait = require('wait-for-stuff');
 export const fetchByYears = (years) => dispatch =>{
 
   years.map((x) => {
-    wait.for.time(2);
+    wait.for.time(1);
     dispatch(loadConstructors(x))
     dispatch(loadDriver(x));
     dispatch(loadSeasons(x));
     dispatch(loadQualify(x));
     dispatch(loadPits(x));
     dispatch(loadRace(x));
-    dispatch(loadStats(x));
     dispatch(loadDriverPerRace(x));
-
   })
 }
 
@@ -36,6 +34,6 @@ export const fetchData = (years) => dispatch => {
   dispatch(fetchByYears(years))
 
   wait.for.time(2);
-  startServer()
+  startServer().then(() => dispatch(loadStats(2019)))
 };
 
