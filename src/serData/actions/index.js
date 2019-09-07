@@ -36,6 +36,10 @@ export const fetchData = (years) => dispatch => {
   dispatch(fetchByYears(years))
 
   wait.for.time(2);
-  startServer().then(() => dispatch(loadStats(2019)))
+  startServer().then(() => {
+    dispatch(loadStats(2019));
+    dispatch(loadStats(2017));
+    dispatch(loadStats(2018));
+  })
 };
 
