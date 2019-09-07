@@ -33,14 +33,22 @@ const config = {
     jsonpFunction: 'meetingsJsonp'
   },
   optimization: {
-    minimize: true,
     splitChunks: {
+      chunks: "async",
+      minSize: 10000,
+      minChunks: 1,
+      maxAsyncRequests: 5,
+      maxInitialRequests: 3,
+      name: true,
       cacheGroups: {
-        commons: {
-          test: /node_modules\/(.*)\.js/,
-          chunks: 'initial',
-          name: 'vendor',
-          enforce: true
+        default: {
+          minChunks: 2,
+          priority: -20,
+          reuseExistingChunk: true,
+        },
+        vendors: {
+          test: /[\\/]node_modules[\\/]/,
+          priority: -10
         }
       }
     },
@@ -50,7 +58,6 @@ const config = {
     minimizer: [
       new TerserPlugin({
         cache: true,
-        parallel: true,
         parallel: 4,
       }),
       new OptimizeCssAssetsPlugin({
