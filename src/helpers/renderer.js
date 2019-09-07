@@ -9,14 +9,14 @@ import App from '../client/App';
 
 export default (req, store, context, statsFile) => {
   const html = renderHtml({
-    ...resolveAssets(statsFile, { chunksOrder: ['manifest', 'vendor', 'main'] }),
-    markup: renderStylesToString(renderToString(
+    ...resolveAssets(statsFile, { chunksOrder: ['manifest', 'vendor', 'client'] }),
+    markup: renderToString(
       <Provider store={store}>
         <StaticRouter location={req.path} context={context}>
           <App />
         </StaticRouter>
       </Provider>
-    )),
+    ),
     state: store.getState(),
   });
 

@@ -4,7 +4,6 @@ const { StatsWriterPlugin } = require('webpack-stats-plugin');
 const PurgecssPlugin = require('purgecss-webpack-plugin')
 const path = require('path')
 const glob = require('glob')
-const CopyPlugin = require('copy-webpack-plugin');
 const PATHS = {
   src: path.resolve(__dirname, 'public')
 }
@@ -27,6 +26,15 @@ module.exports = {
 
   module: {
     rules: [
+      {
+        test: /\.(less)$/,
+        use: [{
+          loader: 'style-loader' // creates style nodes from JS strings
+        }, {
+          loader: 'css-loader' // translates CSS into CommonJS
+        }, {
+          loader: 'less-loader' // compiles Less to CSS
+        }]},
       {
         type: 'javascript/auto',
         exclude: /node_modules/,

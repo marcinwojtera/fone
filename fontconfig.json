@@ -1,0 +1,35 @@
+{
+  "google-fonts-plugin": {
+    "fonts": [
+      {
+        "family": "Roboto",
+        "variants": [
+          "300",
+          "400",
+          "500",
+          "700"
+        ],
+        "subsets": [
+          "latin-ext"
+        ]
+      },
+      {
+        "family": "Lato",
+        "variants": [
+          "400",
+          "700",
+          "400i",
+          "700i"
+        ],
+        "subsets": [
+          "latin-ext"
+        ]
+      }
+    ],
+    "formats": [
+      "woff",
+      "woff2"
+    ],
+    "filname": "[hash].css"
+  }
+}

@@ -1,7 +1,8 @@
 /* eslint-disable no-underscore-dangle */
 // Startup point for client-side application
 
-import '@babel/core';
+// import '@babel/core';
+import '@babel/polyfill';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
@@ -9,7 +10,6 @@ import { createStore, applyMiddleware } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
-// import { renderRoutes } from 'react-router-config';
 import reducers from './reducers';
 // import Routes from './Routes';
 import App from './App';
@@ -23,7 +23,6 @@ ReactDOM.hydrate(
   <Provider store={store}>
     <BrowserRouter>
       <App />
-      {/*<div>{renderRoutes(Routes)}</div>*/}
     </BrowserRouter>
   </Provider>,
   document.querySelector('#root'),

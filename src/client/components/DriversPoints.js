@@ -8,8 +8,6 @@ import MapBlock from "./block/MapBlock";
 import DriverPointBlock from "./block/DriverPointBlock";
 import RaceTimming from './block/RaceTimming'
 import PitStops from './block/PitStops'
-
-import MyResponsiveLine from './block/DriverPositionStatsBlock';
 import { Tab, Dimmer, Header, Icon,  Segment } from 'semantic-ui-react'
 
 const panes = [

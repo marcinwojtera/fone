@@ -8,7 +8,6 @@ const template = `
                     <meta name="description" content="F1 statistics description">
                     <meta name="keywords" content="F1, statistic f1, races">
                     <meta name="author" content="MWoj">
-                 <link rel="preload" as="style" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
                  <link rel="icon" href="favicon.ico" type="image/x-icon" />
                  <% css.forEach(function(cssUrl) { %><link href="../../../../<%= cssUrl %>" rel="stylesheet" type="text/css"><% }); %>
                  <script>
@@ -25,7 +24,8 @@ const template = `
                  let script = js.split(',');
                  script.forEach(function(elem){
                    let chunk = document.createElement('script');
-                   chunk.async = true;
+                   // chunk.async = true;
+                   chunk.defer = true;
                    chunk.src = "../../"+elem;
                    document.head.appendChild(chunk);
                  });

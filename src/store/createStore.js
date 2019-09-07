@@ -3,7 +3,6 @@ import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import reducers from '../client/reducers';
 import { backstore } from '../serData/pool';
-import fetch from "node-fetch";
 
 const _ = require('lodash/core');
 

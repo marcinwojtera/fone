@@ -1,17 +1,12 @@
 const webpack = require('webpack');
 const path = require('path');
-const glob = require('glob')
 const merge = require('webpack-merge');
 const CompressionPlugin = require('compression-webpack-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const baseConfig = require('./webpack.base');
 const BrotliPlugin = require('brotli-webpack-plugin');
-const PurgecssPlugin = require('purgecss-webpack-plugin')
-
-const PATHS = {
-  src: path.join(__dirname, 'src')
-}
+// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 const config = {
   mode: 'production',
@@ -25,7 +20,10 @@ const config = {
     modules: true,
     children: true
   },
-  entry: './src/client/client.js',
+  entry: {
+    client: './src/client/client.js',
+    vendor: ['core-js', 'react', 'react-dom', 'redux', 'semantic-ui-css', 'semantic-ui-react'],
+  },
   output: {
     path: path.resolve(__dirname, 'public'),
     filename: '[name].[chunkhash].js',
@@ -33,10 +31,12 @@ const config = {
     jsonpFunction: 'meetingsJsonp'
   },
   optimization: {
+    minimize: true,
+    runtimeChunk: 'single',
     splitChunks: {
       chunks: "async",
       minSize: 10000,
-      minChunks: 1,
+      minChunks: 2,
       maxAsyncRequests: 5,
       maxInitialRequests: 3,
       name: true,
@@ -46,10 +46,12 @@ const config = {
           priority: -20,
           reuseExistingChunk: true,
         },
-        vendors: {
-          test: /[\\/]node_modules[\\/]/,
-          priority: -10
-        }
+        vendor: {
+          chunks: 'initial',
+          name: 'vendor',
+          test: 'vendor',
+          enforce: true
+        },
       }
     },
     runtimeChunk: {
@@ -58,6 +60,7 @@ const config = {
     minimizer: [
       new TerserPlugin({
         cache: true,
+        parallel: true,
         parallel: 4,
       }),
       new OptimizeCssAssetsPlugin({
@@ -69,6 +72,7 @@ const config = {
   },
   devtool: '',
   plugins: [
+    // new GoogleFontsPlugin('./fontconfig.json'),
     // new BundleAnalyzerPlugin(),
     new CompressionPlugin(),
     new BrotliPlugin({
@@ -82,10 +86,6 @@ const config = {
         NODE_ENV: JSON.stringify('production')
       }
     }),
-    new PurgecssPlugin({
-      paths: glob.sync(`${PATHS.src}/*`),
-      only: ['bundle', 'vendor']
-    })
   ]
 };
 

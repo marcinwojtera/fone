@@ -11,7 +11,6 @@ const fs = require('fs');
 const mcache = require('memory-cache');
 const app = express();
 
-
 const cache = (duration) => {
   return (req, res, next) => {
     let key = 'fi-Stats' + req.originalUrl || req.url
@@ -129,29 +128,6 @@ app.get(
   },
 );
 
-// app.get(
-//   // '/race/:year/:season',
-//   // (req, res, next) => {
-//   //   const { year, season } = req.params;
-//   //   res.express_redis_cache_name = `race:${year}:${season}`;
-//   //   res.set('X-Redis', 'Exist');
-//   //   next();
-//   // },
-//   // cache.route(),
-//   (req, res) => {
-//     const store = initialLoads(req.params.year, req.params.season, req.params.page);
-//     const statsFile = fs.readFileSync('public/stats.json', 'utf8');
-//     const context = {};
-//     const content = renderer(req, store, context, statsFile);
-//
-//     if (context.notFound) {
-//       res.status(404);
-//     }
-//     res.send(content);
-//   },
-// );
-
-
 app.get('/race/:year/:season', cache(1000), async (req, res) => {
   const store = initialLoads(req.params.year, req.params.season, req.params.page);
   const statsFile = fs.readFileSync('public/stats.json', 'utf8');
@@ -168,7 +144,7 @@ app.get('*', async (req, res) => {
   const store = initialLoads();
   const statsFile = fs.readFileSync('public/stats.json', 'utf8');
   const context = {};
-  const content = renderer(req, store, context, statsFile);
+  const content =  renderer(req, store, context, statsFile);
 
   if (context.notFound) {
     res.status(404);
