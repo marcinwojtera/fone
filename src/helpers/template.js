@@ -2,8 +2,12 @@ import ejs from 'ejs';
 
 const template = `
   <!DOCTYPE html>
-             <head>
+             <head lang="en">
                  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+                   <meta charset="UTF-8">
+                    <meta name="description" content="F1 statistics description">
+                    <meta name="keywords" content="F1, statistic f1, races">
+                    <meta name="author" content="MWoj">
                  <link rel="preload" as="style" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
                  <link rel="icon" href="favicon.ico" type="image/x-icon" />
                  <% css.forEach(function(cssUrl) { %><link href="../../../../<%= cssUrl %>" rel="stylesheet" type="text/css"><% }); %>
@@ -26,6 +30,7 @@ const template = `
                    document.head.appendChild(chunk);
                  });
                </script>
+               <title>F1 statistics</title>
              </head>
             <body>
             <div id="root"><%- markup -%></div>

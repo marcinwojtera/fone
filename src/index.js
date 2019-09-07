@@ -54,6 +54,12 @@ const port = process.env.PORT || 3002;
 // To be able to serve static files
 app.use(express.static('public'));
 app.use(ignoreFavicon);
+
+app.get('/robots.txt',  (req, res) => {
+  res.type('text/plain');
+  res.send("User-agent: *\nDisallow: /");
+});
+
 app.get('/api/cache-stats', async (req, res) => {
   let size = mcache.size();
   let hits = mcache.hits();

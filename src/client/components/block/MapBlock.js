@@ -16,7 +16,7 @@ class TrackBlock extends Component {
         <Grid celled='internally'>
           <Grid.Row>
             <Grid.Column width={16}>
-                <iframe width="100%" height="600"
+                <iframe width="100%" height="600" title="track map"
 src={mapUrl}                        frameBorder="0" scrolling="no" marginHeight="0"
                         marginWidth="0"/>
             </Grid.Column>
