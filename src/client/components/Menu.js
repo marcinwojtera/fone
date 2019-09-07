@@ -1,5 +1,5 @@
 import React, { Component }  from 'react';
-import { Input, Menu } from 'semantic-ui-react';
+import { Menu } from 'semantic-ui-react';
 import { withRouter } from 'react-router';
 import {connect} from "react-redux";
 
@@ -35,12 +35,6 @@ export class MenuComponent extends Component {
               {x}
             </Menu.Item>
           ))}
-
-          <Menu.Menu position='right'>
-            <Menu.Item>
-              <Input icon='search' placeholder='Search...' />
-            </Menu.Item>
-          </Menu.Menu>
         </Menu>
       </div>
     )

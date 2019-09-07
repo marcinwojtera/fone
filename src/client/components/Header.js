@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import Slider from 'react-slick';
-import { Label, Icon } from 'semantic-ui-react'
+import { Icon } from 'semantic-ui-react'
 
 const SampleNextArrow = (props) => {
   const { className, style, onClick } = props;

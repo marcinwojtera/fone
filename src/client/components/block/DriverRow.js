@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Label } from 'semantic-ui-react';
 import wtf from 'wtf_wikipedia'
 import { WikiData } from '../../actions/helper'
 import ModalDriver from '../Modal'

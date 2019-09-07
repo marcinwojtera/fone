@@ -1,11 +1,17 @@
 const webpack = require('webpack');
 const path = require('path');
+const glob = require('glob')
 const merge = require('webpack-merge');
 const CompressionPlugin = require('compression-webpack-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const baseConfig = require('./webpack.base');
 const BrotliPlugin = require('brotli-webpack-plugin');
+const PurgecssPlugin = require('purgecss-webpack-plugin')
+
+const PATHS = {
+  src: path.join(__dirname, 'src')
+}
 
 const config = {
   mode: 'production',
@@ -27,6 +33,7 @@ const config = {
     jsonpFunction: 'meetingsJsonp'
   },
   optimization: {
+    minimize: true,
     splitChunks: {
       cacheGroups: {
         commons: {
@@ -41,7 +48,11 @@ const config = {
       name: 'manifest'
     },
     minimizer: [
-      new TerserPlugin({}),
+      new TerserPlugin({
+        cache: true,
+        parallel: true,
+        parallel: 4,
+      }),
       new OptimizeCssAssetsPlugin({
         cssProcessorPluginOptions: {
           preset: ['default', { discardComments: { removeAll: true } }]
@@ -64,6 +75,10 @@ const config = {
         NODE_ENV: JSON.stringify('production')
       }
     }),
+    new PurgecssPlugin({
+      paths: glob.sync(`${PATHS.src}/*`),
+      only: ['bundle', 'vendor']
+    })
   ]
 };
 

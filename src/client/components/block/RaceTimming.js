@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Icon } from 'semantic-ui-react';
-import PerfectScrollbar from 'react-perfect-scrollbar'
 import map  from 'lodash/map';
 
 class RaceTimming extends Component {

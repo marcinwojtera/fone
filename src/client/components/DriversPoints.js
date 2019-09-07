@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Grid, Message } from 'semantic-ui-react';
+import { Grid } from 'semantic-ui-react';
 import QualifyBlock from "./block/QualifyBlock";
 import ResultsBlock from "./block/ResultsBlock";
 import TrackBlock from "./block/TrackBlock";
