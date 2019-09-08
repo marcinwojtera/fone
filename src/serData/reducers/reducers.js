@@ -12,7 +12,7 @@ import { BACK_FETCH_CONSTRUCTORS } from '../actions/loadConstructors';
 export const backConstructors = (state = {}, action) => {
   switch (action.type) {
     case BACK_FETCH_CONSTRUCTORS:
-      return { ...state, ...{ [action.payload.year]: action.payload.values } };
+      return { ...state, ...{ [action.payload.year]: action.payload.values[0] } };
     default:
       return state;
   }
