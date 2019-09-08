@@ -11,26 +11,34 @@ export const fetchData = (navigation) => (dispatch) => {
   Promise.all([getData]).then(values => {
     dispatch({
       type: FETCH_DATA,
-      payload: {data: values[0].data, navigation: navigation, selectedTrack: false},
+      payload: {data: values[0].data, navigation: navigation, selectedTrack: values[0].selectedTrack },
     });
   });
-  dispatch(fetchDataWiki(navigation))
+  // dispatch(fetchDataWiki(navigation))
 };
 
 export const fetchDataWiki = (navigation) => (dispatch, getState) => {
 
   const selectedTrack = navigation.season ? getState().data.seasonsList[navigation.season -1] : null;
   const circuit = selectedTrack ? selectedTrack.Circuit.url.split('/').slice(-1).pop() : false
-
   const getDataTrackFromWiki = axios.get(`https://pl.wikipedia.org/api/rest_v1/page/summary/${circuit}`)
-    .then(rest => rest.data);
-
-  Promise.all([getDataTrackFromWiki]).then(values => {
-    dispatch({
-      type: FETCH_DATA,
-      payload: {selectedTrack: {...selectedTrack, ...values[1]}}
+    .then(rest => {
+      dispatch({
+        type: FETCH_DATA,
+        payload: {...getState(), ...{selectedTrack, ...{selectedTrack: rest.data}} }
+      });
     });
-  });
+
+
+  //
+
+  //
+  // Promise.all([getDataTrackFromWiki]).then(values => {
+  //   dispatch({
+  //     type: FETCH_DATA,
+  //     payload: {selectedTrack: {...selectedTrack, ...values[1]}}
+  //   });
+  // });
 };
 
 export const changeUrl = (navigation) =>  dispatch => dispatch(fetchData(navigation))

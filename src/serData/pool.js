@@ -7,11 +7,28 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import thunk from 'redux-thunk';
 import backreducers from './reducers';
 import { fetchData } from './actions';
+const fs = require('fs');
+const path = require('path');
+import { startServer } from '../index'
+const develop = process.env.PORT ? false : true;
+
+let data = {};
+
+if (develop) {
+  const dataJson = fs.readFileSync(path.resolve(`./build/jsons/response.json`));
+  data =  JSON.parse(dataJson)
+  const jsonDataLoad = require(`./response.json`);
+}
 
 const composeEnhancers = composeWithDevTools({ port: 3002 });
-export const backstore = createStore(backreducers, {}, composeEnhancers(applyMiddleware(thunk)));
+export const backstore = createStore(backreducers, data, composeEnhancers(applyMiddleware(thunk)));
 
 export const loadData = ()  => {
-  const years = [2019, 2018, 2017];
-  backstore.dispatch(fetchData(years));
+
+  if (!develop) {
+    const years = [2019, 2018, 2017];
+    backstore.dispatch(fetchData(years));
+  } else {
+    startServer();
+  }
 };

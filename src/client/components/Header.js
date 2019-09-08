@@ -27,18 +27,74 @@ const SamplePrevArrow = (props) => {
 }
 class Header extends React.Component {
 
+  constructor(props) {
+    super(props);
+    this.state = { width: 0, height: 0 };
+  }
+
   render() {
     const settings = {
       dots: false,
       infinite: true,
-      centerPadding: "60px",
+      // centerPadding: "60px",
       speed: 500,
       slidesToShow: 7,
       slidesToScroll: 6,
       nextArrow: <SampleNextArrow />,
-      prevArrow: <SamplePrevArrow />
+      prevArrow: <SamplePrevArrow />,
+      responsive: [
+        {
+          breakpoint: 1400,
+          settings: {
+            slidesToShow: 7,
+            slidesToScroll: 6,
+          }
+        },
+        {
+          breakpoint: 1300,
+          settings: {
+            slidesToShow: 6,
+            slidesToScroll: 5,
+          }
+        },
+        {
+          breakpoint: 1250,
+          settings: {
+            slidesToShow: 5,
+            slidesToScroll: 4,
+          }
+        },
+        {
+          breakpoint: 1000,
+          settings: {
+            slidesToShow: 4,
+            slidesToScroll: 3,
+          }
+        },
+        {
+          breakpoint: 800,
+          settings: {
+            slidesToShow: 3,
+            slidesToScroll: 2,
+          }
+        },
+        {
+          breakpoint: 600,
+          settings: {
+            slidesToShow: 2,
+            slidesToScroll: 2,
+            initialSlide: 2
+          }
+        },
+        {
+          breakpoint: 480,
+          settings: {
+            slidesToShow: 1,
+            slidesToScroll: 1
+          }
+        }
+      ]
     };
-
     return (
       <div>
         <Slider {...settings}>
@@ -55,8 +111,8 @@ class Header extends React.Component {
                 <small>
                   {x.Circuit.circuitName}
                 </small>
+                <span className="round-place">  {x.date} <Icon name='map marker alternate' /> {x.Circuit.Location.locality}</span>
                 {this.props.selectedSeason === x.round && <span className="round-see"><Icon name="caret up" /></span>}
-                <span className="round-city">  {x.date} <Icon name='map marker alternate' /> {x.Circuit.Location.locality}</span>
             </div> </Link>
           ))}
         </Slider>

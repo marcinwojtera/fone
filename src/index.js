@@ -128,7 +128,9 @@ app.get(
   },
 );
 
-app.get('/race/:year/:season', cache(1000), async (req, res) => {
+app.get('/race/:year/:season',
+  // cache(1000),
+  async (req, res) => {
   const store = initialLoads(req.params.year, req.params.season, req.params.page);
   const statsFile = fs.readFileSync('public/stats.json', 'utf8');
   const context = {};

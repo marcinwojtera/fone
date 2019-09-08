@@ -12,6 +12,7 @@ module.exports = {
   node: {
     fs: 'empty'
   },
+  mode: 'dev',
   plugins: [
     new MiniCssExtractPlugin({
       filename: '[name].css',

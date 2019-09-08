@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Icon } from 'semantic-ui-react';
+import { Helmet } from "react-helmet";
 import map  from 'lodash/map';
 
 class RaceTimming extends Component {
@@ -12,29 +13,34 @@ class RaceTimming extends Component {
   render() {
     const driversListToShow = ['leclerc','hamilton']
     return (
-      <div> <div style={{overflow: 'hidden'}}>
-
+      <div>
+        <Helmet>
+          <meta charSet="utf-8" />
+          <title>F1 statistics - {`${this.props.selectedTrack.raceName} Year: ${this.props.selectedTrack.season}`}</title>
+          <meta name="description" content={`${this.props.selectedTrack.raceName} Year - ${this.props.selectedTrack.season} Race timming`} />
+        </Helmet>
+        <div style={{overflow: 'hidden'}}>
           </div>
 
         <div className="race-timming">
           <div className="race-timming-sticky">
             <div className="race-driver"><Icon naame="user circle"/></div>
             {map(this.props.seasonQualify, z => {
-              return (<div className="race-driver">{z.Driver.code}</div>)
+              return (<div className="race-driver" key={z.Driver.code}>{z.Driver.code}</div>)
             })}
           </div>
 
         <div className="race-timming-slide">
 
           <div className="timming-row" >
-           {this.props.stats.map((x, i) =>  <span className="race-time-box"><small>Lap {i+1}</small></span>)}
+           {this.props.stats.map((x, i) =>  <span className="race-time-box" key={i+1}><small>Lap {i+1}</small></span>)}
           </div>
 
-            {map(this.props.seasonQualify, z => {
+            {map(this.props.seasonQualify, (z, d) => {
               //
               return (
 
-                <div className="timming-row" key={z.Driver.driverId}>
+                <div className="timming-row" key={`${z.Driver.driverId}-${d}`}>
                   {this.props.stats.map((x, i) => {
                     let gap = '';
                     let gapBlock = ''
@@ -42,7 +48,7 @@ class RaceTimming extends Component {
                       const lastLap = this.props.stats[i-1][z.Driver.driverId]['position'];
                       const ccurrentLap = x[z.Driver.driverId]['position']
                       gap = lastLap - ccurrentLap;
-                      gapBlock = gap !== 0 && (<span className="gap">
+                      gapBlock = gap !== 0 && (<span className="gap" key={ccurrentLap-x[z.Driver.driverId]}>
                           <span className={gap > 0 ? "plus" : "minus"}>{gap > 0 ? <span> {gap}</span> : <span> {gap}</span>}
                             {gap > 0 ? <Icon name={gap > 1 ? "angle double up" :"angle up"}/> :
                               <Icon name={gap < 1 ? "angle double down" :"angle down"}/>}
@@ -74,15 +80,7 @@ const mapStateToProps = state => ({
   stats: state.data.statsBySeason ? state.data.statsBySeason.test : [],
   driversList: state.data.driversList,
   seasonsDrivers: state.data.seasonsDrivers,
-  seasonQualify: state.data.seasonQualify.QualifyingResults
+  seasonQualify: state.data.seasonQualify.QualifyingResults,
+  selectedTrack: state.selectedTrack,
 });
 export default connect(mapStateToProps)(RaceTimming);
-{/*<PerfectScrollbar>*/}
-{/*  <Button.Group>*/}
-{/*    {this.props.seasonsDrivers.map(y =>  (*/}
-{/*      <Button>*/}
-{/*        {y.Driver.familyName}*/}
-{/*      </Button>*/}
-{/*    ))}*/}
-{/*  </Button.Group>*/}
-{/*</PerfectScrollbar>*/}
