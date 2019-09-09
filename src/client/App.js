@@ -9,7 +9,7 @@ import MenuComponent from './components/Menu';
 import HomePage from './pages/HomePage';
 import Race from './pages/Race';
 import './app.scss';
-import UrlWrapper from "./pages/urlWrapper";
+
 
 class App extends Component {
 

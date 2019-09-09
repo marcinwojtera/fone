@@ -6,7 +6,6 @@ const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const baseConfig = require('./webpack.base');
 const BrotliPlugin = require('brotli-webpack-plugin');
-// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 const config = {
   mode: 'production',
@@ -32,9 +31,8 @@ const config = {
   },
   optimization: {
     minimize: true,
-    runtimeChunk: 'single',
     splitChunks: {
-      chunks: "async",
+      chunks: "all",
       minSize: 10000,
       minChunks: 2,
       maxAsyncRequests: 5,
@@ -61,7 +59,6 @@ const config = {
       new TerserPlugin({
         cache: true,
         parallel: true,
-        parallel: 4,
       }),
       new OptimizeCssAssetsPlugin({
         cssProcessorPluginOptions: {
@@ -72,8 +69,6 @@ const config = {
   },
   devtool: '',
   plugins: [
-    // new GoogleFontsPlugin('./fontconfig.json'),
-    // new BundleAnalyzerPlugin(),
     new CompressionPlugin(),
     new BrotliPlugin({
       asset: '[path].br[query]',

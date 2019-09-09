@@ -56,7 +56,9 @@ app.use(ignoreFavicon);
 
 app.get('/robots.txt',  (req, res) => {
   res.type('text/plain');
-  res.send("User-agent: *\nDisallow: /");
+  res.send("User-agent: *\n" +
+    "Disallow: \n" +
+    "Disallow: /cgi-bin/");
 });
 
 app.get('/api/cache-stats', async (req, res) => {

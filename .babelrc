@@ -4,12 +4,12 @@
     "@babel/preset-react"
   ],
   "plugins": [
-    "@babel/plugin-proposal-class-properties", "@babel/plugin-transform-runtime", "emotion"
+    "@babel/plugin-proposal-class-properties", "@babel/plugin-transform-runtime",
   ],
   "env": {
     "production": {
       "plugins": [
-        "transform-react-remove-prop-types", "emotion"
+        "transform-react-remove-prop-types", "@babel/plugin-syntax-dynamic-import"
       ]
     }
   }

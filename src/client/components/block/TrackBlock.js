@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Grid } from 'semantic-ui-react';
 import {fetchDataWiki} from '../../actions'
+
 class TrackBlock extends Component {
   state = {
     rendered: false,
@@ -48,3 +49,4 @@ const mapStateToProps = state => ({
   navigation: state.navigation
 });
 export default connect(mapStateToProps)(TrackBlock);
+
