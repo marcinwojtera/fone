@@ -43,7 +43,7 @@ function ignoreFavicon(req, res, next) {
 }
 app.use(
   compression({
-    level: 7, // set compression level from 1 to 9 (6 by default)
+    level: 9, // set compression level from 1 to 9 (6 by default)
     filter: shouldCompress, // set predicate to determine whether to compress
   }),
 );

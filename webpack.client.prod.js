@@ -21,6 +21,8 @@ const config = {
   },
   entry: {
     client: './src/client/client.js',
+    pitStop: ['./src/client/components/block/PitStops.js'],
+    statsElements: ['./src/client/components/block/StatsElements.js'],
     vendor: ['core-js', 'react', 'react-dom', 'redux', 'semantic-ui-css', 'semantic-ui-react'],
   },
   output: {
@@ -45,9 +47,21 @@ const config = {
           reuseExistingChunk: true,
         },
         vendor: {
-          chunks: 'initial',
+          chunks: 'all',
           name: 'vendor',
           test: 'vendor',
+          enforce: true
+        },
+        pitStop: {
+          chunks: 'all',
+          name: 'pitStop',
+          test: 'pitStop',
+          enforce: true
+        },
+        statsElements: {
+          chunks: 'all',
+          name: 'statsElements',
+          test: 'statsElements',
           enforce: true
         },
       }
@@ -59,6 +73,7 @@ const config = {
       new TerserPlugin({
         cache: true,
         parallel: true,
+        extractComments: 'all',
       }),
       new OptimizeCssAssetsPlugin({
         cssProcessorPluginOptions: {
@@ -74,7 +89,8 @@ const config = {
       asset: '[path].br[query]',
       test: /\.(js|css|html|svg)$/,
       threshold: 10240,
-      minRatio: 0.8
+      minRatio: 0.8,
+      quality: 15,
     }),
     new webpack.DefinePlugin({
       'process.env': {
