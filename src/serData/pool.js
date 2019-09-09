@@ -24,6 +24,9 @@ const composeEnhancers = composeWithDevTools({ port: 3002 });
 export const backstore = createStore(backreducers, data, composeEnhancers(applyMiddleware(thunk)));
 
 export const loadData = ()  => {
+  //
+  // const years = [2019];
+  // backstore.dispatch(fetchData(years));
 
   if (!develop) {
     const years = [2019, 2018, 2017];

@@ -37,9 +37,7 @@ class RaceTimming extends Component {
           </div>
 
             {map(this.props.seasonQualify, (z, d) => {
-              //
               return (
-
                 <div className="timming-row" key={`${z.Driver.driverId}-${d}`}>
                   {this.props.stats.map((x, i) => {
                     let gap = '';

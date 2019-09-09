@@ -41,6 +41,7 @@ export const prepareAns = (year = getCurrentYear(), season = 1) => {
   const data = {
     data: {
       seasonConstructors: backstore.getState().constructors[year || getCurrentYear()],
+      statusesPerRace: filterDataBySeason(backstore.getState().statusesPerRace[year || getCurrentYear()], season),
       constructorsPerRace: filterDataBySeason(backstore.getState().constructorsPerRace[year || getCurrentYear()], season),
       seasonsDrivers: backstore.getState().drivers[year || getCurrentYear()],
       seasonsDriversList: filterDataBySeason(backstore.getState().driversList[year || getCurrentYear()], season),

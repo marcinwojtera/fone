@@ -7,6 +7,7 @@ import { loadDriverPerRace } from './loadDriverPerRace';
 import { loadPits } from './loadPitStops';
 import { loadConstructorsPerRace } from './loadConstructorsPerRace';
 import { loadConstructors } from './loadConstructors';
+import { loadRaceStatuses } from './loadRaceStatuses';
 import { startServer } from '../../index'
 const wait = require('wait-for-stuff');
 
@@ -22,6 +23,7 @@ export const fetchByYears = (years) => dispatch =>{
     dispatch(loadPits(x));
     dispatch(loadRace(x));
     dispatch(loadDriverPerRace(x));
+    dispatch(loadRaceStatuses(x));
   })
 }
 

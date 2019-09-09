@@ -7,8 +7,16 @@ import { BACK_FETCH_DRIVER } from '../actions/loadDriverPerRace';
 import { BACK_FETCH_PITS } from '../actions/loadPitStops';
 import { BACK_FETCH_CONSTRUCTORS_PER_RACE } from '../actions/loadConstructorsPerRace';
 import { BACK_FETCH_CONSTRUCTORS } from '../actions/loadConstructors';
+import { BACK_FETCH_RACE_STATUSES_PER_RACE } from '../actions/loadRaceStatuses';
 
-
+export const backStatusesPerRace = (state = {}, action) => {
+  switch (action.type) {
+    case BACK_FETCH_RACE_STATUSES_PER_RACE:
+      return { ...state, ...{ [action.payload.year]: action.payload.values } };
+    default:
+      return state;
+  }
+};
 export const backConstructors = (state = {}, action) => {
   switch (action.type) {
     case BACK_FETCH_CONSTRUCTORS:

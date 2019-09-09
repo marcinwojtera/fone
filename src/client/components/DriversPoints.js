@@ -8,6 +8,7 @@ import DriverPointBlock from "./block/DriverPointBlock";
 import RaceTimming from './block/RaceTimming';
 import ConstructorsPointBlock from './block/ConstructorsPointBlock'
 import PitStops from './block/PitStops'
+import StatsElements from './block/StatsElements'
 import { Tab, Dimmer, Header, Icon,  Segment } from 'semantic-ui-react'
 import { Helmet } from 'react-helmet'
 
@@ -16,6 +17,7 @@ const panes = [
   { menuItem: { key: 'Qualify', icon: 'flag checkered', content: 'Qualify' }, render: () => <Tab.Pane> <QualifyBlock /></Tab.Pane> },
   { menuItem: { key: 'Pit Stops', icon: 'wait', content: 'Pit Stops' }, render: () => <Tab.Pane> <PitStops /></Tab.Pane> },
   { menuItem: { key: 'RaceTimming', icon: 'line graph', content: 'Race timming' }, render: () => <Tab.Pane> <RaceTimming /></Tab.Pane> },
+  { menuItem: { key: 'RaceGraph', icon: 'line graph', content: 'Race graph' }, render: () => <Tab.Pane> <StatsElements /></Tab.Pane> },
   { menuItem: 'Track info', render: () => <Tab.Pane><TrackBlock /></Tab.Pane> },
 
   // { menuItem: { key: 'MyResponsiveLine', icon: 'line graph', content: 'Driver points per year' }, render: () => <Tab.Pane> <MyResponsiveLine /></Tab.Pane> },
@@ -47,6 +49,9 @@ class DriversPoints extends Component {
               <Grid.Column width={11}>
                 <Tab panes={panes} />
               </Grid.Column>
+              {/*<Grid.Column width={3}>*/}
+              {/*  <StatsElements />*/}
+              {/*</Grid.Column>*/}
               <Grid.Column width={5}>
                 <Tab panes={panesMap} />
               </Grid.Column>

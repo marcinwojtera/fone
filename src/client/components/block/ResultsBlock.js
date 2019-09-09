@@ -9,16 +9,18 @@ class QualifyBlock extends Component {
   }
 
   render() {
+
     return (
       <div>
         <Grid celled='internally'>
           <Grid.Row>
             <Grid.Column width={16}>
+
+
               <Table striped color='purple' selectable>
                 <Table.Header>
                   <Table.Row>
                     <Table.HeaderCell style={{width:60}}>Place</Table.HeaderCell>
-                    <Table.HeaderCell style={{width:60}}>Laps</Table.HeaderCell>
                     <Table.HeaderCell style={{width:60}}>Points</Table.HeaderCell>
                     <Table.HeaderCell>Driver</Table.HeaderCell>
                     <Table.HeaderCell>Grid</Table.HeaderCell>
@@ -41,7 +43,7 @@ class QualifyBlock extends Component {
                             <b>{x.position}</b>
                           </span>}
                       </Table.Cell>
-                      <Table.Cell>{x.laps}</Table.Cell>
+                      {/*<Table.Cell>{x.laps}</Table.Cell>*/}
                       <Table.Cell>{x.points !== '0' ? <span>+{x.points}</span> : <span>0</span>}</Table.Cell>
                       <Table.Cell><DriverRow driver={x.Driver.driverId}/></Table.Cell>
                       <Table.Cell>{x.grid}</Table.Cell>
