@@ -23,8 +23,8 @@
   "author": "ilker ALTIN",
   "license": "ISC",
   "dependencies": {
-    "@babel/polyfill": "^7.6.0",
     "@nivo/bump": "^0.59.1",
+    "@nivo/axes": "^0.59.2",
     "axios": "0.18.0",
     "core-js": "3.1.4",
     "fetch": "^1.1.0",

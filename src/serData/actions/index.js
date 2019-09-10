@@ -22,7 +22,7 @@ export const fetchByYears = (years) => dispatch =>{
     dispatch(loadQualify(x));
     dispatch(loadPits(x));
     dispatch(loadRace(x));
-    dispatch(loadDriverPerRace(x));
+    // dispatch(loadDriverPerRace(x));
     dispatch(loadRaceStatuses(x));
   })
 }
