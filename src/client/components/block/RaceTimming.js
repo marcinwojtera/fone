@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Icon } from 'semantic-ui-react';
 import { Helmet } from "react-helmet";
-import map  from 'lodash/map';
+import { map }  from 'lodash';
 
 class RaceTimming extends Component {
   state = {
@@ -50,7 +50,6 @@ class RaceTimming extends Component {
                           <span className={gap > 0 ? "plus" : "minus"}>{gap > 0 ? <span> {gap}</span> : <span> {gap}</span>}
                             {gap > 0 ? <Icon name={gap > 1 ? "angle double up" :"angle up"}/> :
                               <Icon name={gap < 1 ? "angle double down" :"angle down"}/>}
-
                           </span>{gap > 0 ? <div className="green-box" /> : <div className="red-box"/> }
                       </span>)
                     }

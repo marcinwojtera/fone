@@ -1,5 +1,5 @@
 import { loadRace } from './loadResults';
-import { BACK_FETCH_DRIVER_STANDINGS, loadDriver } from './loadDriver'
+import { loadDriverStandings } from './loadDriverStandings'
 import { loadQualify } from './loadQualify';
 import { BACK_YEARS_SEASONS, loadSeasons } from './loadSeasons'
 import { loadStats } from './loadStats';
@@ -17,7 +17,7 @@ export const fetchByYears = (years) => dispatch =>{
     wait.for.time(1);
     dispatch(loadConstructorsPerRace(x))
     dispatch(loadConstructors(x))
-    dispatch(loadDriver(x));
+    dispatch(loadDriverStandings(x));
     dispatch(loadSeasons(x));
     dispatch(loadQualify(x));
     dispatch(loadPits(x));

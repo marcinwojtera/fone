@@ -5,6 +5,9 @@ import { Provider } from 'react-redux';
 import { resolveAssets } from './assets';
 import renderHtml from './template';
 import App from '../client/App';
+
+
+
 export default (req, store, context, statsFile) => {
 
   const html = renderHtml({

@@ -27,7 +27,7 @@ class PitStops extends Component {
 
                 <Table.Body>
                   {this.props.seasonsPitStop.map(x => (
-                    <Table.Row key={x.time+'-' +this.props.season}>
+                    <Table.Row key={x.time+'-'+x.driverId+this.props.season}>
                       <Table.Cell><b>{x.lap} </b></Table.Cell>
                       <Table.Cell><DriverRow driver={x.driverId}/></Table.Cell>
                       <Table.Cell>{x.stop}</Table.Cell>

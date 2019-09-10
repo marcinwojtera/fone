@@ -22,7 +22,7 @@ const config = {
   entry: {
     client: './src/client/client.js',
     pitStop: ['./src/client/components/block/PitStops.js'],
-    statsElements: ['./src/client/components/block/StatsElements.js'],
+    statsElements: ['./src/client/components/block/StatsElements.js', '@nivo/bump'],
     vendor: ['core-js', 'react', 'react-dom', 'redux', 'semantic-ui-css', 'semantic-ui-react'],
   },
   output: {
@@ -73,7 +73,6 @@ const config = {
       new TerserPlugin({
         cache: true,
         parallel: true,
-        extractComments: 'all',
       }),
       new OptimizeCssAssetsPlugin({
         cssProcessorPluginOptions: {

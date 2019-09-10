@@ -23,7 +23,7 @@ export const loadRaceStatuses = year => (dispatch) => {
       console.log(err)
     });
 
-  for (let i =  1; i < 22; i++) {
+  for (let i =  1; i < 1; i++) {
     wait.for.time(0.1);
     fetchStatuses(i)
   }

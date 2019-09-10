@@ -19,7 +19,6 @@ const template = `
                   docHead.appendChild(newLink);
                   window.__PRELOADED_STATE__ = <%- JSON.stringify(state) -%>;
                  </script>
-           
                <title>F1 statistics</title>
              </head>
             <body>
@@ -27,12 +26,10 @@ const template = `
                   <script>
                  let js = "<%= js %>";
                  var script = js.split(',');
-                 console.log(script)
-          
                  script.forEach(function(elem){
                    let chunk = document.createElement('script');
                    chunk.async = true;
-                   // chunk.defer = true;
+                   chunk.defer = true;
                    chunk.src = "../../"+elem;
                    document.head.appendChild(chunk);
                  });

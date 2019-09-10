@@ -23,7 +23,7 @@ export const loadDriverPerRace = year => (dispatch, getState) => {
     })
     .catch(err => console.log(err));
 
-  for (let i =  1; i < 20; i++) {
+  for (let i =  1; i < 1; i++) {
     wait.for.time(0.2);
     fetchDrivers(i)
   }

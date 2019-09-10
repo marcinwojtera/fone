@@ -18,15 +18,15 @@ export class DriverRow extends Component {
     this.setState( { open: false })
   }
   render() {
-    const { driversList, driver } = this.props
+    const { seasonsDrivers, driver } = this.props
     return (
       <div className="driver-box">
         <span className="info">
-          {driversList[driver].Driver.givenName} {driversList[driver].Driver.familyName}
-          <small><i> ({driversList[driver].number || driversList[driver].Driver.permanentNumber})
-            <small> {driversList[driver].Driver.code}</small></i></small>
+          {seasonsDrivers[driver].Driver.givenName} {seasonsDrivers[driver].Driver.familyName}
+          <small><i> ({seasonsDrivers[driver].number || seasonsDrivers[driver].Driver.permanentNumber})
+            <small> {seasonsDrivers[driver].Driver.code}</small></i></small>
         </span>
-        <span className="constructor-box">{driversList[driver].Constructors[0].name}</span>
+        <span className="constructor-box">{seasonsDrivers[driver].Constructors[0].name}</span>
       {this.state.open && <ModalDriver close={this.closeModal} open={this.state.open} data={<WikiData data={this.state.text}/>}/>}
     </div>
     );
@@ -35,7 +35,7 @@ export class DriverRow extends Component {
 
 const mapStateToProps = state => ({
   selectedTrack: state.selectedTrack,
-  driversList: state.data.driversList
+  seasonsDrivers: state.data.seasonsDrivers
 });
 export default connect(mapStateToProps)(DriverRow);
 

@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Grid } from 'semantic-ui-react';
-import { Table } from 'semantic-ui-react'
+import { Grid, Table } from 'semantic-ui-react';
 import DriverRow from "./DriverRow";
+import { map } from 'lodash'
 
 class DriverPointBlock extends Component {
   state = {
@@ -24,7 +24,7 @@ class DriverPointBlock extends Component {
                   </Table.Row>
                 </Table.Header>
                 <Table.Body>
-                  {this.props.seasonsDrivers.map(x => (
+                  {map(this.props.seasonsDrivers, x => (
                     <Table.Row key={x.position +'-' +this.props.season}>
                       <Table.Cell>{x.points} </Table.Cell>
                       <Table.Cell><DriverRow driver={x.Driver.driverId}/></Table.Cell>

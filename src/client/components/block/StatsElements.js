@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { ResponsiveBump } from '@nivo/bump'
-import map from 'lodash/map'
+import { map } from 'lodash'
 
 class StatsElements extends Component {
   state = {

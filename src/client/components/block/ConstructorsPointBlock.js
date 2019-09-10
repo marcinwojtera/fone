@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Grid } from 'semantic-ui-react';
-import { Table } from 'semantic-ui-react'
-import DriverRow from "./DriverRow";
+import { Grid, Table } from 'semantic-ui-react';
 
 class ConstructorsPointBlock extends Component {
   state = {

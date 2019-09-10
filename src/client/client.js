@@ -1,8 +1,8 @@
 /* eslint-disable no-underscore-dangle */
 // Startup point for client-side application
 
-import '@babel/core';
-// import '@babel/polyfill';
+// import '@babel/core';
+import '@babel/polyfill';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
@@ -11,7 +11,6 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
 import reducers from './reducers';
-// import Routes from './Routes';
 import App from './App';
 
 const state = window.__PRELOADED_STATE__;

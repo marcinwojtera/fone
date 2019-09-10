@@ -14,24 +14,28 @@ const develop = process.env.PORT ? false : true;
 
 let data = {};
 
-if (develop) {
-  const dataJson = fs.readFileSync(path.resolve(`./build/jsons/response.json`));
-  data =  JSON.parse(dataJson)
-  const jsonDataLoad = require(`./response.json`);
-}
+// if (develop) {
+//   const dataJson = fs.readFileSync(path.resolve(`./build/jsons/response.json`));
+//   data =  JSON.parse(dataJson)
+//   const jsonDataLoad = require(`./response.json`);
+// }
 
 const composeEnhancers = composeWithDevTools({ port: 3002 });
 export const backstore = createStore(backreducers, data, composeEnhancers(applyMiddleware(thunk)));
 
 export const loadData = ()  => {
-  //
-  // const years = [2019];
-  // backstore.dispatch(fetchData(years));
 
-  if (!develop) {
-    const years = [2019, 2018, 2017];
-    backstore.dispatch(fetchData(years));
-  } else {
-    startServer();
-  }
+  const years = [2019];
+  backstore.dispatch(fetchData(years));
+
+
+  //
+  // if (!develop) {
+  //   const years = [2019, 2018, 2017];
+  //   backstore.dispatch(fetchData(years));
+  // } else {
+  //   startServer();
+  // }
+
+
 };
