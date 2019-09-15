@@ -25,12 +25,12 @@ export const backstore = createStore(backreducers, data, composeEnhancers(applyM
 
 export const loadData = ()  => {
 
-  // const years = [2019,2018,2017,2016,2015,2014,2013,2012,2011,2010];
+  // const years = [2019,2018,2017,2016,2015,2014,2013,2012,2011];
   // backstore.dispatch(fetchData(years));
 
 
   if (!develop) {
-    const years = [2019, 2018, 2017];
+    const years = [2019,2018,2017,2016,2015,2014,2013,2012,2011];
     backstore.dispatch(fetchData(years));
   } else {
     startServer();
