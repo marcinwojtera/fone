@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {withRouter} from "react-router-dom";
-import { Dimmer, Grid, Button, Tab, Segment } from 'semantic-ui-react'
+import { Dimmer, Grid, Header, Icon, Segment } from 'semantic-ui-react'
 import UrlWrapper from '../urlWrapper'
 import LeftPanel from '../components/LeftPanel'
+import DriverHistory from '../components/DriverHistory'
 
 class Driver extends Component {
-
   render() {
     return (
       <div>
@@ -14,7 +14,7 @@ class Driver extends Component {
         <Grid celled='internally'>
           <Grid.Row>
             <Grid.Column width={11}>
-              {this.props.driverId}
+              {this.props.driverId && <DriverHistory />}
             </Grid.Column>
             <Grid.Column width={5}>
                <LeftPanel />
@@ -28,7 +28,6 @@ class Driver extends Component {
 }
 
 const mapStateToProps = state => ({
-  seasonsDrivers: state.data.seasonsDrivers,
   driverId: state.navigation.driver,
 });
 export default withRouter(UrlWrapper(connect(mapStateToProps)(Driver)));

@@ -109,9 +109,10 @@ class Header extends React.Component {
                   to={`/driver/${x.Driver.driverId}/${this.props.year}`}
                 >
                   <div key={x.raceName} >
-                      <span className={"driver-box " + (this.props.selectedDriver === x.Driver.driverId && 'selected')}>
+                      <span className={"driver-box " + (this.props.selectedDriver === x.Driver.driverId ? 'selected' : '')}>
                       {x.Driver.familyName} {x.Driver.givenName}
                     </span>
+                    <small className="driver-info">{x.Constructors[0].name}</small>
                   </div> </Link>
               )
           })}

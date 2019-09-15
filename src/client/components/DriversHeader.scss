@@ -3,5 +3,15 @@
 
   &.selected {
     font-weight: bold;
+
+    .driver-info {
+      font-weight: bold;
+    }
   }
+}
+
+.driver-info {
+  display: block;
+  font-size: 9px;
+  color: #dc287f;
 }
