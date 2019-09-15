@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {withRouter} from "react-router-dom";
-import { Dimmer, Grid, Header, Icon, Segment } from 'semantic-ui-react'
+import { Dimmer, Grid, Segment } from 'semantic-ui-react'
 import UrlWrapper from '../urlWrapper'
 import LeftPanel from '../components/LeftPanel'
 import DriverHistory from '../components/DriverHistory'
