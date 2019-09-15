@@ -4,7 +4,7 @@ import { withRouter } from 'react-router';
 import {connect} from "react-redux";
 
 export class MenuComponent extends Component {
-  state = { activeItem: '2019' }
+  state = { activeItem: this.props.year }
 
   handleItemClick = (e, { name }) => {
     this.props.history.push(`/race/${name}/1`)

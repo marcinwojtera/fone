@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import DriversPoints from '../components/DriversPoints';
-import UrlWrapper from './urlWrapper';
 import {withRouter} from "react-router-dom";
+import UrlWrapper from '../urlWrapper'
 
 class Race extends Component {
 
@@ -18,5 +18,5 @@ class Race extends Component {
 const mapStateToProps = state => ({
   seasonsResults: state.data.seasonsResults,
 });
-
 export default withRouter(UrlWrapper(connect(mapStateToProps)(Race)));
+

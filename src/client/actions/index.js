@@ -1,21 +1,40 @@
 import axios from 'axios';
 
 export const FETCH_DATA = 'FETCH_DATA';
-export const CHANGE_URL = 'CHANGE_URL';
+export const FETCH_DRIVER_DATA = 'FETCH_DRIVER_DATA';
 
-export const fetchData = (navigation) => (dispatch) => {
+export const fetchData = (params, pathname) => (dispatch, getState) => {
 
-  const getData = axios.get(`/api/race/${navigation.year}/${navigation.season}`)
+  const getData = axios.get(`/api${pathname}`)
     .then(rest => rest.data);
-
+  // const navigation = {params, pathname}
   Promise.all([getData]).then(values => {
     dispatch({
       type: FETCH_DATA,
-      payload: {data: values[0].data, navigation: navigation, selectedTrack: values[0].selectedTrack },
+      payload: {
+        data: values[0].data,
+        navigation: values[0].navigation,
+        driverHistory: values[0].driverHistory,
+        selectedTrack: values[0].selectedTrack
+      },
     });
   });
-  // dispatch(fetchDataWiki(navigation))
 };
+
+//
+// export const fetchDriverHistory = (driverId) => {
+//   const getData = axios.get(`/api/driver${driverId}`)
+//     .then(rest => rest.data);
+//   Promise.all([getData]).then(values => {
+//     console.log(values)
+//     dispatch({
+//       type: FETCH_DRIVER_DATA,
+//       payload: values,
+//     });
+//   });
+//
+// }
+
 
 export const fetchDataWiki = (navigation) => (dispatch, getState) => {
 
@@ -41,4 +60,4 @@ export const fetchDataWiki = (navigation) => (dispatch, getState) => {
   // });
 };
 
-export const changeUrl = (navigation) =>  dispatch => dispatch(fetchData(navigation))
+export const changeUrl = (params, pathname) =>  dispatch => dispatch(fetchData(params, pathname))

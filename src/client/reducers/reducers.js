@@ -1,32 +1,36 @@
-import { FETCH_DATA, CHANGE_URL } from '../actions/index';
+import { FETCH_DATA, FETCH_DRIVER_DATA } from '../actions/index';
 
 export const loadedData = (state = [], action) => {
   switch (action.type) {
     case FETCH_DATA:
-      return action.payload.data;
+      return {...state.data, ...action.payload.data};
+    default:
+      return state;
+  }
+};
+export const driverHistory = (state = [], action) => {
+  switch (action.type) {
+    case FETCH_DATA:
+      return {...state.driverHistory, ...action.payload.driverHistory};
     default:
       return state;
   }
 };
 
-const navigationInitialState = {
-  page: '/',
-  year: 2019,
-  season: 1
-}
-export const navigation = (state = navigationInitialState, action) => {
+export const navigation = (state = {}, action) => {
   switch (action.type) {
     case FETCH_DATA:
-      return action.payload.navigation;
+      console.log(action.payload.navigation)
+      return {...state.navigation, ...action.payload.navigation};
     default:
       return state;
   }
 };
 
-export const selectedTrack = (state = null, action) => {
+export const selectedTrack = (state = {}, action) => {
   switch (action.type) {
     case FETCH_DATA:
-      return action.payload.selectedTrack;
+      return {...state.selectedTrack, ...action.payload.selectedTrack};
     default:
       return state;
   }

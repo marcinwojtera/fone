@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { backStatusesPerRace, backConstructorsPerRace, backConstructors, backPitStop, backSeasons, backDriverList, backRaceResults, backQualifyList, backYears, backStatsBySeason, loadInfo } from './reducers';
+import { backDriverHistory, backStatusesPerRace, backConstructorsPerRace, backConstructors, backPitStop, backSeasons, backDriverList, backRaceResults, backQualifyList, backYears, backStatsBySeason, loadInfo } from './reducers';
 
 // export default combineReducers(JSON.parse(json));
 export default combineReducers({

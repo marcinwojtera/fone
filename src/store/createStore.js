@@ -3,17 +3,14 @@ import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import reducers from '../client/reducers';
 import { backstore } from '../serData/pool';
-import { map, filter, merge } from 'lodash'
+import { filter } from 'lodash'
 const _ = require('lodash/core');
-
-export const getCurrentYear = () => new Date().getFullYear();
 
 export const filterPitStops = (data, season) => {
 
   if (season) {
     const driverData = _.filter(data, {season: parseInt(season, 10)} )[0]
     return driverData ? driverData.data : [] ;
-    //;
   }
   return data;
 };
@@ -30,64 +27,59 @@ export const filterDataBySeason = (data, season) => {
   if (season) {
     const driverData = _.filter(data, {season: parseInt(season, 10)} )[0]
       return driverData ? driverData.data : [] ;
-    //;
   }
   return data;
 };
 
-export const loadHistoricalResults = (year)=> {
-//loadResultsForDrivers()
-//   return backstore.getState().drivers[year].map(x => loadResultsForDrivers(x.Driver.driverId)  )
-  // return driversList.map((driver, id) => loadResultsForDrivers(id))
-}
-export const prepareAns = (year = getCurrentYear(), season = 1) => {
-  const driversList = {}
-  // backstore.getState().drivers[year || getCurrentYear()].map(x => driversList[[x.Driver.driverId]]= x)
+export const prepareAns = (year, season, pathname, driver) => {
+  const getSeason = !season ? 1 : season;
+  const getYear = !year ? new Date().getFullYear() : year;
   const data = {
     data: {
-      seasonConstructors: backstore.getState().constructors[year || getCurrentYear()],
-      statusesPerRace: filterDataBySeason(backstore.getState().statusesPerRace[year || getCurrentYear()], season),
-      constructorsPerRace: filterDataBySeason(backstore.getState().constructorsPerRace[year || getCurrentYear()], season),
-      seasonsDrivers: backstore.getState().seasonsDrivers[year || getCurrentYear()],
+      seasonConstructors: backstore.getState().constructors[getYear],
+      statusesPerRace: filterDataBySeason(backstore.getState().statusesPerRace[getYear], getSeason),
+      constructorsPerRace: filterDataBySeason(backstore.getState().constructorsPerRace[getYear], getSeason),
+      seasonsDrivers: backstore.getState().seasonsDrivers[getYear],
       //seasonsDriversList: filterDataBySeason(backstore.getState().driversList[year || getCurrentYear()], season),
-      seasonsList: backstore.getState().seasons[year || getCurrentYear()],
-      seasonQualify: filterData(backstore.getState().qualify[year || getCurrentYear()], season),
-      seasonsResults: filterData(backstore.getState().seasonsResults[year || getCurrentYear()], season),
-      seasonsPitStop: filterPitStops(backstore.getState().pitStop[year || getCurrentYear()], season),
+      seasonsList: backstore.getState().seasons[getYear],
+      seasonQualify: filterData(backstore.getState().qualify[getYear], getSeason),
+      seasonsResults: filterData(backstore.getState().seasonsResults[getYear], getSeason),
+      seasonsPitStop: filterPitStops(backstore.getState().pitStop[getYear], getSeason),
       seasonsYears: backstore.getState().seasonsYear,
-      statsBySeason: filterData(backstore.getState().stats[year || getCurrentYear()], season),
+      statsBySeason: filterData(backstore.getState().stats[getYear], getSeason),
       loadInfo: backstore.getState().loadInfo,
-      historicalResults: loadHistoricalResults(year || getCurrentYear())
     },
     navigation: {
-     season, year
+     season: getSeason, year: getYear, pathname, driver
     },
-    selectedTrack: backstore.getState().seasons[year || getCurrentYear()][season -1]
+    selectedTrack: backstore.getState().seasons[getYear][getSeason -1],
+    driverHistory: driver ? loadResultsForDrivers(driver): []
   };
 
   return data;
 };
 
-
 export const loadResultsForDrivers = (driver) => {
-  const results = backstore.getState().results;
+  const results = backstore.getState().seasonsResults;
 
   const years = backstore.getState().seasonsYear;
-  const driverInYears = {}
+  const driverHistory = {}
   years.map(year => {
     const drivers = [];
     results[year].map((data, season) => {
-      const foundDriver = data.Results.filter(x=>  x.Driver.driverId === driver)
-        if (foundDriver.length >0) {
-          drivers.push({season: season+1, data: foundDriver})
-        }
+        const seasonByKey = season + 1
+        const foundDriver = data.Results.filter(x=>  x.Driver.driverId === driver);
+        const circuit = filter(backstore.getState().seasons[year], { 'round': seasonByKey.toString() } )
+        if (foundDriver.length >0) drivers.push({season: seasonByKey, data: foundDriver[0], circuit: circuit[0] });
       }
+
     )
-    driverInYears[year] = drivers.length>0 ? drivers : false
+    driverHistory[year] = drivers.length>0 ? drivers : false
   })
 
-  return driverInYears
-
+  return driverHistory
 };
 
-export const initialLoads = (year, season) => createStore(reducers, prepareAns(year, season), applyMiddleware(thunk));
+
+export const initialLoads = (year, season, pathname, driver) => createStore(reducers, prepareAns(year, season, pathname, driver), applyMiddleware(thunk));
+

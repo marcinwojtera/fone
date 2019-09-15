@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import Slider from 'react-slick';
-import { Icon } from 'semantic-ui-react'
+import { Button, Icon } from 'semantic-ui-react'
+import DriversHeader from './DriversHeader'
 
 const SampleNextArrow = (props) => {
   const { className, style, onClick } = props;
@@ -35,7 +36,7 @@ class Header extends React.Component {
   render() {
     const settings = {
       dots: false,
-      infinite: true,
+      infinite: false,
       // centerPadding: "60px",
       speed: 500,
       slidesToShow: 7,
@@ -105,17 +106,18 @@ class Header extends React.Component {
               to={`/race/${x.season}/${x.round}`}
             >
               <div key={x.raceName} >
-                <span className="round">{x.round}</span>
                 <h5>{x.raceName}{' '}</h5>
 
                 <small>
                   {x.Circuit.circuitName}
                 </small>
-                <span className="round-place">  {x.date} <Icon name='map marker alternate' /> {x.Circuit.Location.locality}</span>
-                {this.props.selectedSeason === x.round && <span className="round-see"><Icon name="caret up" /></span>}
+                {this.props.selectedSeason === x.round && <span className="round-see"><Icon name="caret down" /></span>}
             </div> </Link>
           ))}
         </Slider>
+
+        <DriversHeader />
+
       </div>
     );
   }

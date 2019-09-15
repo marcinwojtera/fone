@@ -19,8 +19,6 @@ const panes = [
   { menuItem: { key: 'RaceTimming', icon: 'line graph', content: 'Race timming' }, render: () => <Tab.Pane> <RaceTimming /></Tab.Pane> },
   { menuItem: { key: 'RaceGraph', icon: 'line graph', content: 'Race graph' }, render: () => <Tab.Pane> <StatsElements /></Tab.Pane> },
   { menuItem: 'Track info', render: () => <Tab.Pane><TrackBlock /></Tab.Pane> },
-
-  // { menuItem: { key: 'MyResponsiveLine', icon: 'line graph', content: 'Driver points per year' }, render: () => <Tab.Pane> <MyResponsiveLine /></Tab.Pane> },
 ]
 const panesMap = [
   { menuItem: { key: 'Driver points', icon: 'area graph', content: 'Driver points' }, render: () => <Tab.Pane> <DriverPointBlock /></Tab.Pane> },
@@ -49,9 +47,6 @@ class DriversPoints extends Component {
               <Grid.Column width={11}>
                 <Tab panes={panes} />
               </Grid.Column>
-              {/*<Grid.Column width={3}>*/}
-              {/*  <StatsElements />*/}
-              {/*</Grid.Column>*/}
               <Grid.Column width={5}>
                 <Tab panes={panesMap} />
               </Grid.Column>

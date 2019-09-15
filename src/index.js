@@ -133,14 +133,32 @@ app.get(
   '/api/race/:year/:season',
   cache(1000),
   (req, res) => {
-    res.json(prepareAns(req.params.year, req.params.season));
+    const { season, year } = req.params;
+    const path = `/race/${year}/${season}`
+      res.json(prepareAns(req.params.year, req.params.season, path));
   },
 );
+app.get('/api/driver/:driverId/:year', (req, res) => {
+  const { driverId, year } = req.params;
+  const path = `/driver/${driverId}/${year}`
+  res.send(prepareAns(year, req.params.season, path, driverId));
+});
 
 app.get('/race/:year/:season',
   cache(1000),
   async (req, res) => {
-  const store = initialLoads(req.params.year, req.params.season, req.params.page);
+    loadHtml(req, res)
+});
+
+const loadHtml = (req, res) => {
+  const driver = req.path.includes("driver");
+  let driverId = null;
+  let year = 2019;
+  if (driver) {
+     driverId = req.path.split('/')[2];
+     year = req.path.split('/')[3];
+  }
+  const store = initialLoads(year, req.params.season, req.path, driverId);
   const statsFile = fs.readFileSync('public/stats.json', 'utf8');
   const context = {};
   const content = renderer(req, store, context, statsFile);
@@ -149,18 +167,9 @@ app.get('/race/:year/:season',
     res.status(404);
   }
   res.send(content);
-});
-
+}
 app.get('*', async (req, res) => {
-  const store = initialLoads();
-  const statsFile = fs.readFileSync('public/stats.json', 'utf8');
-  const context = {};
-  const content =  renderer(req, store, context, statsFile);
-
-  if (context.notFound) {
-    res.status(404);
-  }
-  res.send(content);
+  loadHtml(req, res)
 });
 
 export const startServer = async () =>{

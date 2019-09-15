@@ -1,28 +1,31 @@
 import React, { Component } from 'react';
-import { Route } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import { withRouter, matchPath } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import ErrorBoundary from './components/ErrorBoundry';
 import Header from './components/Header';
 import MenuComponent from './components/Menu';
 import HomePage from './pages/HomePage';
 import Race from './pages/Race';
-import './app.scss';
+import Driver from './pages/Driver';
 
+import './app.scss';
 
 class App extends Component {
 
   render() {
     return (
       <div className="app-container">
-
           <div>
             <MenuComponent />
             <Header />
             <ErrorBoundary>
+              <Switch>
               <Route exact path="/" component={HomePage} />
-              <Route path="/race/:year/:season/:tab?"  component={Race} />
+              <Route path="/driver/:driverId"  component={Driver} />
+              <Route path="/race/:year/:season"  component={Race} />
+              </Switch>
             </ErrorBoundary>
           </div>
       </div>
@@ -41,6 +44,5 @@ App.defaultProps = {
 const mapStateToProps = state => ({
   navigation: state.navigation,
 });
-// export default connect(mapStateToProps)(UrlWrapper(Race))
 
 export default withRouter(connect(mapStateToProps)(App));
