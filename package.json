@@ -25,6 +25,7 @@
   "dependencies": {
     "@nivo/axes": "^0.59.2",
     "@nivo/bump": "^0.59.1",
+    "@nivo/line": "^0.59.3",
     "axios": "0.18.0",
     "core-js": "^3.2.1",
     "fetch": "^1.1.0",

@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { map, forEach } from 'lodash'
-import { Statistic, Header, Icon, Label, Menu, Segment, Table } from 'semantic-ui-react'
-
+import { Dimmer, Grid, Header, Icon, Label, Menu, Segment, List, Table } from 'semantic-ui-react'
+import Statistics from './driverHistory/Statistics'
+import DriverChart from './driverHistory/DriverChart'
 
 class DriverHistory extends Component {
 
@@ -60,10 +61,8 @@ const stats = this.statistics()
   const seasons = this.props.driverHistory[this.state.activeItem] || [];
     return (
       <div key={this.props.driverId}>
-
         <Segment>
-          <Header as='h5'>
-            <Icon name='male' />
+          <Header as='h3'>
             <Header.Content>
           <span>{this.props.seasonsDrivers.Driver.givenName}
             {this.props.seasonsDrivers.Driver.familyName}</span>
@@ -78,9 +77,40 @@ const stats = this.statistics()
             </Header.Content>
           </Header>
 
+        <Statistics stats={stats}/>
 
+          <Grid celled='internally'>
+            <Grid.Row>
+
+              <Grid.Column width={3} style={{minWidth: 200}}>
+                <div><small>
+                  <Label color={'purple'}>
+                    <strong>RETIRES</strong>
+                  </Label>
+                </small>
+                  <List>
+                    {map(stats.status, (stat, num) => {
+                      return(
+                        <List.Item key={num}>
+                          <List.Content>{stat} - {num}</List.Content>
+                        </List.Item>
+                        )
+                    })}
+                  </List>
+                 </div>
+              </Grid.Column>
+              <Grid.Column width={13} style={{background: '#fafafb'}}>
+                <small>
+                  <Label>
+                    <strong>CHART</strong>
+                  </Label>
+                  {this.props.driverHistory && <DriverChart driverHistory={this.props.driverHistory}/>}
+                </small>
+              </Grid.Column>
+
+            </Grid.Row>
+          </Grid>
           <Menu pointing secondary>
-
             {map(this.props.driverHistory, (data, year)=> (
               <Menu.Item
                 name={year}
@@ -90,43 +120,13 @@ const stats = this.statistics()
                 onClick={this.handleItemClick}
               />
             ))
-          }
+            }
           </Menu>
-
-          <Segment vertical>
-            <Statistic.Group size={'mini'} color='purple' widths={5}>
-              <Statistic>
-                <Statistic.Value>{stats.won}</Statistic.Value>
-                <Statistic.Label>Won</Statistic.Label>
-              </Statistic>
-              <Statistic>
-                <Statistic.Value>{stats.pole}</Statistic.Value>
-                <Statistic.Label>Pole position</Statistic.Label>
-              </Statistic>
-              <Statistic>
-                <Statistic.Value>{stats.second}</Statistic.Value>
-                <Statistic.Label>Second</Statistic.Label>
-              </Statistic>
-              <Statistic>
-                <Statistic.Value>{stats.third}</Statistic.Value>
-                <Statistic.Label>Third</Statistic.Label>
-              </Statistic>
-              <Statistic>
-                <Statistic.Value>{stats.ret}</Statistic.Value>
-                <Statistic.Label>Retires</Statistic.Label>
-              </Statistic>
-            </Statistic.Group>
-          </Segment>
-          <Segment vertical>
-            <div><small>RETIRES</small>: {map(stats.status, (stat, num) => {
-              return(<span><small key={num}>{num}: {stat}  |{' '}</small> </span>)
-            })}</div>
-          </Segment>
 
           <Table definition>
             <Table.Header>
               <Table.Row>
-                <Table.HeaderCell style={{width: 180}}/>
+                <Table.HeaderCell style={{width: 200}}/>
                 <Table.HeaderCell style={{width:60}}>Place</Table.HeaderCell>
                 <Table.HeaderCell style={{width:60}}>Points</Table.HeaderCell>
                 <Table.HeaderCell>Grid</Table.HeaderCell>
@@ -166,9 +166,6 @@ const stats = this.statistics()
 
             </Table.Body>
           </Table>
-
-          {/*<Tab menu={{ fluid: true, vertical: true, tabular: true }} panes={this.renderTabs()} />*/}
-
         </Segment>
       </div>
     );
@@ -185,36 +182,36 @@ const mapStateToProps = state => ({
 export default connect(mapStateToProps)(DriverHistory);
 
 
-
-
-
-<Table striped color='purple' selectable>
-  <Table.Header>
-    <Table.Row>
-      <Table.HeaderCell style={{width:60}}>Place</Table.HeaderCell>
-      <Table.HeaderCell style={{width:60}}>Points</Table.HeaderCell>
-      <Table.HeaderCell>Driver</Table.HeaderCell>
-      <Table.HeaderCell>Grid</Table.HeaderCell>
-      <Table.HeaderCell>Fastest lap</Table.HeaderCell>
-      <Table.HeaderCell>Av speed</Table.HeaderCell>
-      <Table.HeaderCell>Status</Table.HeaderCell>
-    </Table.Row>
-  </Table.Header>
-  <Table.Body>
-    <Table.Row >
-      <Table.Cell>
-        jhkjh
-      </Table.Cell>
-      <Table.Cell>kmkm</Table.Cell>
-      <Table.Cell>
-        dfdtdftdft
-      </Table.Cell>
-      <Table.Cell>2323</Table.Cell>
-      <Table.Cell>dfdfdfdf
-
-      </Table.Cell>
-      <Table.Cell><span>sdfsdf <small>km/h</small></span></Table.Cell>
-      <Table.Cell>dddd</Table.Cell>
-    </Table.Row>
-  </Table.Body>
-</Table>
+//
+//
+//
+// <Table striped color='purple' selectable>
+//   <Table.Header>
+//     <Table.Row>
+//       <Table.HeaderCell style={{width:60}}>Place</Table.HeaderCell>
+//       <Table.HeaderCell style={{width:60}}>Points</Table.HeaderCell>
+//       <Table.HeaderCell>Driver</Table.HeaderCell>
+//       <Table.HeaderCell>Grid</Table.HeaderCell>
+//       <Table.HeaderCell>Fastest lap</Table.HeaderCell>
+//       <Table.HeaderCell>Av speed</Table.HeaderCell>
+//       <Table.HeaderCell>Status</Table.HeaderCell>
+//     </Table.Row>
+//   </Table.Header>
+//   <Table.Body>
+//     <Table.Row >
+//       <Table.Cell>
+//         jhkjh
+//       </Table.Cell>
+//       <Table.Cell>kmkm</Table.Cell>
+//       <Table.Cell>
+//         dfdtdftdft
+//       </Table.Cell>
+//       <Table.Cell>2323</Table.Cell>
+//       <Table.Cell>dfdfdfdf
+//
+//       </Table.Cell>
+//       <Table.Cell><span>sdfsdf <small>km/h</small></span></Table.Cell>
+//       <Table.Cell>dddd</Table.Cell>
+//     </Table.Row>
+//   </Table.Body>
+// </Table>

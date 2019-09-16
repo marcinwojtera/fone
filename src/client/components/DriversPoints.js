@@ -17,7 +17,7 @@ const panes = [
   { menuItem: { key: 'Qualify', icon: 'flag checkered', content: 'Qualify' }, render: () => <Tab.Pane> <QualifyBlock /></Tab.Pane> },
   { menuItem: { key: 'Pit Stops', icon: 'wait', content: 'Pit Stops' }, render: () => <Tab.Pane> <PitStops /></Tab.Pane> },
   { menuItem: { key: 'RaceTimming', icon: 'line graph', content: 'Race timming' }, render: () => <Tab.Pane> <RaceTimming /></Tab.Pane> },
-  { menuItem: { key: 'RaceGraph', icon: 'line graph', content: 'Race graph' }, render: () => <Tab.Pane> <StatsElements /></Tab.Pane> },
+  // { menuItem: { key: 'RaceGraph', icon: 'line graph', content: 'Race graph' }, render: () => <Tab.Pane> <StatsElements /></Tab.Pane> },
   { menuItem: 'Track info', render: () => <Tab.Pane><TrackBlock /></Tab.Pane> },
 ]
 const panesMap = [

@@ -8,7 +8,7 @@ class TrackBlock extends Component {
     rendered: false,
   }
   componentDidUpdate (prevProps) {
-    if(prevProps.navigation != this.props.navigation) {
+    if(prevProps.navigation.pathname !== this.props.navigation.pathname) {
       this.loadTrackInfo();
     }
   }
