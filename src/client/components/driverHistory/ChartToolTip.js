@@ -25,11 +25,11 @@ const ChartToolTip = ({ slice, driverHistory }) => {
             }}
           >
             <div>
+              <small>Pos:</small> <Label style={{background: point.serieColor, width: 35, textAlign: 'center', color: '#fff'}}>
+                {point.data.yFormatted}
+              </Label>
               <Label>
                 {point.serieId}
-              </Label>
-              <Label color={'purple'} style={{width: 35, textAlign: 'center'}}>
-                {point.data.yFormatted}
               </Label>
             <small> - {track ? track.circuit.raceName : <span/>}</small>
           </div>

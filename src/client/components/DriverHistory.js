@@ -1,17 +1,30 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { map, forEach } from 'lodash'
-import { Dimmer, Grid, Header, Icon, Label, Menu, Segment, List, Table } from 'semantic-ui-react'
+import { map, filter } from 'lodash'
+import { Grid, Header, Label, Menu, Segment, Table, Icon, Portal, Button } from 'semantic-ui-react'
 import Statistics from './driverHistory/Statistics'
+import RetiresInfo from './driverHistory/RetiresInfo'
 import DriverChart from './driverHistory/DriverChart'
+import HeaderDriverHistory from './driverHistory/HeaderDriverHistory'
+import wtf from 'wtf_wikipedia'
+import { WikiData } from '../actions/helper'
 
 class DriverHistory extends Component {
 
-  state = { activeItem: this.props.year }
-  componentDidUpdate (prevProps, prevState, snapshot) {
+  constructor(props) {
+    super(props);
+    this.state = {
+      activeItem: props.year,
+      open: false,
+      chartSelectedYears: [props.year],
+    };
+  }
+
+  componentDidUpdate (prevProps) {
     if (this.props.driver !== prevProps.driver) {
-      this.setState({activeItem: this.props.year})
+      this.setState({activeItem: this.props.year, chartSelectedYears: [this.props.year]})
     }
+
   }
 
   handleItemClick = (e, { name }) => this.setState({ activeItem: name })
@@ -55,59 +68,112 @@ class DriverHistory extends Component {
     })
     return {won, second, third, pole, ret, status}
   }
+
+  openBigChart = () => {
+    this.setState({ open: true })
+  }
+
+  closeBigChart = () => {
+    this.setState({ open: false })
+  }
+
+  selectChartYear = (year) => {
+    let selectedYears = this.state.chartSelectedYears;
+    const filterExist = selectedYears.indexOf(year) >= 0
+
+    if (filterExist) {
+      selectedYears = filter(this.state.chartSelectedYears, (n => n !== year));
+    } else {
+      selectedYears.push(year);
+    }
+
+    this.setState({ chartSelectedYears: selectedYears })
+  }
+
   render() {
   const { activeItem } = this.state;
-const stats = this.statistics()
+  const stats = this.statistics()
   const seasons = this.props.driverHistory[this.state.activeItem] || [];
     return (
       <div key={this.props.driverId}>
+        {this.state.open && <div className='dimmer' />}
+        <Portal onClose={this.closeBigChart} open={this.state.open}>
+          <Segment
+            style={{
+              left: '5%',
+              position: 'fixed',
+              top: '10%',
+              width: '90%',
+              zIndex: '1000',
+            }}
+          >
+            <Grid >
+              <Grid.Row>
+                <Grid.Column width={16} >
+                  <HeaderDriverHistory simple/>
+                </Grid.Column>
+              </Grid.Row>
+            </Grid>
+
+            <DriverChart driverHistory={this.props.driverHistory} height={450}/>
+            <br/>
+            <Button
+              size='mini'
+              content='Close'
+              onClick={this.closeBigChart}
+            />
+          </Segment>
+        </Portal>
+
         <Segment>
-          <Header as='h3'>
-            <Header.Content>
-          <span>{this.props.seasonsDrivers.Driver.givenName}
-            {this.props.seasonsDrivers.Driver.familyName}</span>
-              <Header.Subheader>
-                <span>Nr: {this.props.seasonsDrivers.Driver.permanentNumber} |
-                  Code: {this.props.seasonsDrivers.Driver.code} |
-                  Nationality: {this.props.seasonsDrivers.Driver.nationality} |
-                  Date of birth: {this.props.seasonsDrivers.Driver.dateOfBirth}
-                </span>
 
-              </Header.Subheader>
-            </Header.Content>
-          </Header>
+          <HeaderDriverHistory />
 
-        <Statistics stats={stats}/>
+          <Statistics stats={stats}/>
 
           <Grid celled='internally'>
             <Grid.Row>
-
-              <Grid.Column width={3} style={{minWidth: 200}}>
-                <div><small>
-                  <Label color={'purple'}>
-                    <strong>RETIRES</strong>
-                  </Label>
-                </small>
-                  <List>
-                    {map(stats.status, (stat, num) => {
-                      return(
-                        <List.Item key={num}>
-                          <List.Content>{stat} - {num}</List.Content>
-                        </List.Item>
-                        )
-                    })}
-                  </List>
-                 </div>
+              <Grid.Column width={3} >
+                <RetiresInfo stats={stats}/>
               </Grid.Column>
-              <Grid.Column width={13} style={{background: '#fafafb'}}>
+              <Grid.Column width={13} style={{background: '#fafafb', height: 350}}>
                 <small>
-                  <Label>
-                    <strong>CHART</strong>
+                  <strong>YEAR: {' '}</strong>
+
+                  {map(this.props.driverHistory, (data, year)=> data && (
+                    <Button
+                      color={this.state.chartSelectedYears.indexOf(year) >= 0 ? 'purple': null}
+                      size={'mini'}
+                      name={year}
+                      key={year}
+                      disabled={!data}
+                      style={{padding: '5px 8px'}}
+                      onClick={()=> this.selectChartYear(year)}
+                    >{year}</Button>
+                  ))
+                  }
+
+                  <Label style={{ float: 'right', cursor: 'pointer', padding: '5px 8px'}} onClick={this.openBigChart}>
+                    <Icon name={'zoom-in'} /> Zoom
                   </Label>
-                  {this.props.driverHistory && <DriverChart driverHistory={this.props.driverHistory}/>}
+
+                  {!this.state.open &&
+                  (this.state.chartSelectedYears.length > 0 ?
+                    <DriverChart
+                      key={this.state.chartSelectedYears}
+                      driverHistory={this.props.driverHistory}
+                      height={310}
+                      selected={this.state.chartSelectedYears}
+                    /> :  <Segment placeholder>
+                      <Header icon>
+                        <Icon name='info' />
+                        Please select at least one year.
+                      </Header>
+                    </Segment>)
+                  }
+
                 </small>
               </Grid.Column>
-
             </Grid.Row>
           </Grid>
           <Menu pointing secondary>
@@ -180,38 +246,3 @@ const mapStateToProps = state => ({
   seasonsDrivers: state.data.seasonsDrivers[state.navigation.driver] || [],
 });
 export default connect(mapStateToProps)(DriverHistory);
-
-
-//
-//
-//
-// <Table striped color='purple' selectable>
-//   <Table.Header>
-//     <Table.Row>
-//       <Table.HeaderCell style={{width:60}}>Place</Table.HeaderCell>
-//       <Table.HeaderCell style={{width:60}}>Points</Table.HeaderCell>
-//       <Table.HeaderCell>Driver</Table.HeaderCell>
-//       <Table.HeaderCell>Grid</Table.HeaderCell>
-//       <Table.HeaderCell>Fastest lap</Table.HeaderCell>
-//       <Table.HeaderCell>Av speed</Table.HeaderCell>
-//       <Table.HeaderCell>Status</Table.HeaderCell>
-//     </Table.Row>
-//   </Table.Header>
-//   <Table.Body>
-//     <Table.Row >
-//       <Table.Cell>
-//         jhkjh
-//       </Table.Cell>
-//       <Table.Cell>kmkm</Table.Cell>
-//       <Table.Cell>
-//         dfdtdftdft
-//       </Table.Cell>
-//       <Table.Cell>2323</Table.Cell>
-//       <Table.Cell>dfdfdfdf
-//
-//       </Table.Cell>
-//       <Table.Cell><span>sdfsdf <small>km/h</small></span></Table.Cell>
-//       <Table.Cell>dddd</Table.Cell>
-//     </Table.Row>
-//   </Table.Body>
-// </Table>

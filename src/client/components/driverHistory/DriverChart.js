@@ -2,24 +2,31 @@ import React from 'react'
 import { Segment } from 'semantic-ui-react'
 import { ResponsiveLine } from '@nivo/line'
 import {connect} from "react-redux";
-import { map, forEach } from 'lodash';
+import { map, forEach, filter } from 'lodash';
 import ChartToolTip from './ChartToolTip'
 
 class DriverChart extends React.Component {
 
   calculateDataChart = () => {
+
+    const filtered = this.props.selected ?
+      filter(this.props.driverHistory, ((data, index) => this.props.selected.indexOf(index) >= 0 ) ) :
+      this.props.driverHistory;
+
     const data = [];
-    const driverData = forEach(this.props.driverHistory, (year, key) => {
+    const driverData = forEach(filtered, (year, key) => {
       if (year) {
         data.push({id: key, info: data, data: map(year, d => ({x: d.season,  y: d.data.position }))})
       }
     });
+
     return data;
   }
   render () {
+    const selectedChart = this.props.selected && this.props.selected.length !== 0
     return (
       <Segment vertical >
-        <div style={{width: '100%', height:300}}>
+        <div style={{width: '100%', height: this.props.height}}>
           <ResponsiveLine
             data={this.calculateDataChart()}
             enableSlices="x"
@@ -56,7 +63,7 @@ class DriverChart extends React.Component {
             pointLabel="y"
             pointLabelYOffset={-12}
             useMesh={true}
-            legends={[
+            legends={!selectedChart ? [
               {
                 anchor: 'bottom-left',
                 direction: 'row',
@@ -81,7 +88,7 @@ class DriverChart extends React.Component {
                   }
                 ]
               }
-            ]}
+            ]: []}
           />
         </div>
       </Segment>

@@ -1,22 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import wtf from 'wtf_wikipedia'
-import { WikiData } from '../../actions/helper'
-import ModalDriver from '../Modal'
-
 
 export class DriverRow extends Component {
   state = {
     open: false,
   }
-  loadDriverData = () => {
-    wtf.fetch('Lewis Hamilton', 'pl', (err, doc)=> {
-      this.setState({text: doc.json(), open: true})
-    })
-  }
-  closeModal = () => {
-    this.setState( { open: false })
-  }
+
   render() {
     const { seasonsDrivers, driver } = this.props
     return (
@@ -27,7 +16,6 @@ export class DriverRow extends Component {
             <small> {seasonsDrivers[driver].Driver.code}</small></i></small>
         </span>
         <span className="constructor-box">{seasonsDrivers[driver].Constructors[0].name}</span>
-      {this.state.open && <ModalDriver close={this.closeModal} open={this.state.open} data={<WikiData data={this.state.text}/>}/>}
     </div>
     );
   }

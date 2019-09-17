@@ -68,9 +68,13 @@ export const loadResultsForDrivers = (driver) => {
     const drivers = [];
     results[year].map((data, season) => {
         const seasonByKey = season + 1
+
         const foundDriver = data.Results.filter(x=>  x.Driver.driverId === driver);
         const circuit = filter(backstore.getState().seasons[year], { 'round': seasonByKey.toString() } )
-        if (foundDriver.length >0) drivers.push({season: seasonByKey, data: foundDriver[0], circuit: circuit[0] });
+        if (foundDriver.length >0) {
+          drivers.push({season: seasonByKey, data: foundDriver[0], circuit: circuit[0] });
+        }
+
       }
 
     )

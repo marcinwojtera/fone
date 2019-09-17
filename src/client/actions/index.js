@@ -21,21 +21,6 @@ export const fetchData = (params, pathname) => (dispatch, getState) => {
   });
 };
 
-//
-// export const fetchDriverHistory = (driverId) => {
-//   const getData = axios.get(`/api/driver${driverId}`)
-//     .then(rest => rest.data);
-//   Promise.all([getData]).then(values => {
-//     console.log(values)
-//     dispatch({
-//       type: FETCH_DRIVER_DATA,
-//       payload: values,
-//     });
-//   });
-//
-// }
-
-
 export const fetchDataWiki = (navigation) => (dispatch, getState) => {
 
   const selectedTrack = navigation.season ? getState().data.seasonsList[navigation.season -1] : null;
@@ -47,17 +32,6 @@ export const fetchDataWiki = (navigation) => (dispatch, getState) => {
         payload: {...getState(), ...{selectedTrack, ...{selectedTrack: rest.data}} }
       });
     });
-
-
-  //
-
-  //
-  // Promise.all([getDataTrackFromWiki]).then(values => {
-  //   dispatch({
-  //     type: FETCH_DATA,
-  //     payload: {selectedTrack: {...selectedTrack, ...values[1]}}
-  //   });
-  // });
 };
 
 export const changeUrl = (params, pathname) =>  dispatch => dispatch(fetchData(params, pathname))

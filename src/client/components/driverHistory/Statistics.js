@@ -1,17 +1,16 @@
 import React from 'react'
-import { Breadcrumb, Segment, Statistic } from 'semantic-ui-react'
-import {connect} from "react-redux";
+import { Segment, Statistic } from 'semantic-ui-react'
 
 const Statistics = ({ stats }) => (
   <Segment vertical>
     <Statistic.Group size={'mini'} color='purple' widths={5}>
       <Statistic>
         <Statistic.Value>{stats.won}</Statistic.Value>
-        <Statistic.Label>Won</Statistic.Label>
+        <Statistic.Label>Wins</Statistic.Label>
       </Statistic>
       <Statistic>
         <Statistic.Value>{stats.pole}</Statistic.Value>
-        <Statistic.Label>Pole position</Statistic.Label>
+        <Statistic.Label>Pole positions</Statistic.Label>
       </Statistic>
       <Statistic>
         <Statistic.Value>{stats.second}</Statistic.Value>
