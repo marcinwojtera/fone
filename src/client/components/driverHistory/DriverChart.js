@@ -2,25 +2,43 @@ import React from 'react'
 import { Segment } from 'semantic-ui-react'
 import { ResponsiveLine } from '@nivo/line'
 import {connect} from "react-redux";
-import { map, forEach, filter } from 'lodash';
+import { map, forEach, filter, pick } from 'lodash';
 import ChartToolTip from './ChartToolTip'
 
 class DriverChart extends React.Component {
 
+  componentDidMount() {
+    this.calculateDataChart();
+  }
+  componentDidUpdate(prevProps) {
+    if(this.props.loadedCompareDriver !== prevProps.loadedCompareDriver) {
+      this.calculateDataChart();
+    }
+  }
   calculateDataChart = () => {
 
-    const filtered = this.props.selected ?
-      filter(this.props.driverHistory, ((data, index) => this.props.selected.indexOf(index) >= 0 ) ) :
-      this.props.driverHistory;
-
+    const graphData = pick(this.props.driverHistory, this.props.selected)
     const data = [];
-    const driverData = forEach(filtered, (year, key) => {
+    const driverData = forEach(graphData, (year, key) => {
       if (year) {
         data.push({id: key, info: data, data: map(year, d => ({x: d.season,  y: d.data.position }))})
       }
+
     });
 
-    return data;
+    forEach(this.props.loadedCompareDriver, (years, driverId) => {
+
+      const graphCompareData = pick(years, this.props.selected)
+
+      const driverCompareData =  forEach(graphCompareData, (year, key) => {
+        if(year) {
+          data.push({id: `${driverId} ${key}`, info: data, data: map(year, d => ({x: d.season,  y: d.data.position }))})
+        }
+
+      });
+    })
+  return data
+
   }
   render () {
     const selectedChart = this.props.selected && this.props.selected.length !== 0
@@ -30,7 +48,7 @@ class DriverChart extends React.Component {
           <ResponsiveLine
             data={this.calculateDataChart()}
             enableSlices="x"
-            margin={{ top: 10, right: 5, bottom: 70, left: 40 }}
+            margin={{ top: 10, right: 5, bottom: 50, left: 40 }}
             xScale={{ type: 'point' }}
             yScale={{ type: 'linear', stacked: false, min: 0, max: 'auto' }}
             sliceTooltip={({ slice }) => <ChartToolTip slice={slice}/>}
@@ -98,5 +116,6 @@ class DriverChart extends React.Component {
 
 
 const mapStateToProps = state => ({
+  loadedCompareDriver: state.loadedCompareDriver,
 });
 export default connect(mapStateToProps)(DriverChart);

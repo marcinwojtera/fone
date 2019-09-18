@@ -1,21 +1,24 @@
 import React from 'react'
-import { Label, List } from 'semantic-ui-react'
+import { Label, Segment } from 'semantic-ui-react'
 import { map } from 'lodash'
 
 const RetiresInfo = ({ stats }) => {
   return (
-    <div><small>
-      <Label color={'purple'}>
-        <strong>RETIRES</strong>
-      </Label>
-    </small>
-      <List>
+    <div>
+      <small><strong>RETIRES: {' '}</strong> </small>
+      <Segment vertical>
+
         {map(stats.status, (stat, num) => (
-          <List.Item key={num}>
-            <List.Content>{stat} - {num}</List.Content>
-          </List.Item>
+          <span style={{ marginRight: '10px'}} key={num}>
+            <span style={{ marginRight: '5px'}}  >
+              <strong>{stat}</strong>
+            </span>
+            {num}
+          </span>
+
         ))}
-      </List>
+      </Segment>
+
     </div>
   )
 }

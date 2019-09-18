@@ -144,6 +144,11 @@ app.get('/api/driver/:driverId/:year', (req, res) => {
   res.send(prepareAns(year, req.params.season, path, driverId));
 });
 
+app.get('/api/compare/:driverId', (req, res) => {
+  const { driverId, year } = req.params;
+  res.send(loadResultsForDrivers(driverId));
+});
+
 app.get('/race/:year/:season',
   cache(1000),
   async (req, res) => {

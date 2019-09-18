@@ -2,8 +2,10 @@ import React from 'react'
 import { Segment, Statistic } from 'semantic-ui-react'
 
 const Statistics = ({ stats }) => (
+  <div>
+    <small><strong>STATS: {' '}</strong> </small>
   <Segment vertical>
-    <Statistic.Group size={'mini'} color='purple' widths={5}>
+    <Statistic.Group color='purple' widths={5}>
       <Statistic>
         <Statistic.Value>{stats.won}</Statistic.Value>
         <Statistic.Label>Wins</Statistic.Label>
@@ -26,6 +28,7 @@ const Statistics = ({ stats }) => (
       </Statistic>
     </Statistic.Group>
   </Segment>
+  </div>
 )
 
 

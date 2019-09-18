@@ -1,4 +1,15 @@
+import { merge } from 'lodash';
+
 import { FETCH_DATA, FETCH_DRIVER_DATA } from '../actions/index';
+
+export const loadedCompareDriver = (state = {}, action) => {
+  switch (action.type) {
+    case FETCH_DRIVER_DATA:
+      return action.payload;
+    default:
+      return state;
+  }
+};
 
 export const loadedData = (state = [], action) => {
   switch (action.type) {
@@ -8,6 +19,7 @@ export const loadedData = (state = [], action) => {
       return state;
   }
 };
+
 export const driverHistory = (state = [], action) => {
   switch (action.type) {
     case FETCH_DATA:

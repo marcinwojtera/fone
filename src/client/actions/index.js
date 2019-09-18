@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { forEach } from 'lodash';
 
 export const FETCH_DATA = 'FETCH_DATA';
 export const FETCH_DRIVER_DATA = 'FETCH_DRIVER_DATA';
@@ -33,5 +34,28 @@ export const fetchDataWiki = (navigation) => (dispatch, getState) => {
       });
     });
 };
+
+
+export const fetchDriverToCompare = (driverId) => (dispatch, getState) => {
+  const driver = getState().loadedCompareDriver[driverId]
+  if (!driver) {
+    axios.get(`/api/compare/${driverId}`)
+      .then(compare =>   dispatch({
+        type: FETCH_DRIVER_DATA,
+        payload: {...getState().loadedCompareDriver, ...{[driverId]: compare.data}}
+      }));
+  } else {
+    const list = getState().loadedCompareDriver;
+    const newList = {}
+    forEach(list, (data, driver) => {
+      if (driver !== driverId) newList[driver] = data;
+    })
+    dispatch({
+      type: FETCH_DRIVER_DATA,
+      payload: newList
+    })
+  }
+};
+
 
 export const changeUrl = (params, pathname) =>  dispatch => dispatch(fetchData(params, pathname))

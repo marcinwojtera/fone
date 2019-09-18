@@ -7,7 +7,7 @@ import RetiresInfo from './driverHistory/RetiresInfo'
 import DriverChart from './driverHistory/DriverChart'
 import HeaderDriverHistory from './driverHistory/HeaderDriverHistory'
 import wtf from 'wtf_wikipedia'
-import { WikiData } from '../actions/helper'
+import DriverList from './driverHistory/DriverList'
 
 class DriverHistory extends Component {
 
@@ -24,7 +24,6 @@ class DriverHistory extends Component {
     if (this.props.driver !== prevProps.driver) {
       this.setState({activeItem: this.props.year, chartSelectedYears: [this.props.year]})
     }
-
   }
 
   handleItemClick = (e, { name }) => this.setState({ activeItem: name })
@@ -97,46 +96,20 @@ class DriverHistory extends Component {
     return (
       <div key={this.props.driverId}>
         {this.state.open && <div className='dimmer' />}
-        <Portal onClose={this.closeBigChart} open={this.state.open}>
-          <Segment
-            style={{
-              left: '5%',
-              position: 'fixed',
-              top: '10%',
-              width: '90%',
-              zIndex: '1000',
-            }}
-          >
-            <Grid >
-              <Grid.Row>
-                <Grid.Column width={16} >
-                  <HeaderDriverHistory simple/>
-                </Grid.Column>
-              </Grid.Row>
-            </Grid>
-
-            <DriverChart driverHistory={this.props.driverHistory} height={450}/>
-            <br/>
-            <Button
-              size='mini'
-              content='Close'
-              onClick={this.closeBigChart}
-            />
-          </Segment>
-        </Portal>
-
-        <Segment>
 
           <HeaderDriverHistory />
+          <Segment>
 
-          <Statistics stats={stats}/>
 
-          <Grid celled='internally'>
+          <Grid celled='internally' padded='vertically'>
             <Grid.Row>
               <Grid.Column width={3} >
-                <RetiresInfo stats={stats}/>
+
+                <DriverList />
               </Grid.Column>
-              <Grid.Column width={13} style={{background: '#fafafb', height: 350}}>
+              <Grid.Column width={13} style={{background: '#fafafb'}}>
+
+
                 <small>
                   <strong>YEAR: {' '}</strong>
 
@@ -153,16 +126,17 @@ class DriverHistory extends Component {
                   ))
                   }
 
-                  <Label style={{ float: 'right', cursor: 'pointer', padding: '5px 8px'}} onClick={this.openBigChart}>
-                    <Icon name={'zoom-in'} /> Zoom
-                  </Label>
+                  {/*<Label style={{ float: 'right', cursor: 'pointer', padding: '5px 8px'}} onClick={this.openBigChart}>*/}
+                    {/*<Icon name={'zoom-in'} /> Zoom*/}
+                  {/*</Label>*/}
+                  <br/>
 
                   {!this.state.open &&
                   (this.state.chartSelectedYears.length > 0 ?
                     <DriverChart
                       key={this.state.chartSelectedYears}
                       driverHistory={this.props.driverHistory}
-                      height={310}
+                      height={390}
                       selected={this.state.chartSelectedYears}
                     /> :  <Segment placeholder>
                       <Header icon>
@@ -173,6 +147,13 @@ class DriverHistory extends Component {
                   }
 
                 </small>
+
+
+                <Statistics stats={stats}/>
+
+                <br/>
+
+                <RetiresInfo stats={stats}/>
               </Grid.Column>
             </Grid.Row>
           </Grid>
@@ -246,3 +227,33 @@ const mapStateToProps = state => ({
   seasonsDrivers: state.data.seasonsDrivers[state.navigation.driver] || [],
 });
 export default connect(mapStateToProps)(DriverHistory);
+
+
+
+{/*<Portal onClose={this.closeBigChart} open={this.state.open}>*/}
+  {/*<Segment*/}
+    {/*style={{*/}
+      {/*left: '5%',*/}
+      {/*position: 'fixed',*/}
+      {/*top: '10%',*/}
+      {/*width: '90%',*/}
+      {/*zIndex: '1000',*/}
+    {/*}}*/}
+  {/*>*/}
+    {/*<Grid >*/}
+      {/*<Grid.Row>*/}
+        {/*<Grid.Column width={16} >*/}
+          {/*<HeaderDriverHistory simple/>*/}
+        {/*</Grid.Column>*/}
+      {/*</Grid.Row>*/}
+    {/*</Grid>*/}
+
+    {/*<DriverChart driverHistory={this.props.driverHistory} height={450}/>*/}
+    {/*<br/>*/}
+    {/*<Button*/}
+      {/*size='mini'*/}
+      {/*content='Close'*/}
+      {/*onClick={this.closeBigChart}*/}
+    {/*/>*/}
+  {/*</Segment>*/}
+{/*</Portal>*/}
