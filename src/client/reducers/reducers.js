@@ -1,6 +1,16 @@
 import { merge } from 'lodash';
 
-import { FETCH_DATA, FETCH_DRIVER_DATA } from '../actions/index';
+import { FETCH_DATA, FETCH_DRIVER_DATA, FETCH_DATA_TRACK } from '../actions/index';
+
+
+export const loadedTrackHome = (state = false, action) => {
+  switch (action.type) {
+    case FETCH_DATA_TRACK:
+      return {...state.loadedTrackHome, ...action.payload.loadedTrackHome};
+    default:
+      return state;
+  }
+};
 
 export const loadedCompareDriver = (state = {}, action) => {
   switch (action.type) {
