@@ -85,6 +85,25 @@ class HomePage extends Component {
             </Grid.Row>
           </Grid>
 
+
+
+          <Grid celled='internally' style={{height: '100%', borderTop: '1px solid #d4d4d4'}}>
+            <Grid.Row>
+              <Grid.Column width={10}>
+              hjjhgjhg
+              </Grid.Column>
+              <Grid.Column width={6} className='next-panel'>
+                <div><small><strong>NEXT RACE: </strong></small></div>
+                <div  className='home-next-panel'>
+
+                tststst
+
+                </div>
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
+
+
         </div>
 
       </div>
