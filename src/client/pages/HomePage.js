@@ -4,6 +4,7 @@ import { Link, withRouter } from 'react-router-dom'
 import { find, map } from 'lodash';
 import { Grid, Label } from 'semantic-ui-react'
 import { fetchTrack } from '../actions'
+import RaceSlider from '../components/homePage/RaceSlider';
 
 class HomePage extends Component {
 
@@ -29,20 +30,19 @@ class HomePage extends Component {
   }
   showConstructors = () => {
     return map(this.props.seasonConstructors, (x => (
-      <div>
+      <div key={x.Constructor.name}>
         <Label size={'mini'}>{x.points || 0}</Label>
         <span>{x.Constructor.name}</span>
       </div>
     )))
   }
 
-  showDrivers = () => {
+  showDrivers = (withPlace) => {
     return map(this.props.seasonsDrivers, (x => (
-      <div>
-        <Label size={'mini'}>{x.points || 0}</Label>
+      <div key={x.Driver.givenName}>
+        {withPlace && <Label size={'mini'}>{x.points || 0}</Label>}
         <Link
           className="slide-box"
-          key={x.Driver.givenName}
           to={`/driver/${x.Driver.driverId}/${this.props.navigation.year}`}
         >
           <span>{x.Driver.givenName} {x.Driver.familyName}</span>
@@ -58,10 +58,8 @@ class HomePage extends Component {
           <Grid celled='internally'>
             <Grid.Row>
               <Grid.Column width={10}>
-                {/*<div><small><strong>DRIVERS: </strong></small></div>*/}
-                <div className='home-driver-panel'>{this.showDrivers()}</div>
+                <div className='home-driver-panel'>{this.showDrivers(true)}</div>
                 <hr/>
-                {/*<div><small><strong>CONSTRUCTORS: </strong></small></div>*/}
                 <div  className='home-constructor-panel'>{this.showConstructors()}</div>
               </Grid.Column>
               <Grid.Column width={6} className='next-panel'>
@@ -71,7 +69,7 @@ class HomePage extends Component {
                   <div>
                     <h3>{this.state.nextTrack.raceName}</h3>
                     <h4>{this.state.nextTrack && this.state.nextTrack.Circuit.circuitName}</h4>
-                    <Label color='white' size={'large'}>
+                    <Label size={'large'}>
                       12:45:33
                     </Label>
                   </div>
@@ -86,17 +84,17 @@ class HomePage extends Component {
           </Grid>
 
 
-
           <Grid celled='internally' style={{height: '100%', borderTop: '1px solid #d4d4d4'}}>
             <Grid.Row>
               <Grid.Column width={10}>
-              hjjhgjhg
+                <div><small><strong>RACE RESULTS: </strong></small></div>
+                {/*<div className='home-driver-panel'>{this.showDrivers(false)}</div>*/}
               </Grid.Column>
               <Grid.Column width={6} className='next-panel'>
                 <div><small><strong>NEXT RACE: </strong></small></div>
                 <div  className='home-next-panel'>
 
-                tststst
+                <RaceSlider/>
 
                 </div>
               </Grid.Column>

@@ -2,16 +2,29 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Icon } from 'semantic-ui-react';
 import { Helmet } from "react-helmet";
-import { map }  from 'lodash';
+import { filter, map } from 'lodash'
+import { Button }  from 'semantic-ui-react';
 
 class RaceTimming extends Component {
   state = {
     rendered: false,
-    selected: []
+    selected: [],
+    driversListToShow: ['leclerc','hamilton', 'max_verstappen', 'kubica']
   }
 
+  selectDriver = (driver) => {
+    let selecteddriver = this.state.driversListToShow;
+    const filterExist = selecteddriver.indexOf(driver) >= 0
+
+    if (filterExist) {
+      selecteddriver = filter(this.state.driversListToShow, (n => n !== driver));
+    } else {
+      selecteddriver.push(driver);
+    }
+
+    this.setState({ driversListToShow: selecteddriver })
+  }
   render() {
-    const driversListToShow = ['leclerc','hamilton']
     return (
       <div>
         <Helmet>
@@ -21,12 +34,25 @@ class RaceTimming extends Component {
         </Helmet>
         <div style={{overflow: 'hidden'}}>
           </div>
+        {map(this.props.seasonsDrivers, z => {
+          return ( <Button
+            color={this.state.driversListToShow.indexOf(z.Driver.driverId) >= 0 ? 'purple': null}
+            size={'mini'}
+            name={z.Driver.driverId}
+            key={z.Driver.code}
+            style={{padding: '5px 8px'}}
+            onClick={()=> this.selectDriver(z.Driver.driverId)}
+          >{z.Driver.code}</Button>)
+        })}
+
+
+
 
         <div className="race-timming">
           <div className="race-timming-sticky">
             <div className="race-driver"><Icon naame="user circle"/></div>
             {map(this.props.seasonQualify, z => {
-              return (<div className="race-driver" key={z.Driver.code}>{z.Driver.code}</div>)
+              return this.state.driversListToShow.indexOf(z.Driver.driverId) >= 0 ? (<div className="race-driver" key={z.Driver.code}>{z.Driver.code}</div>) : null
             })}
           </div>
 
@@ -37,7 +63,7 @@ class RaceTimming extends Component {
           </div>
 
             {map(this.props.seasonQualify, (z, d) => {
-              return (
+              return this.state.driversListToShow.indexOf(z.Driver.driverId) >= 0 ? (
                 <div className="timming-row" key={`${z.Driver.driverId}-${d}`}>
                   {this.props.stats.map((x, i) => {
                     let gap = '';
@@ -58,13 +84,13 @@ class RaceTimming extends Component {
                       <span className="race-time-box" key={`${z.Driver.driverId}-${i}`}>
                         {x[z.Driver.driverId]  ?  <span>{ x[z.Driver.driverId]['time']}
                           <span className="box-place">{x[z.Driver.driverId]['position']} {gapBlock && gapBlock}</span>
-                        </span> : <span>fuck</span>}
+                        </span> : <span>---</span>}
                       </span>
                     )
 
                   })}
                </div>
-              )
+              ) : null
             })}
         </div>
         </div>

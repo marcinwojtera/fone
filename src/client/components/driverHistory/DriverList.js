@@ -8,7 +8,6 @@ class DriverList extends Component {
 
 
   fetch = (driverId) =>{
-    console.log(driverId)
     this.props.dispatch(fetchDriverToCompare(driverId))
   }
 
