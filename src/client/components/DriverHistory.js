@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { map, filter } from 'lodash'
+import { map, filter, forEach, pick } from 'lodash'
 import { Grid, Header, Label, Menu, Segment, Table, Icon, Portal, Button } from 'semantic-ui-react'
 import Statistics from './driverHistory/Statistics'
 import RetiresInfo from './driverHistory/RetiresInfo'
 import DriverChart from './driverHistory/DriverChart'
 import HeaderDriverHistory from './driverHistory/HeaderDriverHistory'
-import wtf from 'wtf_wikipedia'
+import DriverColumnView from './driverHistory/DriverColumnView'
+import { calculateChart } from './../actions/helper'
 import DriverList from './driverHistory/DriverList'
 
 class DriverHistory extends Component {
@@ -17,6 +18,7 @@ class DriverHistory extends Component {
       activeItem: props.year,
       open: false,
       chartSelectedYears: [props.year],
+      columnView: false,
     };
   }
 
@@ -88,11 +90,18 @@ class DriverHistory extends Component {
 
     this.setState({ chartSelectedYears: selectedYears })
   }
+  calculateDataChart = () => {
+    return calculateChart(this.props.driverHistory, this.props.loadedCompareDriver, this.state.chartSelectedYears, this.props.driver)
+  }
+  columnViewToggle = () => {
+    this.setState({columnView: !this.state.columnView})
+  }
 
   render() {
   const { activeItem } = this.state;
   const stats = this.statistics()
   const seasons = this.props.driverHistory[this.state.activeItem] || [];
+
     return (
       <div key={this.props.driverId}>
         {this.state.open && <div className='dimmer' />}
@@ -126,24 +135,29 @@ class DriverHistory extends Component {
                   ))
                   }
 
-                  {/*<Label style={{ float: 'right', cursor: 'pointer', padding: '5px 8px'}} onClick={this.openBigChart}>*/}
-                    {/*<Icon name={'zoom-in'} /> Zoom*/}
-                  {/*</Label>*/}
+                  <Label style={{ float: 'right', cursor: 'pointer', padding: '5px 8px'}} onClick={this.columnViewToggle}>
+                    {this.state.columnView ? <span><Icon name={'zoom-in'} /> Chart view</span> :
+                     <span> <Icon name={'zoom-in'} /> Column view</span>}
+                  </Label>
                   <br/>
 
-                  {!this.state.open &&
-                  (this.state.chartSelectedYears.length > 0 ?
-                    <DriverChart
-                      key={this.state.chartSelectedYears}
-                      driverHistory={this.props.driverHistory}
-                      height={390}
-                      selected={this.state.chartSelectedYears}
-                    /> :  <Segment placeholder>
+
+                  {this.state.chartSelectedYears.length > 0 ?
+                    <span>
+                        {this.state.columnView ?
+                          <DriverColumnView data={this.calculateDataChart()} /> :
+                          <DriverChart
+                            key={this.state.chartSelectedYears}
+                            height={390}
+                            data={this.calculateDataChart()}
+                          />
+                        }
+                    </span> :  <Segment placeholder>
                       <Header icon>
                         <Icon name='info' />
                         Please select at least one year.
                       </Header>
-                    </Segment>)
+                    </Segment>
                   }
 
                 </small>
@@ -225,6 +239,7 @@ const mapStateToProps = state => ({
   driverHistory: state.driverHistory,
   driver: state.navigation.driver,
   seasonsDrivers: state.data.seasonsDrivers[state.navigation.driver] || [],
+  loadedCompareDriver: state.loadedCompareDriver,
 });
 export default connect(mapStateToProps)(DriverHistory);
 

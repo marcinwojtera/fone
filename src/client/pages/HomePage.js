@@ -1,29 +1,37 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Link, withRouter } from 'react-router-dom'
 import { find, map } from 'lodash';
-import { Label } from 'semantic-ui-react'
+import { Grid, Label } from 'semantic-ui-react'
 import { fetchTrack } from '../actions'
 
 class HomePage extends Component {
 
-  state = {
-    nextTrack: false,
+  constructor(props){
+    super(props);
+    this.state = {
+      seconds: '00',   // responsible for the seconds
+      minutes: '',
+      nextTrack: false,
+    }
   }
-
   componentDidMount () {
     this.showNextRace()
   }
   showNextRace = () => {
     const dateNow = new Date()
-    const circInfo = find(this.props.seasonsList, (x => +dateNow <= +new Date(x.date) ))
-    this.setState({nextTrack: circInfo})
-    this.props.dispatch(fetchTrack(circInfo.round))
+    const circInfo = find(this.props.seasonsList, (x => +dateNow <= +new Date(x.date) ));
+    if (circInfo) {
+      this.setState({nextTrack: circInfo})
+      this.props.dispatch(fetchTrack(circInfo.round))
+    }
 
   }
   showConstructors = () => {
     return map(this.props.seasonConstructors, (x => (
       <div>
-        <span>{x.points}</span> <span>{x.Constructor.name}</span>
+        <Label size={'mini'}>{x.points || 0}</Label>
+        <span>{x.Constructor.name}</span>
       </div>
     )))
   }
@@ -31,45 +39,54 @@ class HomePage extends Component {
   showDrivers = () => {
     return map(this.props.seasonsDrivers, (x => (
       <div>
-        <span>{x.Driver.givenName} {x.Driver.familyName}</span> <span>{x.points}</span>
+        <Label size={'mini'}>{x.points || 0}</Label>
+        <Link
+          className="slide-box"
+          key={x.Driver.givenName}
+          to={`/driver/${x.Driver.driverId}/${this.props.navigation.year}`}
+        >
+          <span>{x.Driver.givenName} {x.Driver.familyName}</span>
+        </Link>
       </div>
     )))
   }
   render() {
-console.log(this.state.nextTrack)
     return (
-      <div>
+      <div className='home-page-container'>
 
-        <div className="container-driver">
-          <div className="drivers">
-            <small><strong>DRIVERS</strong></small>
-            <small>{this.showDrivers()}</small>
-          </div>
-        </div>
+        <div className='home-panel'>
+          <Grid celled='internally'>
+            <Grid.Row>
+              <Grid.Column width={10}>
+                {/*<div><small><strong>DRIVERS: </strong></small></div>*/}
+                <div className='home-driver-panel'>{this.showDrivers()}</div>
+                <hr/>
+                {/*<div><small><strong>CONSTRUCTORS: </strong></small></div>*/}
+                <div  className='home-constructor-panel'>{this.showConstructors()}</div>
+              </Grid.Column>
+              <Grid.Column width={6} className='next-panel'>
+                <div><small><strong>NEXT RACE: </strong></small></div>
+                <div  className='home-next-panel'>
 
-
-         <div className="container">
-            <div className="comming-race">
-              {this.state.nextTrack && <span>
-                <h3>{this.state.nextTrack.raceName}</h3>
-                  <h4>{this.state.nextTrack.Circuit.circuitName}</h4>
-                    <div>
-                      <Label color='red' size={'large'}>
+                  <div>
+                    <h3>{this.state.nextTrack.raceName}</h3>
+                    <h4>{this.state.nextTrack && this.state.nextTrack.Circuit.circuitName}</h4>
+                    <Label color='white' size={'large'}>
                       12:45:33
                     </Label>
-                    </div>
-              </span>}
-              {this.props.trackImg && <img src={this.props.trackImg.source}/>}
-            </div>
+                  </div>
+
+                  <div>
+                    {this.props.trackImg && <img src={this.props.trackImg.source}/>}
+                  </div>
+
+                </div>
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
+
         </div>
 
-
-        <div className="container-constructor">
-          <div className="constructor">
-            <small><strong>CONSTRUCTORS</strong></small>
-            <small>{this.showConstructors()}</small>
-          </div>
-        </div>
       </div>
     );
   }

@@ -17,7 +17,7 @@ class App extends Component {
   render() {
     return (
       <div className="app-container">
-          <div>
+          <div style={{height: '100%'}}>
             <MenuComponent />
             <Header />
             <ErrorBoundary>

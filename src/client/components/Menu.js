@@ -2,6 +2,7 @@ import React, { Component }  from 'react';
 import { Menu } from 'semantic-ui-react';
 import { withRouter } from 'react-router';
 import {connect} from "react-redux";
+import { changeUrl } from '../actions'
 
 export class MenuComponent extends Component {
   state = { activeItem: this.props.year }
@@ -12,7 +13,10 @@ export class MenuComponent extends Component {
   }
   handleHompageClick = (e, { name }) => {
     this.props.history.push(`/`)
-    this.setState({ activeItem: name })
+    this.setState({ activeItem: name });
+    // this.setUrl(this.props.match.params, this.props.location.pathname)
+   this.props.dispatch(changeUrl('', '/home'))
+
   }
   render() {
     const { activeItem } = this.state

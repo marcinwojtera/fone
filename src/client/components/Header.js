@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import Slider from 'react-slick';
-import { Button, Icon } from 'semantic-ui-react'
+import { Icon } from 'semantic-ui-react'
 import DriversHeader from './DriversHeader'
 
 const SampleNextArrow = (props) => {
@@ -116,7 +116,7 @@ class Header extends React.Component {
           ))}
         </Slider>
 
-        <DriversHeader />
+        {this.props.homepage !== '/' &&  <DriversHeader /> }
 
       </div>
     );
@@ -128,6 +128,7 @@ const mapStateToProps = state => ({
   selectedSeason: state.navigation.season,
   seasonsList: state.data.seasonsList || [],
   slide: state.navigation.season || 1,
+  homepage: state.navigation.pathname,
 });
 
 export default withRouter(connect(mapStateToProps)(Header));

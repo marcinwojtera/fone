@@ -1,6 +1,7 @@
 import { merge } from 'lodash';
 
 import { FETCH_DATA, FETCH_DRIVER_DATA, FETCH_DATA_TRACK } from '../actions/index';
+import { FETCH_HOME_PAGE } from '../actions'
 
 
 export const loadedTrackHome = (state = false, action) => {
@@ -42,7 +43,6 @@ export const driverHistory = (state = [], action) => {
 export const navigation = (state = {}, action) => {
   switch (action.type) {
     case FETCH_DATA:
-      console.log(action.payload.navigation)
       return {...state.navigation, ...action.payload.navigation};
     default:
       return state;

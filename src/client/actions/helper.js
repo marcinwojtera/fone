@@ -1,26 +1,24 @@
-import React from 'react';
+import { forEach, map, pick } from 'lodash'
 
-export const WikiData = ({data}) => {
-  const sections = data && data.sections ?  data.sections.filter(x=> x.depth > 0 && !x.templates && !x.references && x.paragraphs) : [];
-  console.log(data)
-  return (
-    <div>
-      {/*{data && sections.map(x => {*/}
-        {/*return (<div>*/}
-          {/*<h4>{x.title}</h4>*/}
+export const calculateChart = (driverHistory, loadedCompareDriver, chartSelectedYears, mainDriver) => {
+  const graphData = pick(driverHistory, chartSelectedYears)
+  const data = [];
+  forEach(graphData, (year, key) => {
+    if (year) {
+      data.push({id: key, year: key, driverId: mainDriver, info: data, data: map(year, d => ({x: d.season,  y: d.data.position }))})
+    }
 
-          {/*{x.paragraphs && x.paragraphs.map((para, index) => {*/}
-            {/*return (*/}
-              {/*<div key={{index}}>{para.sentences && para.sentences.map((fin, i) => {*/}
-                {/*return (<span key={i}>{fin.text.length > 5 && fin.text}</span>)*/}
-              {/*})}</div>*/}
-            {/*)*/}
-          {/*})}*/}
-          {/*<hr />*/}
-        {/*</div>)*/}
-      {/*})}*/}
-    </div>
-  )
+  });
 
-  // return data
+  forEach(loadedCompareDriver, (years, driverId) => {
+    const graphCompareData = pick(years, chartSelectedYears)
+    forEach(graphCompareData, (year, key) => {
+      if(year) {
+        data.push({id: `${driverId} ${key}`, year: key, driverId: driverId, info: data, data: map(year, d => ({x: d.season,  y: d.data.position }))})
+      }
+
+    });
+  })
+  return data
+
 };

@@ -60,10 +60,6 @@ class DriversPoints extends Component {
             </Header>
           </Dimmer>
         </Dimmer.Dimmable>
-
-
-
-
       </div>
     );
   }

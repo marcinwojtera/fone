@@ -1,0 +1,41 @@
+.driver-compare-table {
+  width: 100%;
+  overflow: auto;
+  padding-bottom: 20px;
+
+  .compare-column {
+    margin-right:10px;
+
+    .driver-points {
+      border-bottom: 1px solid #999;
+      padding-bottom: 5px;
+      margin-bottom: 5px;
+      font-weight: 700;
+    }
+    .driver-year {
+      margin-right: 10px;
+
+      .season-points {
+        .pkt {
+          text-align: center;
+          position: relative;
+
+          &::after {
+            width:100%;
+            display:block;
+            content: '';
+          }
+        }
+
+        &::after {
+          width:100%;
+          display:block;
+          content: '';
+        }
+      }
+    }
+  }
+}
+
+
+

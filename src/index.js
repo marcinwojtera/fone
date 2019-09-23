@@ -130,6 +130,15 @@ app.get('/api/seasons', async (req, res) => {
 });
 
 app.get(
+  '/api/home',
+  cache(1000),
+  (req, res) => {
+    const year = new Date().getFullYear()
+    res.json(prepareAns(year, '1', '/'));
+  },
+);
+
+app.get(
   '/api/race/:year/:season',
   cache(1000),
   (req, res) => {

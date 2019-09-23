@@ -4,6 +4,7 @@ import { forEach } from 'lodash';
 export const FETCH_DATA = 'FETCH_DATA';
 export const FETCH_DRIVER_DATA = 'FETCH_DRIVER_DATA';
 export const FETCH_DATA_TRACK = 'FETCH_DATA_TRACK';
+export const FETCH_HOME_PAGE = 'FETCH_HOME_PAGE';
 
 export const fetchData = (params, pathname) => (dispatch, getState) => {
 
@@ -69,6 +70,5 @@ export const fetchDriverToCompare = (driverId) => (dispatch, getState) => {
     })
   }
 };
-
 
 export const changeUrl = (params, pathname) =>  dispatch => dispatch(fetchData(params, pathname))
