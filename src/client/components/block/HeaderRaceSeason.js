@@ -5,11 +5,12 @@ import { find } from 'lodash';
 
 const HeaderRaceSeason = ({ seasonsList, season }) => {
   const seasonHeader = find(seasonsList, {round: season});
-  console.log(seasonHeader)
+
   return (
     <Header as='h3'>
       <Header.Content>
-        <span>{seasonHeader.raceName} </span>
+        {seasonHeader && <span>
+          <span>{seasonHeader.raceName} </span>
         <small>(<span>{seasonHeader.Circuit.circuitName}</span>)</small>
         <Header.Subheader>
                 <span>
@@ -21,7 +22,8 @@ const HeaderRaceSeason = ({ seasonsList, season }) => {
                 <span>
                   Date: {seasonHeader.date}
                 </span>
-        </Header.Subheader>
+
+        </Header.Subheader> </span>}
       </Header.Content>
     </Header>
   )
