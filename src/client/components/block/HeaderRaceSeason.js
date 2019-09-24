@@ -22,7 +22,6 @@ const HeaderRaceSeason = ({ seasonsList, season }) => {
                 <span>
                   Date: {seasonHeader.date}
                 </span>
-
         </Header.Subheader> </span>}
       </Header.Content>
     </Header>
