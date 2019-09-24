@@ -1,8 +1,16 @@
 import { merge } from 'lodash';
 
-import { FETCH_DATA, FETCH_DRIVER_DATA, FETCH_DATA_TRACK } from '../actions/index';
-import { FETCH_HOME_PAGE } from '../actions'
+import { FETCH_DATA, FETCH_DRIVER_DATA, FETCH_DATA_TRACK, FETCH_DATA_TRACK_YEAR_AGO } from '../actions/index';
 
+
+export const historyTrack = (state = false, action) => {
+  switch (action.type) {
+    case FETCH_DATA_TRACK_YEAR_AGO:
+      return action.payload.historyTrack;
+    default:
+      return state;
+  }
+};
 
 export const loadedTrackHome = (state = false, action) => {
   switch (action.type) {

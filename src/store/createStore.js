@@ -22,6 +22,14 @@ export const filterData = (data, season) => {
   return data;
 };
 
+export const filterDataByTrack = (data, season, track) => {
+
+  if (track) {
+    return _.filter(data, n => n.Circuit.circuitId == track )[0];
+  }
+  return data;
+};
+
 export const filterDataBySeason = (data, season) => {
 
   if (season) {
@@ -30,6 +38,9 @@ export const filterDataBySeason = (data, season) => {
   }
   return data;
 };
+export const loadResultsForTrack = (year, season, circuitId) => {
+  return filterDataByTrack(backstore.getState().seasonsResults[year-1], season, circuitId)
+}
 
 export const prepareAns = (year, season, pathname, driver) => {
   const getSeason = !season ? 1 : season;
@@ -83,7 +94,6 @@ export const loadResultsForDrivers = (driver) => {
 
   return driverHistory
 };
-
 
 export const initialLoads = (year, season, pathname, driver) => createStore(reducers, prepareAns(year, season, pathname, driver), applyMiddleware(thunk));
 

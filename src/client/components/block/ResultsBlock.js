@@ -9,7 +9,6 @@ class QualifyBlock extends Component {
   }
 
   render() {
-
     return (
       <div>
         <Grid celled='internally'>

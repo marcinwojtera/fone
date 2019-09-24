@@ -4,7 +4,7 @@ import { forEach } from 'lodash';
 export const FETCH_DATA = 'FETCH_DATA';
 export const FETCH_DRIVER_DATA = 'FETCH_DRIVER_DATA';
 export const FETCH_DATA_TRACK = 'FETCH_DATA_TRACK';
-export const FETCH_HOME_PAGE = 'FETCH_HOME_PAGE';
+export const FETCH_DATA_TRACK_YEAR_AGO = 'FETCH_DATA_TRACK_YEAR_AGO';
 
 export const fetchData = (params, pathname) => (dispatch, getState) => {
 
@@ -41,11 +41,21 @@ export const fetchTrack = (season) => (dispatch, getState) => {
 
   const selectedTrack = season ? getState().data.seasonsList[season -1] : null;
   const circuit = selectedTrack ? selectedTrack.Circuit.url.split('/').slice(-1).pop() : false
-  const getDataTrackFromWiki = axios.get(`https://pl.wikipedia.org/api/rest_v1/page/summary/${circuit}`)
+  axios.get(`https://pl.wikipedia.org/api/rest_v1/page/summary/${circuit}`)
     .then(rest => {
       dispatch({
         type: FETCH_DATA_TRACK,
         payload: {loadedTrackHome: rest.data},
+      });
+    });
+};
+
+export const fetchTrackYearAgo = (year, season, track) => (dispatch) => {
+  axios.get(`/api/historyTrack/${year}/${season}/${track}`)
+    .then(rest => {
+      dispatch({
+        type: FETCH_DATA_TRACK_YEAR_AGO,
+        payload: {historyTrack: rest.data},
       });
     });
 };
