@@ -8,9 +8,11 @@ import DriverPointBlock from "./block/DriverPointBlock";
 import RaceTimming from './block/RaceTimming';
 import ConstructorsPointBlock from './block/ConstructorsPointBlock'
 import PitStops from './block/PitStops'
+import HeaderRaceSeason from './block/HeaderRaceSeason';
 import StatsElements from './block/StatsElements'
 import { Tab, Dimmer, Header, Icon,  Segment } from 'semantic-ui-react'
 import { Helmet } from 'react-helmet'
+import { selectedTrack } from '../reducers/reducers'
 
 const panes = [
   { menuItem:{ key: 'Results', icon: 'winner', content: 'Results' }, render: () => <Tab.Pane><ResultsBlock /></Tab.Pane> },
@@ -42,9 +44,11 @@ class DriversPoints extends Component {
         </Helmet>
 
         <Dimmer.Dimmable as={Segment} dimmed={isFeatureRace}>
+
           <Grid celled='internally'>
             <Grid.Row>
               <Grid.Column width={11}>
+                <HeaderRaceSeason />
                 <Tab panes={panes} />
               </Grid.Column>
               <Grid.Column width={5}>

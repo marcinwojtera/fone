@@ -147,10 +147,10 @@ app.get(
       res.json(prepareAns(req.params.year, req.params.season, path));
   },
 );
-app.get('/api/driver/:driverId/:year', (req, res) => {
-  const { driverId, year } = req.params;
-  const path = `/driver/${driverId}/${year}`
-  res.send(prepareAns(year, req.params.season, path, driverId));
+app.get('/api/driver/:driverId/:year/:season', (req, res) => {
+  const { driverId, year, season } = req.params;
+  const path = `/driver/${driverId}/${year}/${season}`
+  res.send(prepareAns(year, season, path, driverId));
 });
 
 app.get('/api/compare/:driverId', (req, res) => {

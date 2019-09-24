@@ -106,7 +106,7 @@ class Header extends React.Component {
                 <Link
                   className="slide-box"
                   key={x.Driver.givenName}
-                  to={`/driver/${x.Driver.driverId}/${this.props.year}`}
+                  to={`/driver/${x.Driver.driverId}/${this.props.year}/${this.props.season}`}
                 >
                   <div key={x.raceName} >
                       <span className={"driver-box " + (this.props.selectedDriver === x.Driver.driverId ? 'selected' : '')}>
@@ -125,6 +125,7 @@ class Header extends React.Component {
 const mapStateToProps = state => ({
   selectedDriver: state.navigation.driver,
   year: state.navigation.year,
+  season: state.navigation.season,
   seasonsDrivers: state.data.seasonsDrivers,
 });
 

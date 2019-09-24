@@ -37,6 +37,7 @@ class Header extends React.Component {
     const settings = {
       dots: false,
       infinite: false,
+      slickGoTo: 12,
       // centerPadding: "60px",
       speed: 500,
       slidesToShow: 7,
