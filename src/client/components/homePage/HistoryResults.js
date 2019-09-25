@@ -11,9 +11,6 @@ class HistoryResults extends Component {
   render() {
     return (
       <div style={{height: '100%'}}>
-
-
-
               <Table style={{ marginBottom: '-2px'}}>
                 <Table.Header>
                   <Table.Row>
@@ -27,7 +24,7 @@ class HistoryResults extends Component {
               </Table>
          <div className='table-slide' style={{height: 'calc(100% - 60px)'}}>
            <PerfectScrollbar>
-           <Table style={{ marginTop: 0}} >
+           <Table style={{ margin: 0}} >
              <Table.Body>
                {this.props.seasonsResults.map(x => (
                  <Table.Row key={x.number+'-' +this.props.season} error={x.positionText == 'R'}>

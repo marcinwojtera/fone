@@ -94,11 +94,11 @@ class HomePage extends Component {
 
           <Grid celled='internally' style={{height: '100%', borderTop: '1px solid #d4d4d4'}}>
             <Grid.Row>
-              <Grid.Column width={5} style={{height: 'calc(100% - 598px)'}}>
+              <Grid.Column width={5}>
                 <div><small><strong>RACE RESULTS: </strong></small></div>
 
               </Grid.Column>
-              <Grid.Column width={5} style={{height: 'calc(100% - 598px)'}}>
+              <Grid.Column width={5}>
                 <div><small><strong>RACE RESULTS: </strong></small></div>
 
 

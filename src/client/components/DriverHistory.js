@@ -103,7 +103,7 @@ class DriverHistory extends Component {
   const seasons = this.props.driverHistory[this.state.activeItem] || [];
 
     return (
-      <div key={this.props.driverId}>
+      <div>
         {this.state.open && <div className='dimmer' />}
 
           <HeaderDriverHistory />

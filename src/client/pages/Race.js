@@ -9,7 +9,7 @@ class Race extends Component {
   render() {
     return (
       <div>
-        <DriversPoints />
+        {this.props.seasonsResults && <DriversPoints />}
       </div>
     );
   }
