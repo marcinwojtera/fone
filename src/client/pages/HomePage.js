@@ -84,13 +84,24 @@ class HomePage extends Component {
               </Grid.Column>
             </Grid.Row>
           </Grid>
-
+          <Grid celled='internally' style={{borderTop: '1px solid #d4d4d4'}}>
+            <Grid.Row>
+              <Grid.Column width={16} >
+                <div><small><strong>RACE RESULTS: </strong></small></div>
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
 
           <Grid celled='internally' style={{height: '100%', borderTop: '1px solid #d4d4d4'}}>
             <Grid.Row>
-              <Grid.Column width={10} style={{height: 'calc(100% - 598px)'}}>
+              <Grid.Column width={5} style={{height: 'calc(100% - 598px)'}}>
                 <div><small><strong>RACE RESULTS: </strong></small></div>
-                {/*<div className='home-driver-panel'>{this.showDrivers(false)}</div>*/}
+
+              </Grid.Column>
+              <Grid.Column width={5} style={{height: 'calc(100% - 598px)'}}>
+                <div><small><strong>RACE RESULTS: </strong></small></div>
+
+
               </Grid.Column>
               <Grid.Column width={6} className='next-panel race-results'>
                 <div><small><strong>YEAR AGO RESULTS: </strong></small></div>

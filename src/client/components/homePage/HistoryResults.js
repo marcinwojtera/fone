@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {Grid, Table, Label, Icon} from 'semantic-ui-react';
-import DriverRow from "../block/DriverRow";
+import PerfectScrollbar from 'react-perfect-scrollbar'
 
 class HistoryResults extends Component {
   state = {
@@ -25,7 +25,8 @@ class HistoryResults extends Component {
                   </Table.Row>
                 </Table.Header>
               </Table>
-         <div className='table-slide' style={{height: 'calc(100% - 60px)', overflowY: 'scroll'}}>
+         <div className='table-slide' style={{height: 'calc(100% - 60px)'}}>
+           <PerfectScrollbar>
            <Table style={{ marginTop: 0}} >
              <Table.Body>
                {this.props.seasonsResults.map(x => (
@@ -45,6 +46,7 @@ class HistoryResults extends Component {
                ))}
              </Table.Body>
            </Table>
+           </PerfectScrollbar>
          </div>
 
               <div>

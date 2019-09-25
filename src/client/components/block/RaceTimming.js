@@ -4,6 +4,7 @@ import { Icon } from 'semantic-ui-react';
 import { Helmet } from "react-helmet";
 import { filter, map } from 'lodash'
 import { Button }  from 'semantic-ui-react';
+import PerfectScrollbar from 'react-perfect-scrollbar'
 
 class RaceTimming extends Component {
   state = {
@@ -55,7 +56,7 @@ class RaceTimming extends Component {
               return this.state.driversListToShow.indexOf(z.Driver.driverId) >= 0 ? (<div className="race-driver" key={z.Driver.code}>{z.Driver.code}</div>) : null
             })}
           </div>
-
+          <PerfectScrollbar>
         <div className="race-timming-slide">
 
           <div className="timming-row" >
@@ -93,6 +94,7 @@ class RaceTimming extends Component {
               ) : null
             })}
         </div>
+          </PerfectScrollbar>
         </div>
       </div>
     );
