@@ -22,8 +22,8 @@ const config = {
   entry: {
     client: './src/client/client.js',
     pitStop: ['./src/client/components/block/PitStops.js'],
-    statsElements: ['./src/client/components/block/StatsElements.js', '@nivo/bump'],
-    vendor: ['core-js', 'react', 'react-dom', 'redux', 'semantic-ui-css', 'semantic-ui-react'],
+    statsElements: ['./src/client/components/block/StatsElements.js', '@nivo/bump', '@nivo/line'],
+    vendor: ['core-js', 'react', 'react-dom', 'redux', 'semantic-ui-css', 'semantic-ui-react', 'lodash'],
   },
   output: {
     path: path.resolve(__dirname, 'public'),

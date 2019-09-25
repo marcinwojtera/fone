@@ -147,7 +147,7 @@ app.get(
       res.json(prepareAns(req.params.year, req.params.season, path));
   },
 );
-app.get('/api/driver/:driverId/:year', (req, res) => {
+app.get('/api/driver/:driverId/:year', cache(1000), (req, res) => {
   const { driverId, year } = req.params;
   const path = `/driver/${driverId}/${year}`
   res.send(prepareAns(year, req.params.season, path, driverId));
@@ -158,7 +158,7 @@ app.get('/api/compare/:driverId', (req, res) => {
   res.send(loadResultsForDrivers(driverId));
 });
 
-app.get('/api/historyTrack/:year/:season/:circuitId', (req, res) => {
+app.get('/api/historyTrack/:year/:season/:circuitId',cache(1000), (req, res) => {
   const { season, year, circuitId } = req.params;
   res.send(loadResultsForTrack(year, season, circuitId));
 });
@@ -172,7 +172,7 @@ app.get('/race/:year/:season',
 const loadHtml = (req, res) => {
   const driver = req.path.includes("driver");
   let driverId = null;
-  let year = 2019;
+  let year = req.params.year || 2019;
   if (driver) {
      driverId = req.path.split('/')[2];
      year = req.path.split('/')[3];

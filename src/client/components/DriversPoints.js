@@ -12,7 +12,6 @@ import HeaderRaceSeason from './block/HeaderRaceSeason';
 import StatsElements from './block/StatsElements'
 import { Tab, Dimmer, Header, Icon,  Segment } from 'semantic-ui-react'
 import { Helmet } from 'react-helmet'
-import { selectedTrack } from '../reducers/reducers'
 
 const panes = [
   { menuItem:{ key: 'Results', icon: 'winner', content: 'Results' }, render: () => <Tab.Pane><ResultsBlock /></Tab.Pane> },
