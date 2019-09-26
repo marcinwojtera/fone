@@ -20,7 +20,7 @@
     "dev:server": "nodemon --watch build --exec \"node build/bundle.js\"",
     "precommit": "pretty-quick --staged"
   },
-  "author": "",
+  "author": "mla",
   "license": "ISC",
   "dependencies": {
     "@nivo/axes": "^0.59.2",
