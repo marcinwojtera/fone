@@ -1,7 +1,7 @@
 {
-  "name": "react-news-ssr",
+  "name": "F1 stats",
   "version": "1.0.0",
-  "description": "Server side rendering project",
+  "description": "F1 stats",
   "engines": {
     "node": "12"
   },
@@ -20,7 +20,7 @@
     "dev:server": "nodemon --watch build --exec \"node build/bundle.js\"",
     "precommit": "pretty-quick --staged"
   },
-  "author": "ilker ALTIN",
+  "author": "",
   "license": "ISC",
   "dependencies": {
     "@nivo/axes": "^0.59.2",
@@ -34,22 +34,17 @@
     "memory-cache": "^0.2.0",
     "node-fetch": "^2.6.0",
     "perfect-scrollbar-react": "^1.0.1",
-    "prop-types": "^15.7.2",
     "react": "16.8.2",
     "react-dom": "16.8.2",
     "react-helmet": "5.2.0",
-    "react-loadable": "^5.5.0",
     "react-perfect-scrollbar": "^1.5.3",
     "react-redux": "6.0.0",
     "react-router-dom": "4.3.1",
-    "react-slick": "^0.25.2",
     "redux": "4.0.1",
     "redux-thunk": "2.3.0",
     "semantic-ui-css": "^2.4.1",
     "semantic-ui-react": "^0.87.2",
-    "slick-carousel": "^1.8.1",
-    "wait-for-stuff": "^1.4.0",
-    "wtf_wikipedia": "^7.7.1"
+    "wait-for-stuff": "^1.4.0"
   },
   "devDependencies": {
     "@babel/core": "^7.3.3",
@@ -97,6 +92,7 @@
     "postcss-loader": "^3.0.0",
     "prettier": "^1.16.4",
     "pretty-quick": "^1.10.0",
+    "prop-types": "^15.7.2",
     "purgecss-webpack-plugin": "^1.5.0",
     "purify-css": "^1.2.5",
     "purifycss-webpack": "^0.7.0",

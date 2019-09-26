@@ -4,9 +4,7 @@ import { Grid } from 'semantic-ui-react';
 import QualifyBlock from "./block/QualifyBlock";
 import ResultsBlock from "./block/ResultsBlock";
 import TrackBlock from "./block/TrackBlock";
-import DriverPointBlock from "./block/DriverPointBlock";
 import RaceTimming from './block/RaceTimming';
-import ConstructorsPointBlock from './block/ConstructorsPointBlock'
 import PitStops from './block/PitStops'
 import HeaderRaceSeason from './block/HeaderRaceSeason';
 import StatsElements from './block/StatsElements'
@@ -21,10 +19,7 @@ const panes = [
   // { menuItem: { key: 'RaceGraph', icon: 'line graph', content: 'Race graph' }, render: () => <Tab.Pane> <StatsElements /></Tab.Pane> },
   { menuItem: 'Track info', render: () => <Tab.Pane><TrackBlock /></Tab.Pane> },
 ]
-const panesMap = [
-  { menuItem: { key: 'Driver points', icon: 'area graph', content: 'Driver points' }, render: () => <Tab.Pane> <DriverPointBlock /></Tab.Pane> },
-  { menuItem: { key: 'Constructors points', icon: 'area graph', content: 'Constructors points' }, render: () => <Tab.Pane> <ConstructorsPointBlock /></Tab.Pane> },
-]
+
 class DriversPoints extends Component {
   state = {
     active: false,
@@ -42,19 +37,10 @@ class DriversPoints extends Component {
           <meta name="description" content={`${this.props.selectedTrack.raceName} Year - ${this.props.selectedTrack.season}`} />
         </Helmet>
 
-        <Dimmer.Dimmable as={Segment} dimmed={isFeatureRace}>
-
-          <Grid celled='internally'>
-            <Grid.Row>
-              <Grid.Column width={11}>
-                <HeaderRaceSeason />
-                <Tab panes={panes} />
-              </Grid.Column>
-              <Grid.Column width={5}>
-                <Tab panes={panesMap} />
-              </Grid.Column>
-            </Grid.Row>
-          </Grid>
+         <div>
+           <HeaderRaceSeason />
+           <Tab panes={panes} />
+         </div>
 
           <Dimmer active={isFeatureRace} onClickOutside={this.handleHide}>
             <Header as='h2' icon inverted>
@@ -62,7 +48,6 @@ class DriversPoints extends Component {
               Dimmed Message!
             </Header>
           </Dimmer>
-        </Dimmer.Dimmable>
       </div>
     );
   }

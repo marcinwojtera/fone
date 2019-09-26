@@ -112,19 +112,14 @@ class DriverHistory extends Component {
 
           <Grid celled='internally' padded='vertically'>
             <Grid.Row>
-              <Grid.Column width={3} >
-
-                <DriverList />
-              </Grid.Column>
               <Grid.Column width={13} style={{background: '#fafafb'}}>
-
 
                 <small>
                   <strong>YEAR: {' '}</strong>
 
                   {map(this.props.driverHistory, (data, year)=> data && (
                     <Button
-                      color={this.state.chartSelectedYears.indexOf(year) >= 0 ? 'purple': null}
+                      color={this.state.chartSelectedYears.indexOf(year) >= 0 ? 'pink': null}
                       size={'mini'}
                       name={year}
                       key={year}
@@ -168,6 +163,10 @@ class DriverHistory extends Component {
                 <br/>
 
                 <RetiresInfo stats={stats}/>
+              </Grid.Column>
+
+              <Grid.Column width={3} >
+                <DriverList />
               </Grid.Column>
             </Grid.Row>
           </Grid>

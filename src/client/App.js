@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import { Route, Switch } from "react-router-dom";
 import { connect } from 'react-redux';
-import { withRouter, matchPath } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import ErrorBoundary from './components/ErrorBoundry';
-import Header from './components/Header';
 import MenuComponent from './components/Menu';
 import HomePage from './pages/HomePage';
 import Race from './pages/Race';
@@ -19,7 +18,6 @@ class App extends Component {
       <div className="app-container">
           <div style={{height: '100%'}}>
             <MenuComponent />
-            <Header />
             <ErrorBoundary>
               <Switch>
               <Route exact path="/" component={HomePage} />

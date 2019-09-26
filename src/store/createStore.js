@@ -43,8 +43,8 @@ export const loadResultsForTrack = (year, season, circuitId) => {
 }
 
 export const prepareAns = (year, season, pathname, driver) => {
-  const getSeason = !season ? 1 : season;
-  const getYear = !year ? new Date().getFullYear() : year;
+  const getSeason = !season ? "1" : season;
+  const getYear = !year ? new Date().getFullYear().toString() : year;
   const data = {
     data: {
       seasonConstructors: backstore.getState().constructors[getYear],

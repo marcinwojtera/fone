@@ -20,10 +20,10 @@ const config = {
     children: true
   },
   entry: {
-    client: './src/client/client.js',
+    client: ['./src/client/client.js', '@nivo/bump', '@nivo/line'],
     pitStop: ['./src/client/components/block/PitStops.js'],
-    statsElements: ['./src/client/components/block/StatsElements.js', '@nivo/bump', '@nivo/line'],
-    vendor: ['core-js', 'react', 'react-dom', 'redux', 'semantic-ui-css', 'semantic-ui-react', 'lodash'],
+    statsElements: ['./src/client/components/block/StatsElements.js'],
+    vendor: ['react', 'react-dom', 'redux', 'semantic-ui-react', 'lodash'],
   },
   output: {
     path: path.resolve(__dirname, 'public'),

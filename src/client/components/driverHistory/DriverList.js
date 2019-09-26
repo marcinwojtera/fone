@@ -25,7 +25,7 @@ class DriverList extends Component {
               as={'a'}
               key={indexId}
               onClick={() => this.fetch(indexId)}
-              color={!!this.props.loadedCompareDriver[indexId] ? 'purple' : null} >
+              color={!!this.props.loadedCompareDriver[indexId] ? 'pink' : null} >
               {driver.Driver.givenName} {driver.Driver.familyName}
             </Label>
 

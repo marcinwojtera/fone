@@ -35,19 +35,19 @@ class RaceTimming extends Component {
         </Helmet>
         <div style={{overflow: 'hidden'}}>
           </div>
-        {map(this.props.seasonsDrivers, z => {
-          return ( <Button
-            color={this.state.driversListToShow.indexOf(z.Driver.driverId) >= 0 ? 'purple': null}
-            size={'mini'}
-            name={z.Driver.driverId}
-            key={z.Driver.code}
-            style={{padding: '5px 8px'}}
-            onClick={()=> this.selectDriver(z.Driver.driverId)}
-          >{z.Driver.code}</Button>)
-        })}
+       <div>
 
-
-
+         {map(this.props.seasonsDrivers, z => {
+           return ( <Button
+             color={this.state.driversListToShow.indexOf(z.Driver.driverId) >= 0 ? 'pink': null}
+             size={'mini'}
+             name={z.Driver.driverId}
+             key={z.Driver.code}
+             style={{padding: '5px 8px'}}
+             onClick={()=> this.selectDriver(z.Driver.driverId)}
+           >{z.Driver.code}</Button>)
+         })}
+       </div>
 
         <div className="race-timming">
           <div className="race-timming-sticky">

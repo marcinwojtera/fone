@@ -22,21 +22,12 @@ class HomePage extends Component {
   showNextRace = () => {
     const dateNow = new Date()
     const circInfo = find(this.props.seasonsList, (x => +dateNow <= +new Date(x.date) ));
-    console.log(circInfo)
     if (circInfo) {
       this.setState({nextTrack: circInfo})
       this.props.dispatch(fetchTrackYearAgo(circInfo.season, circInfo.round, circInfo.Circuit.circuitId))
       this.props.dispatch(fetchTrack(circInfo.round))
     }
 
-  }
-  showConstructors = () => {
-    return map(this.props.seasonConstructors, (x => (
-      <div key={x.Constructor.name}>
-        <Label size={'mini'}>{x.points || 0}</Label>
-        <span>{x.Constructor.name}</span>
-      </div>
-    )))
   }
 
   showDrivers = (withPlace) => {
@@ -59,10 +50,8 @@ class HomePage extends Component {
         <div className='home-panel'>
           <Grid celled='internally'>
             <Grid.Row>
-              <Grid.Column width={10}>
+              <Grid.Column width={10} style={{ padding: '5px'}}>
                 <div className='home-driver-panel'>{this.showDrivers(true)}</div>
-                <hr/>
-                <div  className='home-constructor-panel'>{this.showConstructors()}</div>
               </Grid.Column>
               <Grid.Column width={6} className='next-panel'>
                 <div><small><strong>NEXT RACE: </strong></small></div>
@@ -84,14 +73,6 @@ class HomePage extends Component {
               </Grid.Column>
             </Grid.Row>
           </Grid>
-          <Grid celled='internally' style={{borderTop: '1px solid #d4d4d4'}}>
-            <Grid.Row>
-              <Grid.Column width={16} >
-                <div><small><strong>RACE RESULTS: </strong></small></div>
-              </Grid.Column>
-            </Grid.Row>
-          </Grid>
-
           <Grid celled='internally' style={{height: '100%', borderTop: '1px solid #d4d4d4'}}>
             <Grid.Row>
               <Grid.Column width={5}>

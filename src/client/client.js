@@ -1,7 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 // Startup point for client-side application
 
-import '@babel/core';
+//import '@babel/core';
 // import '@babel/polyfill';
 import React from 'react';
 import ReactDOM from 'react-dom';

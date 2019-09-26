@@ -1,5 +1,4 @@
 @import '~semantic-ui-css/semantic.min.css';
-@import '~slick-carousel/slick/slick.css';
 @import '~react-perfect-scrollbar/dist/css/styles.css';
 
 body {
@@ -14,6 +13,73 @@ body {
 .app-container {
 
   height: 100%;
+
+  .menu {
+    .item {
+      .driver-more-info {
+        display: none;
+      }
+      &:hover {
+
+        .driver-more-info {
+          display: block;
+          position: absolute;
+          bottom: -60px;
+          height: 50px;
+          width: 250px;
+          z-index: 99;
+          left: -10px;
+          background: #fff;
+        }
+      }
+
+    }
+  }
+  .slide-box {
+    border-bottom: 1px solid #e0e1e2;
+
+    .step {
+      padding: 10px!important;
+
+      .driver-info-number {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        padding: 1px 4px;
+        font-size: 10px;
+        width: 20px;
+        text-align: center;
+      }
+
+      strong {
+        background: #e6e6e6;
+        padding: 2px;
+        margin-right: 3px;
+        font-weight: 400;
+      }
+      &.active {
+        .driver-info-number {
+          position: absolute;
+          right: 0;
+          bottom: 0;
+          padding: 1px 4px;
+          color: #f5f1f1;
+          background: #df418a;
+          font-size: 10px;
+        }
+        strong {
+          color: #f5f1f1;
+          background: #df418a;
+        }
+        .title {
+          color: #dc287f!important;
+        }
+      }
+    }
+
+  }
+
+
   .home-page-container {
     height: calc(100% - 95px);
 
@@ -44,19 +110,25 @@ body {
         color: #000;
       }
       .home-driver-panel {
-        column-count: 5;
-        font-size: 11px;
+        column-count: 4;
+        font-size: 13px;
+        line-height: 22px;
+        column-gap: 0;
       }
       .home-constructor-panel {
         column-count: 5;
         font-size: 11px;
       }
       .label {
-        width: 25px;
+        width: 40px;
         text-align: center;
-        background: #f5f5f5;
+        background: #ececec;
+        color: #3e3e3f;
+        font-size: 12px;
         font-weight: bold;
-        padding: 2px 3px;
+        padding: 5px 0px;
+        border-radius: 0;
+        margin: 5px;
       }
       .next-panel {
         overflow: hidden;
@@ -99,12 +171,10 @@ body {
     }
   }
 
-
-
   .driver-list-history {
     margin-bottom: 5px;
     display: block;
-    margin-left: -10px;
+    margin-right: -10px;
     background: #fafafb;
   }
 
@@ -117,53 +187,6 @@ body {
     left: 0;
     z-index: 999;
   }
-  .driver-list-slider {
-
-    .slick-slider {
-      height: 36px!important;
-      border-bottom: 1px solid #d0d0d0;
-    }
-    .slick-list {
-      background: #fff;
-      box-shadow: none;
-    }
-    .slick-slider .slick-arrow {
-      z-index: 999;
-      width: 35px;
-      background: #f3f3f3;
-      line-height: 38px;
-      color: #757474;
-
-      &.slick-prev {
-        border-right: 1px solid #d2cece
-      }
-      &.slick-next {
-        border-left: 1px solid #d2cece
-      }
-      &.slick-disabled {
-        color: #d2cece;
-      }
-    }
-
-    .slick-slider .slide-box {
-      color: #3c3c3c;
-
-      &:hover {
-        background: #dadada;
-        color: #000;
-      }
-    }
-
-    .slick-slider .slick-slide {
-      border-right: none;
-      text-align: center;
-    }
-    .slick-slider .slick-slide {
-      border-right: none
-    }
-  }
-
-
 
   .lap-place-box {
     display: block;
@@ -374,82 +397,5 @@ body {
   border-radius: 0;
   -webkit-box-shadow: none;
   box-shadow: none;
-}
-.slick-slider {
-  display: inline-flex;
-  width: 100%;
-  height: 50px;
-
-  .slick-track {
-    height: 100%;
-  }
-  .slick-slide {
-    position: relative;
-    border-right: 1px solid #4e619e;
-    text-align: center;
-  }
-  .slide-box {
-    padding: 8px;
-    color: #fff;
-    line-height: 10px;
-
-    &:focus {
-      outline: none;
-    }
-    h5 {
-      margin: 0;
-      font-size: 16px;
-      z-index: 9;
-      position: relative;
-    }
-    .label {
-      position: absolute;
-      background-color: #db2881!important;
-      bottom: 0px;
-      border-radius: 0;
-      left: 15px;
-    }
-    .round-see {
-      position: absolute;
-      right: 0px;
-      top: -2px;
-      opacity: .5;
-      font-size: 22px;
-    }
-  }
-  .slick-arrow {
-    z-index: 999;
-    width: 35px;
-    cursor: pointer;
-    background: #1e2954;
-    line-height: 48px;
-    text-align: center;
-    color: #fff;
-
-    &:hover {
-      background: #192244;
-    }
-
-    &.slick-prev {
-      border-right: 1px solid #346494;
-    }
-
-    &.slick-next {
-      border-left: 1px solid #346494;
-    }
-    &.slick-disabled {
-      color: #4c577d;
-      cursor: auto;
-    }
-
-  }
-  .slick-list {
-    background: #2e4694;
-    -webkit-box-shadow: inset 0px 0px 91px -1px rgba(39,50,94,1);
-    -moz-box-shadow: inset 0px 0px 91px -1px rgba(39,50,94,1);
-    box-shadow: inset 0px 0px 91px -1px rgba(39,50,94,1);
-    color: #fff;
-    width: calc(100% - 70px);
-  }
 }
 
