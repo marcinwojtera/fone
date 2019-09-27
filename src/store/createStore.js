@@ -96,7 +96,7 @@ export const loadResultsForTrackStats = (track) => {
 
   const years = backstore.getState().seasonsYear;
   const trackHistory = {}
-  takeRight(years.reverse(), 5).map(year => {
+  takeRight(years, 5).map(year => {
     const winner = [];
     const pole = [];
     const fastestLap = [];

@@ -23,7 +23,7 @@ class DriverList extends Component {
             <Label
               className="driver-list-history"
               as={'a'}
-              key={indexId}
+              key={indexId-driver.Driver.givenName}
               onClick={() => this.fetch(indexId)}
               color={!!this.props.loadedCompareDriver[indexId] ? 'pink' : null} >
               {driver.Driver.givenName} {driver.Driver.familyName}
