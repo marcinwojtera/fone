@@ -1,6 +1,6 @@
 import { merge } from 'lodash';
 
-import { FETCH_DATA, FETCH_DRIVER_DATA, FETCH_DATA_TRACK, FETCH_DATA_TRACK_YEAR_AGO } from '../actions/index';
+import { FETCH_DATA, FETCH_DRIVER_DATA, FETCH_DATA_TRACK, FETCH_DATA_TRACK_YEAR_AGO, FETCH_DATA_TRACK_HISTORY } from '../actions/index';
 
 
 export const historyTrack = (state = false, action) => {
@@ -66,5 +66,12 @@ export const selectedTrack = (state = {}, action) => {
   }
 };
 
-
+export const trackHistoryStats = (state = false, action) => {
+  switch (action.type) {
+    case FETCH_DATA_TRACK_HISTORY:
+      return action.payload;
+    default:
+      return state;
+  }
+};
 

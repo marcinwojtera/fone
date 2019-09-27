@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Grid, Segment, Dimmer, Step } from 'semantic-ui-react'
-import DriversPoints from '../components/DriversPoints';
+import DriversPoints from '../components/TrackResults';
 import {withRouter, Link} from "react-router-dom";
 import UrlWrapper from '../urlWrapper'
 import { map } from 'lodash'

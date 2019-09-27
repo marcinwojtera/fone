@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { historyTrack, loadedTrackHome, driverHistory, loadedData, navigation, selectedTrack, loadedCompareDriver } from './reducers';
+import { trackHistoryStats, historyTrack, loadedTrackHome, driverHistory, loadedData, navigation, selectedTrack, loadedCompareDriver } from './reducers';
 
 export default combineReducers({
   data: loadedData,
@@ -8,5 +8,6 @@ export default combineReducers({
   driverHistory,
   loadedCompareDriver,
   loadedTrackHome,
-  historyTrack
+  historyTrack,
+  trackHistoryStats
 });

@@ -5,8 +5,9 @@ export const FETCH_DATA = 'FETCH_DATA';
 export const FETCH_DRIVER_DATA = 'FETCH_DRIVER_DATA';
 export const FETCH_DATA_TRACK = 'FETCH_DATA_TRACK';
 export const FETCH_DATA_TRACK_YEAR_AGO = 'FETCH_DATA_TRACK_YEAR_AGO';
+export const FETCH_DATA_TRACK_HISTORY = 'FETCH_DATA_TRACK_HISTORY'
 
-export const fetchData = (params, pathname) => (dispatch, getState) => {
+  export const fetchData = (params, pathname) => (dispatch, getState) => {
 
   const getData = axios.get(`/api${pathname}`)
     .then(rest => rest.data);
@@ -80,5 +81,18 @@ export const fetchDriverToCompare = (driverId) => (dispatch, getState) => {
     })
   }
 };
+
+
+export const fetchHistoryTrackResults = (circuit) => (dispatch, getState) => {
+
+  axios.get(`/api/trackStats/${circuit}`)
+    .then(rest => {
+      dispatch({
+        type: FETCH_DATA_TRACK_HISTORY,
+        payload: rest.data
+      });
+    });
+};
+
 
 export const changeUrl = (params, pathname) =>  dispatch => dispatch(fetchData(params, pathname))

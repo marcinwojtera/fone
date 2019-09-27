@@ -22,7 +22,6 @@ export class MenuComponent extends Component {
     const url = `/driver/${driver}/${this.props.year}`
     this.props.history.push(url)
     this.setState({ activeItem: name });
-    this.props.dispatch(changeUrl('', url))
   }
 
 

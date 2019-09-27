@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Grid } from 'semantic-ui-react';
 import QualifyBlock from "./block/QualifyBlock";
 import ResultsBlock from "./block/ResultsBlock";
 import TrackBlock from "./block/TrackBlock";
 import RaceTimming from './block/RaceTimming';
 import PitStops from './block/PitStops'
+import TrackHistory from './TrackHistory'
 import HeaderRaceSeason from './block/HeaderRaceSeason';
 import StatsElements from './block/StatsElements'
 import { Tab, Dimmer, Header, Icon,  Segment } from 'semantic-ui-react'
@@ -20,7 +20,7 @@ const panes = [
   { menuItem: 'Track info', render: () => <Tab.Pane><TrackBlock /></Tab.Pane> },
 ]
 
-class DriversPoints extends Component {
+class TrackResults extends Component {
   state = {
     active: false,
     text: '',
@@ -39,6 +39,7 @@ class DriversPoints extends Component {
 
          <div>
            <HeaderRaceSeason />
+           <TrackHistory />
            <Tab panes={panes} />
          </div>
 
@@ -56,4 +57,4 @@ class DriversPoints extends Component {
 const mapStateToProps = state => ({
   selectedTrack: state.selectedTrack,
 });
-export default connect(mapStateToProps)(DriversPoints);
+export default connect(mapStateToProps)(TrackResults);

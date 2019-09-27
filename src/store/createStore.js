@@ -3,7 +3,7 @@ import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import reducers from '../client/reducers';
 import { backstore } from '../serData/pool';
-import { filter } from 'lodash'
+import { filter, min, max, takeRight } from 'lodash'
 const _ = require('lodash/core');
 
 export const filterPitStops = (data, season) => {
@@ -72,27 +72,58 @@ export const prepareAns = (year, season, pathname, driver) => {
 
 export const loadResultsForDrivers = (driver) => {
   const results = backstore.getState().seasonsResults;
-
   const years = backstore.getState().seasonsYear;
   const driverHistory = {}
   years.map(year => {
     const drivers = [];
     results[year].map((data, season) => {
         const seasonByKey = season + 1
-
         const foundDriver = data.Results.filter(x=>  x.Driver.driverId === driver);
         const circuit = filter(backstore.getState().seasons[year], { 'round': seasonByKey.toString() } )
         if (foundDriver.length >0) {
           drivers.push({season: seasonByKey, data: foundDriver[0], circuit: circuit[0] });
         }
-
       }
-
     )
     driverHistory[year] = drivers.length>0 ? drivers : false
   })
-
   return driverHistory
+};
+
+export const loadResultsForTrackStats = (track) => {
+  const results = backstore.getState().seasonsResults;
+  const qualify = backstore.getState().qualify
+
+  const years = backstore.getState().seasonsYear;
+  const trackHistory = {}
+  takeRight(years.reverse(), 5).map(year => {
+    const winner = [];
+    const pole = [];
+    const fastestLap = [];
+    const avgSpeed = [];
+    results[year].map(data => {
+       if(data.raceName == track) {
+         const findWinner = _.filter(data.Results, {position: "1"})[0]
+         const lapTime = data.Results.map(rec => rec.FastestLap && {time: rec.FastestLap.Time.time, driver: rec.Driver, speed: rec.FastestLap.AverageSpeed.speed });
+         const findFaster = _.min(lapTime, 'time');
+         const findavgSpeed = _.max(lapTime, 'speed');
+
+         avgSpeed.push(findavgSpeed)
+         fastestLap.push(findFaster);
+         winner.push(findWinner.Driver);
+        }
+      }
+    )
+    qualify[year].map(data => {
+        if(data.raceName == track) {
+          const find = _.filter(data.QualifyingResults, {position: "1"})[0]
+          pole.push(find.Driver)
+        }
+      }
+    )
+    trackHistory[year] = {winner, pole, fastestLap, avgSpeed}
+  })
+  return trackHistory
 };
 
 export const initialLoads = (year, season, pathname, driver) => createStore(reducers, prepareAns(year, season, pathname, driver), applyMiddleware(thunk));

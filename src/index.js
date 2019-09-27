@@ -4,7 +4,7 @@ import 'regenerator-runtime/runtime';
 import express from 'express';
 import compression from 'compression';
 import renderer from './helpers/renderer';
-import { initialLoads, prepareAns, loadResultsForDrivers, loadResultsForTrack } from './store/createStore';
+import { initialLoads, prepareAns, loadResultsForDrivers, loadResultsForTrack, loadResultsForTrackStats } from './store/createStore';
 import { loadData, backstore } from './serData/pool';
 const path = require('path');
 const fs = require('fs');
@@ -85,7 +85,10 @@ app.get('/api/test2/:driverId', (req, res) => {
   res.send(loadResultsForDrivers(driverId));
 });
 
-
+app.get('/api/trackStats/:trackId', (req, res) => {
+  const { trackId } = req.params;
+  res.send(loadResultsForTrackStats(trackId));
+});
 
 app.get(
   '/api/stats/:year',
