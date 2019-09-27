@@ -22,6 +22,8 @@ export const FETCH_DATA_TRACK_HISTORY = 'FETCH_DATA_TRACK_HISTORY'
         selectedTrack: values[0].selectedTrack
       },
     });
+
+    // window.history.pushState('page2', 'Title', pathname)
   });
 };
 

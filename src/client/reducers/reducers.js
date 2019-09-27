@@ -15,7 +15,7 @@ export const historyTrack = (state = false, action) => {
 export const loadedTrackHome = (state = false, action) => {
   switch (action.type) {
     case FETCH_DATA_TRACK:
-      return {...state.loadedTrackHome, ...action.payload.loadedTrackHome};
+      return action.payload.loadedTrackHome;
     default:
       return state;
   }
@@ -33,7 +33,7 @@ export const loadedCompareDriver = (state = {}, action) => {
 export const loadedData = (state = [], action) => {
   switch (action.type) {
     case FETCH_DATA:
-      return {...state.data, ...action.payload.data};
+      return action.payload.data;
     default:
       return state;
   }
@@ -42,7 +42,7 @@ export const loadedData = (state = [], action) => {
 export const driverHistory = (state = [], action) => {
   switch (action.type) {
     case FETCH_DATA:
-      return {...state.driverHistory, ...action.payload.driverHistory};
+      return action.payload.driverHistory;
     default:
       return state;
   }
@@ -51,7 +51,7 @@ export const driverHistory = (state = [], action) => {
 export const navigation = (state = {}, action) => {
   switch (action.type) {
     case FETCH_DATA:
-      return {...state.navigation, ...action.payload.navigation};
+      return action.payload.navigation;
     default:
       return state;
   }
@@ -60,7 +60,7 @@ export const navigation = (state = {}, action) => {
 export const selectedTrack = (state = {}, action) => {
   switch (action.type) {
     case FETCH_DATA:
-      return {...state.selectedTrack, ...action.payload.selectedTrack};
+      return action.payload.selectedTrack;
     default:
       return state;
   }

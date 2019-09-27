@@ -93,10 +93,7 @@ class HomePage extends Component {
               </Grid.Column>
             </Grid.Row>
           </Grid>
-
-
         </div>
-
       </div>
     );
   }

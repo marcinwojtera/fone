@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, withRouter } from "react-router-dom";
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import ErrorBoundary from './components/ErrorBoundry';
 import MenuComponent from './components/Menu';

@@ -52,18 +52,18 @@ export const prepareAns = (year, season, pathname, driver) => {
       constructorsPerRace: filterDataBySeason(backstore.getState().constructorsPerRace[getYear], getSeason),
       seasonsDrivers: backstore.getState().seasonsDrivers[getYear],
       //seasonsDriversList: filterDataBySeason(backstore.getState().driversList[year || getCurrentYear()], season),
-      seasonsList: backstore.getState().seasons[getYear],
-      seasonQualify: filterData(backstore.getState().qualify[getYear], getSeason),
-      seasonsResults: filterData(backstore.getState().seasonsResults[getYear], getSeason),
-      seasonsPitStop: filterPitStops(backstore.getState().pitStop[getYear], getSeason),
+      seasonsList: !driver && backstore.getState().seasons[getYear],
+      seasonQualify: !driver && filterData(backstore.getState().qualify[getYear], getSeason),
+      seasonsResults: !driver && filterData(backstore.getState().seasonsResults[getYear], getSeason),
+      seasonsPitStop: !driver && filterPitStops(backstore.getState().pitStop[getYear], getSeason),
       seasonsYears: backstore.getState().seasonsYear,
-      statsBySeason: filterData(backstore.getState().stats[getYear], getSeason),
+      statsBySeason: !driver && filterData(backstore.getState().stats[getYear], getSeason),
       loadInfo: backstore.getState().loadInfo,
     },
     navigation: {
      season: getSeason, year: getYear, pathname, driver
     },
-    selectedTrack: backstore.getState().seasons[getYear][getSeason -1],
+    selectedTrack: !driver && backstore.getState().seasons[getYear][getSeason -1],
     driverHistory: driver ? loadResultsForDrivers(driver): []
   };
 
