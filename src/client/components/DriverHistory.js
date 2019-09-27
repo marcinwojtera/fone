@@ -170,7 +170,7 @@ class DriverHistory extends Component {
               </Grid.Column>
             </Grid.Row>
           </Grid>
-          <Menu pointing secondary>
+          <Menu inverted pointing>
             {map(this.props.driverHistory, (data, year)=> (
               <Menu.Item
                 name={year}

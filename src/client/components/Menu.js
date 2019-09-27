@@ -41,7 +41,7 @@ export class MenuComponent extends Component {
             <Menu.Item
               name={x.toString()}
               key={x}
-              active={activeItem == x}
+              active={this.props.year == x}
               onClick={this.handleItemClick}
             >
               {x}
