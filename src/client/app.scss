@@ -14,6 +14,24 @@ body {
 
   height: 100%;
 
+  .track-history {
+    .label {
+      background: #315186;
+      border-radius: 0;
+      color: #fff;
+    }
+    .bold {
+      color: #dc287f;
+    }
+    a {
+      color: #222;
+      font-size: 12px;
+      &:hover {
+        color: #dc287f;
+      }
+    }
+  }
+
   .menu {
     .item {
       .driver-more-info {
@@ -64,7 +82,7 @@ body {
           bottom: 0;
           padding: 1px 4px;
           color: #f5f1f1;
-          background: #df418a;
+          background: #325086;
           font-size: 10px;
         }
         strong {
@@ -91,11 +109,15 @@ body {
       height: 100%;
       overflow: hidden;
 
+      .segment {
+        padding: 0;
+      }
       a {
-        color: #585858;
-
+        color: #222;
+        font-size: 12px;
+        border-bottom: none;
         &:hover {
-          font-weight: 700;
+          color: #dc287f;
         }
       }
 
@@ -111,24 +133,18 @@ body {
       }
       .home-driver-panel {
         column-count: 4;
-        font-size: 13px;
-        line-height: 22px;
-        column-gap: 0;
+        column-rule: 1px solid rgb(216, 216, 216);
       }
       .home-constructor-panel {
         column-count: 5;
         font-size: 11px;
       }
       .label {
-        width: 40px;
-        text-align: center;
-        background: #ececec;
-        color: #3e3e3f;
-        font-size: 12px;
-        font-weight: bold;
-        padding: 5px 0px;
+        background: #315186;
         border-radius: 0;
-        margin: 5px;
+        color: #fff;
+        width: 35px;
+        text-align: center;
       }
       .next-panel {
         overflow: hidden;

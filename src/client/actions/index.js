@@ -84,7 +84,6 @@ export const fetchDriverToCompare = (driverId) => (dispatch, getState) => {
 
 
 export const fetchHistoryTrackResults = (circuit) => (dispatch, getState) => {
-
   axios.get(`/api/trackStats/${circuit}`)
     .then(rest => {
       dispatch({

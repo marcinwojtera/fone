@@ -3,7 +3,7 @@ import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import reducers from '../client/reducers';
 import { backstore } from '../serData/pool';
-import { filter, min, max, takeRight } from 'lodash'
+import { filter, min, max, takeLeft } from 'lodash'
 const _ = require('lodash/core');
 
 export const filterPitStops = (data, season) => {
@@ -96,7 +96,7 @@ export const loadResultsForTrackStats = (track) => {
 
   const years = backstore.getState().seasonsYear;
   const trackHistory = {}
-  takeRight(years, 5).map(year => {
+  years.slice(0, 5).map(year => {
     const winner = [];
     const pole = [];
     const fastestLap = [];

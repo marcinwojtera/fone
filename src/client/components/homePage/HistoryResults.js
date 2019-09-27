@@ -36,7 +36,6 @@ class HistoryResults extends Component {
                    <Table.Cell style={{width:90}}>{x.FastestLap && <span className="driver-box">
                         {x.FastestLap.Time.time}
                       </span>}
-
                    </Table.Cell>
                    <Table.Cell  style={{width:120}}>{x.FastestLap && <span>{x.FastestLap.AverageSpeed.speed} <small>km/h</small></span>}</Table.Cell>
                  </Table.Row>

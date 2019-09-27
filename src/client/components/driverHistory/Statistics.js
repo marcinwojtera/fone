@@ -5,7 +5,7 @@ const Statistics = ({ stats }) => (
   <div>
     <small><strong>STATS: {' '}</strong> </small>
   <Segment vertical>
-    <Statistic.Group color='purple' widths={5}>
+    <Statistic.Group color='pink' widths={5}>
       <Statistic>
         <Statistic.Value>{stats.won}</Statistic.Value>
         <Statistic.Label>Wins</Statistic.Label>

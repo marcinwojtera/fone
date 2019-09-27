@@ -12,7 +12,6 @@ class RaceYearAgo extends React.Component {
   }
 
   render() {
-
     return this.props.historyTrack ? <HistoryResults /> : null
   }
 }

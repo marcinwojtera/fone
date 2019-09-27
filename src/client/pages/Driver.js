@@ -22,7 +22,7 @@ class Driver extends Component {
                   return(
                     <Link
                       className="slide-box"
-                      key={x.Driver.givenName}
+                      key={`${x.Driver.familyName}-${x.Driver.givenName}-${x.Driver.driverId}`}
                       to={`/driver/${x.Driver.driverId}/${this.props.year}`}
                     >
 
@@ -32,7 +32,7 @@ class Driver extends Component {
                           <Step.Description>
                             <strong>{x.Driver.code}</strong>
                             <span className="driver-info">{x.Constructors[0].name}</span>
-                            <span className="driver-info-number">{x.Driver.permanentNumber}</span>
+                            {x.Driver.permanentNumber && <span className="driver-info-number">{x.Driver.permanentNumber}</span>}
                           </Step.Description>
                         </Step.Content>
                       </Step>
