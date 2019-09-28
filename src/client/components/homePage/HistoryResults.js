@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import {Grid, Table, Label, Icon} from 'semantic-ui-react';
+import {connect} from "react-redux";
+import { Table } from 'semantic-ui-react';
 import PerfectScrollbar from 'react-perfect-scrollbar'
+import { DriverRow } from '../block/DriverRow'
 
 class HistoryResults extends Component {
   state = {
@@ -22,7 +23,7 @@ class HistoryResults extends Component {
                   </Table.Row>
                 </Table.Header>
               </Table>
-         <div className='table-slide' style={{height: 'calc(100% - 60px)'}}>
+         <div className='table-slide' style={{height: 'calc(100% - 15px)'}}>
            <PerfectScrollbar>
            <Table style={{ margin: 0}} >
              <Table.Body>
@@ -31,7 +32,7 @@ class HistoryResults extends Component {
                    <Table.Cell style={{width:10}}>
                      <b>{x.position}</b>
                    </Table.Cell>
-                   <Table.Cell> {x.Driver.driverId }</Table.Cell>
+                   <Table.Cell> <DriverRow constructorData={x.Constructor} driverData={x.Driver} homeView /> </Table.Cell>
                    <Table.Cell style={{width:30}}>{x.grid}</Table.Cell>
                    <Table.Cell style={{width:90}}>{x.FastestLap && <span className="driver-box">
                         {x.FastestLap.Time.time}

@@ -84,10 +84,12 @@ export const loadResultsForTrackYearAgo = (year) => {
 
 export const loadResultsForDrivers = (driver) => {
   const results = backstore.getState().seasonsResults;
+  const qualify = backstore.getState().qualify;
   const years = backstore.getState().seasonsYear;
   const driverHistory = {}
   years.map(year => {
     const drivers = [];
+    const driversQualify = [];
     results[year].map((data, season) => {
         const seasonByKey = season + 1
         const foundDriver = data.Results.filter(x=>  x.Driver.driverId === driver);
@@ -97,7 +99,16 @@ export const loadResultsForDrivers = (driver) => {
         }
       }
     )
-    driverHistory[year] = drivers.length>0 ? drivers : false
+    qualify[year].map((data, season) => {
+        const seasonByKey = season + 1
+        const foundDriver = data.QualifyingResults.filter(x=>  x.Driver.driverId === driver);
+        const circuit = filter(backstore.getState().seasons[year], { 'round': seasonByKey.toString() } )
+        if (foundDriver.length >0) {
+          driversQualify.push({season: seasonByKey, data: foundDriver[0], circuit: circuit[0] });
+        }
+      }
+    )
+    driverHistory[year] = drivers.length>0 ? {drivers, driversQualify} : false
   })
   return driverHistory
 };

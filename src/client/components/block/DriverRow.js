@@ -7,15 +7,18 @@ export class DriverRow extends Component {
   }
 
   render() {
-    const { seasonsDrivers, driver } = this.props
+    const { seasonsDrivers, driver, homeView } = this.props;
+    const driverData = homeView ? this.props.driverData : seasonsDrivers[driver].Driver;
+    const constructorData = homeView ? this.props.constructorData : seasonsDrivers[driver].Constructors[0]
+
     return (
       <div className="driver-box">
         <span className="info">
-          {seasonsDrivers[driver].Driver.givenName} {seasonsDrivers[driver].Driver.familyName}
-          <small><i> ({seasonsDrivers[driver].number || seasonsDrivers[driver].Driver.permanentNumber})
-            <small> {seasonsDrivers[driver].Driver.code}</small></i></small>
+          {driverData.givenName} {driverData.familyName}
+          <small><i> ({driverData.number || driverData.permanentNumber})
+            <small> {driverData.code}</small></i></small>
         </span>
-        <span className="constructor-box">{seasonsDrivers[driver].Constructors[0].name}</span>
+        <span className="constructor-box">{constructorData.name}</span>
     </div>
     );
   }

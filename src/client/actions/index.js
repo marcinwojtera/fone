@@ -73,4 +73,14 @@ export const fetchDriverToCompare = (driverId) => (dispatch, getState) => {
   }
 };
 
+export const fetchLangChange = (lang) => (dispatch, getState) => {
+
+  axios.post(`/api/lang/`,{
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({test: 'dskfjskdfjs' }),
+  }).then(data =>  {
+    console.log(data)
+  } );
+};
+
 export const changeUrl = (params, pathname) =>  dispatch => dispatch(fetchData(params, pathname))

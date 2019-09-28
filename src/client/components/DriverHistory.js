@@ -19,6 +19,8 @@ class DriverHistory extends Component {
       open: false,
       chartSelectedYears: [props.year],
       columnView: false,
+      resultView: true,
+      qualiView: false,
     };
   }
 
@@ -39,7 +41,7 @@ class DriverHistory extends Component {
     let status = {};
 
     const test = map(this.props.driverHistory, year => {
-      return map(year,season => {
+      return map(year.drivers,season => {
         if(season.data.grid == 1) {
             pole = pole +1
         }
@@ -91,16 +93,22 @@ class DriverHistory extends Component {
     this.setState({ chartSelectedYears: selectedYears })
   }
   calculateDataChart = () => {
-    return calculateChart(this.props.driverHistory, this.props.loadedCompareDriver, this.state.chartSelectedYears, this.props.driver)
+    return calculateChart(this.props.driverHistory, this.props.loadedCompareDriver, this.state.chartSelectedYears, this.props.driver, this.state.qualiView)
   }
   columnViewToggle = () => {
     this.setState({columnView: !this.state.columnView})
+  }
+  resultViewToggle = () => {
+    this.setState({resultView: true, qualiView: false})
+  }
+  qualiViewToggle = () => {
+    this.setState({resultView: false, qualiView: true})
   }
 
   render() {
   const { activeItem } = this.state;
   const stats = this.statistics()
-  const seasons = this.props.driverHistory[this.state.activeItem] || [];
+  const seasons = this.props.driverHistory[this.state.activeItem].drivers || [];
 
     return (
       <div>
@@ -109,10 +117,9 @@ class DriverHistory extends Component {
           <HeaderDriverHistory />
           <Segment>
 
-
           <Grid celled='internally' padded='vertically'>
             <Grid.Row>
-              <Grid.Column width={13} style={{background: '#fafafb'}}>
+              <Grid.Column width={13}>
 
                 <small>
                   <strong>YEAR: {' '}</strong>
@@ -130,12 +137,22 @@ class DriverHistory extends Component {
                   ))
                   }
 
+
+
                   <Label style={{ float: 'right', cursor: 'pointer', padding: '5px 8px'}} onClick={this.columnViewToggle}>
                     {this.state.columnView ? <span><Icon name={'zoom-in'} /> Chart view</span> :
                      <span> <Icon name={'zoom-in'} /> Column view</span>}
                   </Label>
-                  <br/>
 
+                  <Label color={this.state.qualiView ? 'pink' : null} style={{ float: 'right', cursor: 'pointer', padding: '5px 8px'}} onClick={this.qualiViewToggle}>
+                    <span><Icon name={'flag outline'} /> Qualify position</span>
+                  </Label>
+
+                  <Label color={this.state.resultView ? 'pink' : null} style={{ float: 'right', cursor: 'pointer', padding: '5px 8px'}} onClick={this.resultViewToggle}>
+                    <span><Icon name={'flag checkered'} /> Race position</span>
+                  </Label>
+
+                  <br/>
 
                   {this.state.chartSelectedYears.length > 0 ?
                     <span>

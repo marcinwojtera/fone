@@ -1,6 +1,5 @@
 import React, { Component }  from 'react';
-import { Menu, Dropdown, Popup } from 'semantic-ui-react';
-import { Link } from 'react-router-dom';
+import { Menu, Popup } from 'semantic-ui-react';
 import { withRouter } from 'react-router';
 import {connect} from "react-redux";
 import { changeUrl } from '../actions'
@@ -24,9 +23,8 @@ export class MenuComponent extends Component {
     this.setState({ activeItem: name });
   }
 
-
   render() {
-    const { activeItem } = this.state
+    const { activeItem } = this.state;
     return (
       <div>
         <Menu pointing inverted style={{margin :0}}>
@@ -46,19 +44,10 @@ export class MenuComponent extends Component {
               {x}
             </Menu.Item>
           ))}
-          <Menu.Menu position='right'>
-          <Dropdown item text='Languages'>
-            <Dropdown.Menu>
-              <Dropdown.Item>English</Dropdown.Item>
-              <Dropdown.Item>Polish</Dropdown.Item>
-              <Dropdown.Item>German</Dropdown.Item>
-              <Dropdown.Item>Russian</Dropdown.Item>
-            </Dropdown.Menu>
-          </Dropdown>
-          </Menu.Menu>
+
         </Menu>
 
-        <Menu size='mini' secondary inverted style={{margin :0, background: '#37383e' }}>
+        <Menu size='mini' secondary inverted style={{margin :0, background: '#22375f' }}>
           <Menu.Item
             name='drivers'
           >

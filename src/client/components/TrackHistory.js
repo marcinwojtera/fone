@@ -12,13 +12,13 @@ class TrackHistory extends Component {
 
   renderDriver = (driver, year) => {
     return (<Link to={`/driver/${driver.driverId}/${year}`}>
-      <span className={'track-history-link'}>{driver.givenName} {driver.familyName}</span>
+      <span className={'track-history-link'}>{driver.givenName[0]}. {driver.familyName}</span>
     </Link>)
   }
   render() {
     return (
       <div>
-        <Segment basic={this.props.track} loading={this.props.loading} style={{minHeight: 90}} className='track-history'>
+        <Segment basic={!!this.props.track} loading={this.props.loading} style={{minHeight: 90}} className='track-history'>
           {this.props.trackHistoryStats && <div>
               <div style={{columnCount: 4}}>
                 <div><strong><small>WINNER</small></strong></div>
@@ -31,8 +31,8 @@ class TrackHistory extends Component {
                 return showRow && (<div style={{columnCount: 4, columnRule: '1px solid #d8d8d8'}} key={year}>
                   <div><Label size={'mini'}>{year}</Label> -  <span>{this.renderDriver(data.winner[0], year)}</span></div>
                   <div><Label size={'mini'}>{year}</Label> - <span>{this.renderDriver(data.pole[0], year)} </span></div>
-                  <div><Label size={'mini'}>{year}</Label> - <span><small><strong className='bold'>{data.avgSpeed[0].time}</strong></small>  {this.renderDriver(data.fastestLap[0].driver, year)}  </span></div>
-                  <div><Label size={'mini'}>{year}</Label> - <span><small><strong className='bold'>{data.avgSpeed[0].speed}</strong></small> {this.renderDriver(data.avgSpeed[0].driver, year)} </span></div>
+                  <div><Label size={'mini'}>{year}</Label> - <span> {this.renderDriver(data.fastestLap[0].driver, year)} - <small><strong className='bold'>{data.avgSpeed[0].time}</strong></small></span></div>
+                  <div><Label size={'mini'}>{year}</Label> - <span>{this.renderDriver(data.avgSpeed[0].driver, year)} - <small><strong className='bold'>{data.avgSpeed[0].speed.split('.')[0]}</strong> (km/h)</small></span></div>
                 </div>)
               })}
             </div>

@@ -34,6 +34,16 @@ class HomePage extends Component {
     }
 
   }
+  showConstructors = () => {
+    return map(this.props.seasonConstructors, (x => (
+      <div key={x.Constructor.name}>
+        <span className="slide-box">
+          <Label size={'mini'}>{x.points || 0}</Label>
+        <span> - {x.Constructor.name}</span>
+        </span>
+      </div>
+    )))
+  }
 
   showDrivers = (withPlace) => {
     return map(this.props.seasonsDrivers, (x => (
@@ -49,23 +59,24 @@ class HomePage extends Component {
     )))
   }
   render() {
+
     return (
       <div className='home-page-container'>
         <div className='home-panel'>
           <Grid celled='internally'>
             <Grid.Row>
-              <Grid.Column width={10}>
+              <Grid.Column width={11}>
                 <div className='home-driver-panel'>{this.showDrivers(true)}</div>
               </Grid.Column>
-              <Grid.Column width={6} className='next-panel'>
+              <Grid.Column width={5} className='next-panel'>
                 <div><small><strong>NEXT RACE: </strong></small></div>
-                <div  className='home-next-panel'>
-                  <div>
+                <div  className='home-next-panel' style={{margin: 0}}>
+                  <div style={{position: 'relative', zIndex: 99}}>
                     <h3>{this.state.nextTrack.raceName}</h3>
                     <h4>{this.state.nextTrack && this.state.nextTrack.Circuit.circuitName}</h4>
-                    <Label size={'large'}>
-                      12:45:33
-                    </Label>
+                    {this.state.nextTrack && <Label size={'large'}>
+                      {this.state.nextTrack.date}
+                    </Label>}
                   </div>
 
                   <div>
@@ -78,14 +89,15 @@ class HomePage extends Component {
           </Grid>
           <Grid celled='internally' style={{height: '100%', borderTop: '1px solid #d4d4d4'}}>
             <Grid.Row>
-              <Grid.Column width={10}>
+              <Grid.Column width={11}>
+                {/*<div className='home-constructor-panel'>{this.showConstructors()}</div>*/}
+
                 <div><small><strong> RACE RESULTS: {this.props.historyTrack.raceName}</strong></small></div>
 
                 <TrackHistory track={this.props.historyTrack.raceName}/>
 
               </Grid.Column>
-              <Grid.Column width={6} className='next-panel race-results'>
-                <div><small><strong>YEAR AGO RESULTS: </strong></small></div>
+              <Grid.Column width={5} className='next-panel race-results' >
                 <div className='home-next-panel home-next-results' style={{height: '100%'}}>
                   <RaceYearAgo historyResults={this.props.historyTrack} />
                 </div>

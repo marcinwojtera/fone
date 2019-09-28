@@ -10,6 +10,7 @@ const path = require('path');
 const fs = require('fs');
 const mcache = require('memory-cache');
 const app = express();
+const cookieSession = require("cookie-session");
 
 const cache = (duration) => {
   return (req, res, next) => {
@@ -49,6 +50,11 @@ app.use(
 );
 
 const port = process.env.PORT || 3002;
+
+app.use(cookieSession({
+  name: "session",
+  keys: ["key1", "key2"],
+}));
 
 // To be able to serve static files
 app.use(express.static('public'));
@@ -130,6 +136,18 @@ app.get(
     res.json(prepareAns(year, '1', '/'));
   },
 );
+
+app.post(
+  '/api/lang',
+  (req, res) => {
+    const body = req.body;
+    console.log(req.body)
+    // req.session.lang = body
+    res.status(200).json({body});
+  },
+);
+
+
 
 app.get(
   '/api/race/:year/:season',
