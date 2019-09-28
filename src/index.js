@@ -80,16 +80,6 @@ app.get('/api/state', (req, res) => {
   res.send(backstore.getState().loadInfo);
 });
 
-app.get('/api/test2/:driverId', (req, res) => {
-  const { driverId } = req.params;
-  res.send(loadResultsForDrivers(driverId));
-});
-
-app.get('/api/trackStats/:trackId', (req, res) => {
-  const { trackId } = req.params;
-  res.send(loadResultsForTrackStats(trackId));
-});
-
 app.get(
   '/api/stats/:year',
   (req, res) => {
@@ -159,10 +149,10 @@ app.get('/api/compare/:driverId', (req, res) => {
   res.send(loadResultsForDrivers(driverId));
 });
 
-app.get('/api/historyTrack/:year/:season/:circuitId', (req, res) => {
-  const { season, year, circuitId } = req.params;
-  res.send(loadResultsForTrack(year, season, circuitId));
-});
+// app.get('/api/historyTrack/:year/:season/:circuitId', (req, res) => {
+//   const { season, year, circuitId } = req.params;
+//   res.send(loadResultsForTrack(year, season, circuitId));
+// });
 
 app.get('/race/:year/:season',
   async (req, res) => {

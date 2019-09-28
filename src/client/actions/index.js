@@ -4,8 +4,6 @@ import { forEach } from 'lodash';
 export const FETCH_DATA = 'FETCH_DATA';
 export const FETCH_DRIVER_DATA = 'FETCH_DRIVER_DATA';
 export const FETCH_DATA_TRACK = 'FETCH_DATA_TRACK';
-export const FETCH_DATA_TRACK_YEAR_AGO = 'FETCH_DATA_TRACK_YEAR_AGO';
-export const FETCH_DATA_TRACK_HISTORY = 'FETCH_DATA_TRACK_HISTORY'
 
   export const fetchData = (params, pathname) => (dispatch, getState) => {
 
@@ -19,11 +17,12 @@ export const FETCH_DATA_TRACK_HISTORY = 'FETCH_DATA_TRACK_HISTORY'
         data: values[0].data,
         navigation: values[0].navigation,
         driverHistory: values[0].driverHistory,
-        selectedTrack: values[0].selectedTrack
+        selectedTrack: values[0].selectedTrack,
+        trackHistoryStats: values[0].trackHistoryStats,
+        historyTrack: values[0].historyTrack,
       },
     });
 
-    // window.history.pushState('page2', 'Title', pathname)
   });
 };
 
@@ -53,16 +52,6 @@ export const fetchTrack = (season) => (dispatch, getState) => {
     });
 };
 
-export const fetchTrackYearAgo = (year, season, track) => (dispatch) => {
-  axios.get(`/api/historyTrack/${year}/${season}/${track}`)
-    .then(rest => {
-      dispatch({
-        type: FETCH_DATA_TRACK_YEAR_AGO,
-        payload: {historyTrack: rest.data},
-      });
-    });
-};
-
 export const fetchDriverToCompare = (driverId) => (dispatch, getState) => {
   const driver = getState().loadedCompareDriver[driverId]
   if (!driver) {
@@ -83,17 +72,5 @@ export const fetchDriverToCompare = (driverId) => (dispatch, getState) => {
     })
   }
 };
-
-
-export const fetchHistoryTrackResults = (circuit) => (dispatch, getState) => {
-  axios.get(`/api/trackStats/${circuit}`)
-    .then(rest => {
-      dispatch({
-        type: FETCH_DATA_TRACK_HISTORY,
-        payload: rest.data
-      });
-    });
-};
-
 
 export const changeUrl = (params, pathname) =>  dispatch => dispatch(fetchData(params, pathname))

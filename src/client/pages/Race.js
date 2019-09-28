@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Grid, Segment, Dimmer, Step } from 'semantic-ui-react'
-import DriversPoints from '../components/TrackResults';
+import TrackResults from '../components/TrackResults';
 import {withRouter, Link} from "react-router-dom";
 import UrlWrapper from '../urlWrapper'
 import { map } from 'lodash'
@@ -16,7 +16,7 @@ class Race extends Component {
             <Grid.Row>
               <Grid.Column width={3} style={{padding: 0}}>
 
-                <Step.Group size='tiny' fluid vertical>
+                <Step.Group size='tiny' fluid vertical style={{height: 400, background: '#fff'}}>
 
                   {map(this.props.seasonsList, (x, i)=> {
                     return(
@@ -45,7 +45,7 @@ class Race extends Component {
 
               </Grid.Column>
               <Grid.Column width={13}>
-                {this.props.seasonsResults && <DriversPoints />}
+                {this.props.seasonsResults && <TrackResults />}
               </Grid.Column>
             </Grid.Row>
           </Grid>

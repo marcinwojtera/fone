@@ -30,7 +30,6 @@ class HomePage extends Component {
     const circInfo = find(this.props.seasonsList, (x => +dateNow <= +new Date(x.date) ));
     if (circInfo) {
       this.setState({nextTrack: circInfo})
-      this.props.dispatch(fetchTrackYearAgo(circInfo.season, circInfo.round, circInfo.Circuit.circuitId))
       this.props.dispatch(fetchTrack(circInfo.round))
     }
 

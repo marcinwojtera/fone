@@ -10,7 +10,7 @@ export class MenuComponent extends Component {
   state = { activeItem: this.props.year }
 
   handleItemClick = (e, { name }) => {
-    this.props.history.push(`/race/${name}/1`)
+    this.props.history.push(`/race/${name}/${this.props.season}`)
     this.setState({ activeItem: name })
   }
   handleHompageClick = (e, { name }) => {
@@ -94,6 +94,7 @@ const mapStateToProps = state => ({
   seasonsDrivers: state.data.seasonsDrivers,
   seasonsList: state.data.seasonsList || [],
   year: state.navigation.year,
+  season: state.navigation.season,
   driverId: state.navigation.driver,
 });
 

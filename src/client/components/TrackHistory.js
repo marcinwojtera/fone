@@ -9,20 +9,7 @@ class TrackHistory extends Component {
   state = {
     loading: true,
   }
-  componentDidMount() {
-    this.loadHistoryResults(this.props.track || this.props.selectedTrack);
-  }
-  componentDidUpdate (prevProps) {
-   if(!this.props.track && prevProps.pathname !== this.props.pathname && this.props.selectedTrack !== prevProps.selectedTrack) {
-     this.loadHistoryResults(this.props.selectedTrack);
-   }
-   if(this.props.track !== prevProps.track) {
-     this.loadHistoryResults(this.props.track);
-   }
-  }
-  loadHistoryResults = (track) => {
-    this.props.dispatch(fetchHistoryTrackResults(track))
-  }
+
   renderDriver = (driver, year) => {
     return (<Link to={`/driver/${driver.driverId}/${year}`}>
       <span className={'track-history-link'}>{driver.givenName} {driver.familyName}</span>

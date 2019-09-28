@@ -3,7 +3,8 @@ import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import reducers from '../client/reducers';
 import { backstore } from '../serData/pool';
-import { filter, min, max, takeLeft } from 'lodash'
+import { filter, min, max, takeLeft, find } from 'lodash'
+import { fetchTrack, fetchTrackYearAgo } from '../client/actions'
 const _ = require('lodash/core');
 
 export const filterPitStops = (data, season) => {
@@ -58,17 +59,28 @@ export const prepareAns = (year, season, pathname, driver) => {
       seasonsPitStop: !driver && filterPitStops(backstore.getState().pitStop[getYear], getSeason),
       seasonsYears: backstore.getState().seasonsYear,
       statsBySeason: !driver && filterData(backstore.getState().stats[getYear], getSeason),
-      loadInfo: backstore.getState().loadInfo,
     },
     navigation: {
      season: getSeason, year: getYear, pathname, driver
     },
     selectedTrack: !driver && backstore.getState().seasons[getYear][getSeason -1],
-    driverHistory: driver ? loadResultsForDrivers(driver): []
+    driverHistory: driver ? loadResultsForDrivers(driver): [],
+    historyTrack: !driver && loadResultsForTrackYearAgo(getYear),
+    trackHistoryStats: !driver && loadResultsForTrackStats(backstore.getState().seasons[getYear][getSeason -1].raceName)
   };
 
   return data;
 };
+
+export const loadResultsForTrackYearAgo = (year) => {
+  const dateNow = new Date();
+  const getYear = !year ? new Date().getFullYear().toString() : year;
+  const circInfo = find(backstore.getState().seasons[getYear], (x => +dateNow <= +new Date(x.date) ));
+  if (circInfo) {
+    return loadResultsForTrack (circInfo.season, circInfo.round, circInfo.Circuit.circuitId)
+  } else return false;
+}
+
 
 export const loadResultsForDrivers = (driver) => {
   const results = backstore.getState().seasonsResults;
