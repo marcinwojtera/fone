@@ -7,8 +7,7 @@ import RaceTimming from './block/RaceTimming';
 import PitStops from './block/PitStops'
 import TrackHistory from './TrackHistory'
 import HeaderRaceSeason from './block/HeaderRaceSeason';
-import StatsElements from './block/StatsElements'
-import { Tab, Dimmer, Header, Icon,  Segment } from 'semantic-ui-react'
+import { Tab } from 'semantic-ui-react'
 import { Helmet } from 'react-helmet'
 
 const panes = [
@@ -16,7 +15,6 @@ const panes = [
   { menuItem: { key: 'Qualify', icon: 'flag checkered', content: 'Qualify' }, render: () => <Tab.Pane> <QualifyBlock /></Tab.Pane> },
   { menuItem: { key: 'Pit Stops', icon: 'wait', content: 'Pit Stops' }, render: () => <Tab.Pane> <PitStops /></Tab.Pane> },
   { menuItem: { key: 'RaceTimming', icon: 'line graph', content: 'Race timming' }, render: () => <Tab.Pane> <RaceTimming /></Tab.Pane> },
-  // { menuItem: { key: 'RaceGraph', icon: 'line graph', content: 'Race graph' }, render: () => <Tab.Pane> <StatsElements /></Tab.Pane> },
   { menuItem: 'Track info', render: () => <Tab.Pane><TrackBlock /></Tab.Pane> },
 ]
 
@@ -26,9 +24,7 @@ class TrackResults extends Component {
     text: '',
     text2:''
   }
-
   render() {
-    const isFeatureRace = new Date(this.props.selectedTrack.date) >= new Date()
     return (
       <div>
         <Helmet>
@@ -40,15 +36,9 @@ class TrackResults extends Component {
          <div>
            <HeaderRaceSeason />
            <TrackHistory />
+
            <Tab panes={panes} />
          </div>
-
-          <Dimmer active={isFeatureRace} onClickOutside={this.handleHide}>
-            <Header as='h2' icon inverted>
-              <Icon name='heart' />
-              Dimmed Message!
-            </Header>
-          </Dimmer>
       </div>
     );
   }

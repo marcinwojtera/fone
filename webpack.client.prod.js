@@ -20,16 +20,15 @@ const config = {
     children: true
   },
   entry: {
-    client: ['./src/client/client.js', '@nivo/bump', '@nivo/line'],
+    client: ['./src/client/client.js', '@nivo/line'],
     pitStop: ['./src/client/components/block/PitStops.js'],
-    statsElements: ['./src/client/components/block/StatsElements.js'],
     vendor: ['react', 'react-dom', 'redux', 'semantic-ui-react', 'lodash'],
   },
   output: {
     path: path.resolve(__dirname, 'public'),
     filename: '[name].[chunkhash].js',
     chunkFilename: '[name].[chunkhash].js',
-    jsonpFunction: 'meetingsJsonp'
+    jsonpFunction: 'statsJsonp'
   },
   optimization: {
     minimize: true,
@@ -57,13 +56,7 @@ const config = {
           name: 'pitStop',
           test: 'pitStop',
           enforce: true
-        },
-        statsElements: {
-          chunks: 'all',
-          name: 'statsElements',
-          test: 'statsElements',
-          enforce: true
-        },
+        }
       }
     },
     runtimeChunk: {

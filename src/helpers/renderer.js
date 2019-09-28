@@ -11,7 +11,7 @@ import App from '../client/App';
 export default (req, store, context, statsFile) => {
 
   const html = renderHtml({
-    ...resolveAssets(statsFile, { chunksOrder: ['manifest', 'vendor', 'client', 'pitStop', 'statsElements'] }),
+    ...resolveAssets(statsFile, { chunksOrder: ['manifest', 'vendor', 'client', 'pitStop'] }),
     markup: renderToString(
       <Provider store={store}>
         <StaticRouter location={req.path} context={context}>

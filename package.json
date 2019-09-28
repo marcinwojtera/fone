@@ -24,7 +24,6 @@
   "license": "ISC",
   "dependencies": {
     "@nivo/axes": "^0.59.2",
-    "@nivo/bump": "^0.59.1",
     "@nivo/line": "^0.59.3",
     "axios": "0.18.0",
     "cookie-session": "^1.3.3",
