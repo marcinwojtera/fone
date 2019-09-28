@@ -124,6 +124,7 @@ app.get('/api/seasons', async (req, res) => {
 
 app.get(
   '/api/home',
+  cache(100),
   (req, res) => {
     const year = new Date().getFullYear()
     res.json(prepareAns(year, '1', '/'));
@@ -132,13 +133,14 @@ app.get(
 
 app.get(
   '/api/race/:year/:season',
+  cache(100),
   (req, res) => {
     const { season, year } = req.params;
     const path = `/race/${year}/${season}`
       res.json(prepareAns(req.params.year, req.params.season, path));
   },
 );
-app.get('/api/driver/:driverId/:year', (req, res) => {
+app.get('/api/driver/:driverId/:year', cache(100), (req, res) => {
   const { driverId, year } = req.params;
   const path = `/driver/${driverId}/${year}`
   res.send(prepareAns(year, req.params.season, path, driverId));
@@ -149,13 +151,9 @@ app.get('/api/compare/:driverId', (req, res) => {
   res.send(loadResultsForDrivers(driverId));
 });
 
-// app.get('/api/historyTrack/:year/:season/:circuitId', (req, res) => {
-//   const { season, year, circuitId } = req.params;
-//   res.send(loadResultsForTrack(year, season, circuitId));
-// });
-
 app.get('/race/:year/:season',
-  async (req, res) => {
+  cache(100),
+  (req, res) => {
     loadHtml(req, res)
 });
 
