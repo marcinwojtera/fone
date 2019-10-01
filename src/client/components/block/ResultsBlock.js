@@ -14,8 +14,6 @@ class QualifyBlock extends Component {
         <Grid celled='internally'>
           <Grid.Row>
             <Grid.Column width={16}>
-
-
               <Table striped color='purple' selectable>
                 <Table.Header>
                   <Table.Row>

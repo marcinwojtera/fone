@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { List, Label } from 'semantic-ui-react'
+import { Label } from 'semantic-ui-react'
 import { map } from 'lodash'
 import { connect } from 'react-redux';
 import { fetchDriverToCompare } from './../../actions'
@@ -15,11 +15,8 @@ class DriverList extends Component {
     return (
       <div>
         <small> <strong>COMPARE WITH: {' '}</strong>
-  <br/>  <br/>
-
-
+          <br/>  <br/>
           {map(this.props.seasonsDrivers, (driver, indexId) => this.props.driverId !== indexId && (
-
             <Label
               className="driver-list-history"
               as={'a'}
@@ -28,7 +25,6 @@ class DriverList extends Component {
               color={!!this.props.loadedCompareDriver[indexId] ? 'pink' : null} >
               {driver.Driver.givenName} {driver.Driver.familyName}
             </Label>
-
           ))}
        </small>
       </div>

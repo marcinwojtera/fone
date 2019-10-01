@@ -28,7 +28,7 @@ const template = `
                  var script = js.split(',');
                  script.forEach(function(elem){
                    let chunk = document.createElement('script');
-                   chunk.async = true;
+                 
                    chunk.defer = true;
                    chunk.src = "../../"+elem;
                    document.head.appendChild(chunk);
@@ -39,15 +39,4 @@ const template = `
 `;
 
 export default data => ejs.render(template, data);
-// <script>
-//   let js = "<%= js %>";
-//   let script = js.split(',');
-//   console.log(script)
-//   script.forEach(function(elem){
-//   let chunk = document.createElement('script');
-//                    // chunk.async = true;
-//                    chunk.defer = true;
-//                    chunk.src = "../../"+elem;
-//                    document.head.appendChild(chunk);
-//                  });
-//                </script>
+// chunk.async = true;

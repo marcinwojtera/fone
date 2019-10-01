@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { fetchTrack, fetchTrackYearAgo } from '../../actions'
+import { fetchTrackYearAgo } from '../../actions'
 import HistoryResults from './HistoryResults'
 
 class RaceYearAgo extends React.Component {

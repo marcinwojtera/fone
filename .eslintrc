@@ -15,13 +15,17 @@
     }
   },
   "settings": {
-    "import/resolver": { "webpack": { "config": "webpack.config.prod.js" } }
+    "import/resolver": {
+      "babel-module": {},
+      "webpack": { "config": "webpack.config.dist.js" }
+    }
   },
   "plugins": [
     "import",
     "react"
   ],
   "rules": {
+    "class-methods-use-this": "off",
     "react/jsx-filename-extension": "off",
     "object-curly-newline": "off",
     "no-else-return": "off",

@@ -31,7 +31,6 @@ class DriverChart extends React.Component {
                      </div>)
                    })}
                  </div>
-
                </div>
              )
            })}

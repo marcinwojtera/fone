@@ -9,5 +9,5 @@ export default combineReducers({
   loadedCompareDriver,
   loadedTrackHome,
   historyTrack,
-  trackHistoryStats
+  trackHistoryStats,
 });

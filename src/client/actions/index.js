@@ -5,11 +5,9 @@ export const FETCH_DATA = 'FETCH_DATA';
 export const FETCH_DRIVER_DATA = 'FETCH_DRIVER_DATA';
 export const FETCH_DATA_TRACK = 'FETCH_DATA_TRACK';
 
-  export const fetchData = (params, pathname) => (dispatch, getState) => {
-
+export const fetchData = (params, pathname) => (dispatch) => {
   const getData = axios.get(`/api${pathname}`)
     .then(rest => rest.data);
-  // const navigation = {params, pathname}
   Promise.all([getData]).then(values => {
     dispatch({
       type: FETCH_DATA,
@@ -22,65 +20,52 @@ export const FETCH_DATA_TRACK = 'FETCH_DATA_TRACK';
         historyTrack: values[0].historyTrack,
       },
     });
-
   });
 };
 
 export const fetchDataWiki = (navigation) => (dispatch, getState) => {
-
-  const selectedTrack = navigation.season ? getState().data.seasonsList[navigation.season -1] : null;
-  const circuit = selectedTrack ? selectedTrack.Circuit.url.split('/').slice(-1).pop() : false
-  const getDataTrackFromWiki = axios.get(`https://pl.wikipedia.org/api/rest_v1/page/summary/${circuit}`)
+  const selectedTrack = navigation.season ? getState().data.seasonsList[navigation.season - 1] : null;
+  const circuit = selectedTrack ? selectedTrack.Circuit.url.split('/').slice(-1).pop() : false;
+  axios.get(`https://pl.wikipedia.org/api/rest_v1/page/summary/${circuit}`)
     .then(rest => {
       dispatch({
         type: FETCH_DATA,
-        payload: {...getState(), ...{selectedTrack, ...{selectedTrack: rest.data}} }
+        payload: { ...getState(), ...{ selectedTrack, ...{ selectedTrack: rest.data } } },
       });
     });
 };
 
 export const fetchTrack = (season) => (dispatch, getState) => {
-
-  const selectedTrack = season ? getState().data.seasonsList[season -1] : null;
-  const circuit = selectedTrack ? selectedTrack.Circuit.url.split('/').slice(-1).pop() : false
+  const selectedTrack = season ? getState().data.seasonsList[season - 1] : null;
+  const circuit = selectedTrack ? selectedTrack.Circuit.url.split('/').slice(-1).pop() : false;
   axios.get(`https://pl.wikipedia.org/api/rest_v1/page/summary/${circuit}`)
     .then(rest => {
       dispatch({
         type: FETCH_DATA_TRACK,
-        payload: {loadedTrackHome: rest.data},
+        payload: { loadedTrackHome: rest.data },
       });
     });
 };
 
 export const fetchDriverToCompare = (driverId) => (dispatch, getState) => {
-  const driver = getState().loadedCompareDriver[driverId]
+  const driver = getState().loadedCompareDriver[driverId];
   if (!driver) {
     axios.get(`/api/compare/${driverId}`)
-      .then(compare =>   dispatch({
+      .then(compare => dispatch({
         type: FETCH_DRIVER_DATA,
-        payload: {...getState().loadedCompareDriver, ...{[driverId]: compare.data}}
+        payload: { ...getState().loadedCompareDriver, ...{ [driverId]: compare.data } },
       }));
   } else {
     const list = getState().loadedCompareDriver;
-    const newList = {}
+    const newList = {};
     forEach(list, (data, driver) => {
       if (driver !== driverId) newList[driver] = data;
-    })
+    });
     dispatch({
       type: FETCH_DRIVER_DATA,
-      payload: newList
-    })
+      payload: newList,
+    });
   }
 };
 
-export const fetchLangChange = (lang) => (dispatch, getState) => {
-
-  axios.post(`/api/lang/`,{
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({test: 'dskfjskdfjs' }),
-  }).then(data =>  {
-    console.log(data)
-  } );
-};
-
-export const changeUrl = (params, pathname) =>  dispatch => dispatch(fetchData(params, pathname))
+export const changeUrl = (params, pathname) => dispatch => dispatch(fetchData(params, pathname));

@@ -45,9 +45,8 @@ class HistoryResults extends Component {
            </Table>
            </PerfectScrollbar>
          </div>
-
-              <div>
-              </div>
+        <div>
+        </div>
       </div>
     );
   }

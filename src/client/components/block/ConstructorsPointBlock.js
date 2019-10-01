@@ -3,17 +3,13 @@ import { connect } from 'react-redux';
 import { Grid, Table } from 'semantic-ui-react';
 
 class ConstructorsPointBlock extends Component {
-  state = {
-    rendered: false,
-  }
-
   render() {
     return (
       <div>
-        <Grid celled='internally'>
+        <Grid celled="internally">
           <Grid.Row>
             <Grid.Column width={16}>
-              <Table striped color='purple' selectable>
+              <Table striped color="purple" selectable>
                 <Table.Header>
                   <Table.Row>
                     <Table.HeaderCell>Point</Table.HeaderCell>
@@ -23,16 +19,18 @@ class ConstructorsPointBlock extends Component {
                 </Table.Header>
                 <Table.Body>
                   {this.props.seasonConstructors.map(x => (
-                    <Table.Row key={x.position +'-' +this.props.season}>
-                      <Table.Cell>{x.points} </Table.Cell>
+                    <Table.Row key={`${x.position}-${this.props.season}`}>
+                      <Table.Cell>
+                        {x.points}
+                        {' '}
+                      </Table.Cell>
                       <Table.Cell>{x.Constructor.name}</Table.Cell>
                       <Table.Cell>{x.wins}</Table.Cell>
                     </Table.Row>
                   ))}
                 </Table.Body>
               </Table>
-              <div>
-              </div>
+              <div />
             </Grid.Column>
           </Grid.Row>
         </Grid>

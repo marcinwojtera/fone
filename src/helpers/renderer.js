@@ -7,9 +7,7 @@ import renderHtml from './template';
 import App from '../client/App';
 
 
-
 export default (req, store, context, statsFile) => {
-
   const html = renderHtml({
     ...resolveAssets(statsFile, { chunksOrder: ['manifest', 'vendor', 'client', 'pitStop'] }),
     markup: renderToString(
@@ -17,10 +15,25 @@ export default (req, store, context, statsFile) => {
         <StaticRouter location={req.path} context={context}>
           <App />
         </StaticRouter>
-      </Provider>
+      </Provider>,
     ),
     state: store.getState(),
   });
+
+  return html;
+};
+
+export const render = (req, store, context) => {
+  const html = {
+    markup: renderToString(
+      <Provider store={store}>
+        <StaticRouter location={req.path} context={context}>
+          <App />
+        </StaticRouter>
+      </Provider>,
+    ),
+    state: store.getState(),
+  };
 
   return html;
 };

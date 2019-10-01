@@ -11,7 +11,7 @@ function UrlWrapper(HocComponent, props){
         this.setUrl(this.props.match.params, this.props.location.pathname)
       }
     }
-    componentDidUpdate(prevProps, prevState, snapshot) {
+    componentDidUpdate() {
       if(this.props.location.pathname !== this.props.navigation.pathname) {
           this.setUrl(this.props.match.params, this.props.location.pathname)
         }

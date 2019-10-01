@@ -1,5 +1,3 @@
-import { merge } from 'lodash';
-
 import { FETCH_DATA, FETCH_DRIVER_DATA, FETCH_DATA_TRACK } from '../actions/index';
 
 
@@ -74,4 +72,3 @@ export const trackHistoryStats = (state = false, action) => {
       return state;
   }
 };
-

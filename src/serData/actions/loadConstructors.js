@@ -1,4 +1,5 @@
 import fetch from 'node-fetch';
+
 export const BACK_FETCH_CONSTRUCTORS = 'BACK_FETCH_CONSTRUCTORS';
 
 export const loadConstructors = year => dispatch => {
@@ -13,7 +14,7 @@ export const loadConstructors = year => dispatch => {
       payload: { year, values },
     });
   }).then(x => console.log('load Constructor for:', year))
-    .catch(function(err) {
+    .catch((err) => {
       console.log(err.message);
     });
 };

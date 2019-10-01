@@ -32,11 +32,9 @@ class TrackResults extends Component {
           <title>F1 statistics - {`${this.props.selectedTrack.raceName} Year: ${this.props.selectedTrack.season}`}</title>
           <meta name="description" content={`${this.props.selectedTrack.raceName} Year - ${this.props.selectedTrack.season}`} />
         </Helmet>
-
          <div>
            <HeaderRaceSeason />
            <TrackHistory />
-
            <Tab panes={panes} />
          </div>
       </div>

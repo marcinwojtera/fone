@@ -1,27 +1,18 @@
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const autoprefixer = require('autoprefixer');
 const { StatsWriterPlugin } = require('webpack-stats-plugin');
-const PurgecssPlugin = require('purgecss-webpack-plugin')
-const path = require('path')
-const glob = require('glob')
-const PATHS = {
-  src: path.resolve(__dirname, 'public')
-}
 
 module.exports = {
   node: {
-    fs: 'empty'
+    fs: 'empty',
   },
   mode: 'dev',
   plugins: [
     new MiniCssExtractPlugin({
       filename: '[name].css',
-      chunkFilename: '[name].css'
+      chunkFilename: '[name].css',
     }),
-    new PurgecssPlugin({
-      paths: glob.sync(`${PATHS.src}/**/*`, { nodir: true }),
-      only: ['bundle', 'vendor']
-    }),
+
     new StatsWriterPlugin({ filename: 'stats.json' }),
   ],
 
@@ -30,12 +21,12 @@ module.exports = {
       {
         test: /\.(less)$/,
         use: [{
-          loader: 'style-loader' // creates style nodes from JS strings
+          loader: 'style-loader', // creates style nodes from JS strings
         }, {
-          loader: 'css-loader' // translates CSS into CommonJS
+          loader: 'css-loader', // translates CSS into CommonJS
         }, {
-          loader: 'less-loader' // compiles Less to CSS
-        }]},
+          loader: 'less-loader', // compiles Less to CSS
+        }] },
       {
         type: 'javascript/auto',
         exclude: /node_modules/,
@@ -44,10 +35,10 @@ module.exports = {
           {
             loader: 'file-loader',
             options: {
-              name: "jsons/[name].[ext]",
-            }
-          }
-        ]
+              name: 'jsons/[name].[ext]',
+            },
+          },
+        ],
       },
       {
         test: /\.js?$/,
@@ -56,9 +47,9 @@ module.exports = {
         options: {
           presets: [
             '@babel/preset-react',
-            ['@babel/env', { targets: { browsers: ['last 2 versions'] } }]
-          ]
-        }
+            ['@babel/env', { targets: { browsers: ['last 2 versions'] } }],
+          ],
+        },
       },
       {
         test: /\.(PNG|png|jpg|eot|woff|woff2|ttf|svg|gif)$/,
@@ -71,11 +62,11 @@ module.exports = {
           'css-loader',
           {
             loader: 'postcss-loader',
-            options: { plugins: () => [autoprefixer] }
+            options: { plugins: () => [autoprefixer] },
           },
-          'sass-loader'
-        ]
+          'sass-loader',
+        ],
       },
-    ]
+    ],
   },
 };

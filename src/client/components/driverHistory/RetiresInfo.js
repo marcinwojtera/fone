@@ -1,5 +1,5 @@
 import React from 'react'
-import { Label, Segment } from 'semantic-ui-react'
+import { Segment } from 'semantic-ui-react'
 import { map } from 'lodash'
 
 const RetiresInfo = ({ stats }) => {
@@ -15,10 +15,8 @@ const RetiresInfo = ({ stats }) => {
             </span>
             {num}
           </span>
-
         ))}
       </Segment>
-
     </div>
   )
 }

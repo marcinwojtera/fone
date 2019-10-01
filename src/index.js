@@ -1,35 +1,39 @@
 /* eslint-disable no-unused-vars */
-import 'core-js/stable';
+// import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 import express from 'express';
 import compression from 'compression';
-import renderer from './helpers/renderer';
+// import renderer from './helpers/renderer';
+import { render } from './helpers/renderer';
 import { initialLoads, prepareAns, loadResultsForDrivers, loadResultsForTrack, loadResultsForTrackStats } from './store/createStore';
 import { loadData, backstore } from './serData/pool';
+import { resolveAssets } from './helpers/assets';
+
 const path = require('path');
 const fs = require('fs');
 const mcache = require('memory-cache');
-const app = express();
-const cookieSession = require("cookie-session");
 
-const cache = (duration) => {
-  return (req, res, next) => {
-    let key = 'fi-Stats' + req.originalUrl || req.url
-    let cachedBody = mcache.get(key)
-    if (cachedBody) {
-      res.header('from-cache', key)
-      res.send(cachedBody)
-      return
-    } else {
-      res.sendResponse = res.send
-      res.send = (body) => {
-        mcache.put(key, body, duration * 1000);
-        res.sendResponse(body)
-      }
-      next()
-    }
+const app = express();
+
+app.set('views', path.resolve('./src/views'));
+app.set('view engine', 'ejs');
+const cookieSession = require('cookie-session');
+
+const cache = (duration) => (req, res, next) => {
+  const key = `fi-Stats${req.originalUrl}` || req.url;
+  const cachedBody = mcache.get(key);
+  if (cachedBody) {
+    res.header('from-cache', key);
+    res.send(cachedBody);
+  } else {
+    res.sendResponse = res.send;
+    res.send = (body) => {
+      mcache.put(key, body, duration * 1000);
+      res.sendResponse(body);
+    };
+    next();
   }
-}
+};
 
 function shouldCompress(req, res) {
   if (req.headers['x-no-compression']) return false;
@@ -42,6 +46,7 @@ function ignoreFavicon(req, res, next) {
     next();
   }
 }
+
 app.use(
   compression({
     level: 9, // set compression level from 1 to 9 (6 by default)
@@ -52,32 +57,41 @@ app.use(
 const port = process.env.PORT || 3002;
 
 app.use(cookieSession({
-  name: "session",
-  keys: ["key1", "key2"],
+  name: 'session',
+  keys: ['key1', 'key2'],
 }));
 
 // To be able to serve static files
 app.use(express.static('public'));
 app.use(ignoreFavicon);
+// app.set("layout extractScripts", true)
 
-app.get('/robots.txt',  (req, res) => {
+
+const renderScriptsTags = (assets) => {
+  return assets.map(function(script) {
+    return '<script src="/' + script + '" async="true"></script>';
+  }).join('\n ');
+}
+
+
+app.get('/robots.txt', (req, res) => {
   res.type('text/plain');
-  res.send("User-agent: *\n" +
-    "Disallow: \n" +
-    "Disallow: /cgi-bin/");
+  res.send('User-agent: *\n'
+    + 'Disallow: \n'
+    + 'Disallow: /cgi-bin/');
 });
 
 app.get('/api/cache-stats', async (req, res) => {
-  let size = mcache.size();
-  let hits = mcache.hits();
-  let keys = mcache.keys();
-  let memsize = mcache.memsize();
+  const size = mcache.size();
+  const hits = mcache.hits();
+  const keys = mcache.keys();
+  const memsize = mcache.memsize();
 
-  res.json({memsize, size, hits, keys });
+  res.json({ memsize, size, hits, keys });
 });
 app.get('/api/cache-clear', async (req, res) => {
-  let cachedBody = mcache.clear()
-  res.json({clear : true});
+  const cachedBody = mcache.clear();
+  res.json({ clear: true });
 });
 app.get('/api/test', async (req, res) => {
   res.json(backstore.getState());
@@ -88,29 +102,25 @@ app.get('/api/state', (req, res) => {
 
 app.get(
   '/api/stats/:year',
-  (req, res) => {
-
+  async (req, res) => {
     const { year } = req.params;
-
     const values = [];
     for (let i = 0; i < 21; i++) {
       ((index) => {
         const prepareFile = `${year || '2019'}-${index + 1 || '1'}.json`;
         try {
-          // const dataJson = fs.readFileSync(`./jsons/${prepareFile}`);
           const dataJson = fs.readFileSync(path.resolve(`./build/jsons/${prepareFile}`));
           const jsonDataLoad = require(`./jsons/${prepareFile}`);
-
-          const jsonData = JSON.parse(dataJson) || jsonDataLoad
+          const jsonData = JSON.parse(dataJson) || jsonDataLoad;
           const value = jsonData.MRData.RaceTable.Races[0].Laps;
           const test = value.map(c => {
             const times = {};
             const mapping = c.Timings.forEach((v, key) => {
-              times[v.driverId] = {driverId: v.driverId, position: parseInt(v.position) , time: v.time};
+              times[v.driverId] = { driverId: v.driverId, position: parseInt(v.position), time: v.time };
             });
-            return times
-          })
-          const data = { round: (index + 1).toString(), test};
+            return times;
+          });
+          const data = { round: (index + 1).toString(), test };
           values.push(data);
         } catch (e) {
           const data = false;
@@ -132,7 +142,7 @@ app.get(
   '/api/home',
   cache(100),
   (req, res) => {
-    const year = new Date().getFullYear()
+    const year = new Date().getFullYear();
     res.json(prepareAns(year, '1', '/'));
   },
 );
@@ -140,27 +150,25 @@ app.get(
 app.post(
   '/api/lang',
   (req, res) => {
-    const body = req.body;
-    console.log(req.body)
+    const { body } = req;
+    console.log(req.body);
     // req.session.lang = body
-    res.status(200).json({body});
+    res.status(200).json({ body });
   },
 );
-
-
 
 app.get(
   '/api/race/:year/:season',
   cache(100),
   (req, res) => {
     const { season, year } = req.params;
-    const path = `/race/${year}/${season}`
-      res.json(prepareAns(req.params.year, req.params.season, path));
+    const path = `/race/${year}/${season}`;
+    res.json(prepareAns(req.params.year, req.params.season, path));
   },
 );
 app.get('/api/driver/:driverId/:year', cache(100), (req, res) => {
   const { driverId, year } = req.params;
-  const path = `/driver/${driverId}/${year}`
+  const path = `/driver/${driverId}/${year}`;
   res.send(prepareAns(year, req.params.season, path, driverId));
 });
 
@@ -169,19 +177,38 @@ app.get('/api/compare/:driverId', (req, res) => {
   res.send(loadResultsForDrivers(driverId));
 });
 
-app.get('/race/:year/:season',
-  cache(100),
-  (req, res) => {
-    loadHtml(req, res)
-});
-
-const loadHtml = (req, res) => {
-  const driver = req.path.includes("driver");
+app.get('*', cache(100), (req, res) => {
+  const driver = req.path.includes('driver');
   let driverId = null;
   let year = req.params.year || 2019;
   if (driver) {
-     driverId = req.path.split('/')[2];
-     year = req.path.split('/')[3];
+    driverId = req.path.split('/')[2];
+    year = req.path.split('/')[3];
+  }
+  const store = initialLoads(year, req.params.season, req.path, driverId);
+  const statsFile = fs.readFileSync('public/stats.json', 'utf8');
+  const context = {};
+  const assets = resolveAssets(statsFile, { chunksOrder: ['manifest', 'vendor', 'client', 'pitStop'] })
+  const content = render(req, store, context, statsFile);
+
+  const scripts = renderScriptsTags(assets.js)
+  res.render('index.ejs', { content, scripts, store });
+});
+
+
+// app.get('/race/:year/:season',
+//   cache(100),
+//   (req, res) => {
+//     loadHtml(req, res);
+//   });
+
+const loadHtml = (req, res) => {
+  const driver = req.path.includes('driver');
+  let driverId = null;
+  let year = req.params.year || 2019;
+  if (driver) {
+    driverId = req.path.split('/')[2];
+    year = req.path.split('/')[3];
   }
   const store = initialLoads(year, req.params.season, req.path, driverId);
   const statsFile = fs.readFileSync('public/stats.json', 'utf8');
@@ -192,20 +219,18 @@ const loadHtml = (req, res) => {
     res.status(404);
   }
   res.send(content);
-}
-app.get('*', async (req, res) => {
-  loadHtml(req, res)
-});
+};
+// app.get('*', async (req, res) => {
+//   loadHtml(req, res);
+// });
 
-export const startServer = async () =>{
+export const startServer = async () => {
   app.listen(port, () => {
     // const dayInMilliseconds = 1000 * 60 * 60 * 24;
     // setInterval(() => { loadData(); }, dayInMilliseconds);
-    console.log(`-------------------------START----------------------`);
+    console.log('-------------------------START----------------------');
     console.log(`Listening on port: ${port}`);
   });
-}
+};
 
-loadData()
-
-
+loadData();

@@ -137,8 +137,6 @@ class DriverHistory extends Component {
                   ))
                   }
 
-
-
                   <Label style={{ float: 'right', cursor: 'pointer', padding: '5px 8px'}} onClick={this.columnViewToggle}>
                     {this.state.columnView ? <span><Icon name={'zoom-in'} /> Chart view</span> :
                      <span> <Icon name={'zoom-in'} /> Column view</span>}
@@ -173,15 +171,10 @@ class DriverHistory extends Component {
                   }
 
                 </small>
-
-
                 <Statistics stats={stats}/>
-
                 <br/>
-
                 <RetiresInfo stats={stats}/>
               </Grid.Column>
-
               <Grid.Column width={3} >
                 <DriverList />
               </Grid.Column>
@@ -259,32 +252,3 @@ const mapStateToProps = state => ({
 });
 export default connect(mapStateToProps)(DriverHistory);
 
-
-
-{/*<Portal onClose={this.closeBigChart} open={this.state.open}>*/}
-  {/*<Segment*/}
-    {/*style={{*/}
-      {/*left: '5%',*/}
-      {/*position: 'fixed',*/}
-      {/*top: '10%',*/}
-      {/*width: '90%',*/}
-      {/*zIndex: '1000',*/}
-    {/*}}*/}
-  {/*>*/}
-    {/*<Grid >*/}
-      {/*<Grid.Row>*/}
-        {/*<Grid.Column width={16} >*/}
-          {/*<HeaderDriverHistory simple/>*/}
-        {/*</Grid.Column>*/}
-      {/*</Grid.Row>*/}
-    {/*</Grid>*/}
-
-    {/*<DriverChart driverHistory={this.props.driverHistory} height={450}/>*/}
-    {/*<br/>*/}
-    {/*<Button*/}
-      {/*size='mini'*/}
-      {/*content='Close'*/}
-      {/*onClick={this.closeBigChart}*/}
-    {/*/>*/}
-  {/*</Segment>*/}
-{/*</Portal>*/}
