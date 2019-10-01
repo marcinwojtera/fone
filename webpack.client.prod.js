@@ -20,7 +20,7 @@ const config = {
     children: true,
   },
   entry: {
-    client: ['./src/client/client.js', '@nivo/line', 'semantic-ui-css'],
+    client: ['./src/client/client.js', '@nivo/line'],
     pitStop: ['./src/client/components/block/PitStops.js'],
     vendor: ['react', 'react-dom', 'redux', 'semantic-ui-react', 'lodash'],
   },
