@@ -35,6 +35,6 @@ class DriverList extends Component {
 const mapStateToProps = state => ({
   seasonsDrivers: state.data.seasonsDrivers,
   loadedCompareDriver: state.loadedCompareDriver,
-  driverId: state.navigation.driver,
+  driverId: state.navigation.driverId,
 });
 export default connect(mapStateToProps)(DriverList);

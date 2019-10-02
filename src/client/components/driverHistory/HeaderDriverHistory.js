@@ -22,7 +22,7 @@ const HeaderDriverHistory = ({ seasonsDrivers, simple }) => (
 
 
 const mapStateToProps = state => ({
-  seasonsDrivers: state.data.seasonsDrivers[state.navigation.driver] || [],
+  seasonsDrivers: state.data.seasonsDrivers[state.navigation.driverId] || [],
 });
 export default connect(mapStateToProps)(HeaderDriverHistory);
 

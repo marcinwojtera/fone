@@ -5,8 +5,14 @@ export const FETCH_DATA = 'FETCH_DATA';
 export const FETCH_DRIVER_DATA = 'FETCH_DRIVER_DATA';
 export const FETCH_DATA_TRACK = 'FETCH_DATA_TRACK';
 
-export const fetchData = (params, pathname) => (dispatch) => {
-  const getData = axios.get(`/api${pathname}`)
+export const fetchData = (pathname) => (dispatch) => {
+  const config = {
+    method: 'get',
+    url: pathname,
+    headers: { 'Accept': 'application/json' }
+  }
+
+  const getData = axios(config)
     .then(rest => rest.data);
   Promise.all([getData]).then(values => {
     dispatch({
@@ -67,5 +73,3 @@ export const fetchDriverToCompare = (driverId) => (dispatch, getState) => {
     });
   }
 };
-
-export const changeUrl = (params, pathname) => dispatch => dispatch(fetchData(params, pathname));

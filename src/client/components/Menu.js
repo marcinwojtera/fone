@@ -3,7 +3,7 @@ import { Menu, Popup } from 'semantic-ui-react';
 import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import { map } from 'lodash';
-import { changeUrl } from '../actions';
+import { fetchData } from '../actions';
 
 export class MenuComponent extends Component {
   state = { activeItem: this.props.year }
@@ -16,7 +16,7 @@ export class MenuComponent extends Component {
   handleHompageClick = (e, { name }) => {
     this.props.history.push('/');
     this.setState({ activeItem: name });
-    this.props.dispatch(changeUrl('', '/home'));
+    this.props.dispatch(fetchData('', '/home'));
   }
 
   handleDriverChange = (driver) => {
@@ -93,7 +93,7 @@ const mapStateToProps = state => ({
   seasonsList: state.data.seasonsList || [],
   year: state.navigation.year,
   season: state.navigation.season,
-  driverId: state.navigation.driver,
+  driverId: state.navigation.driverId,
 });
 
 export default withRouter(connect(mapStateToProps)(MenuComponent));

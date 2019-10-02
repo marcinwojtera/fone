@@ -40,7 +40,6 @@ class QualifyBlock extends Component {
                             <b>{x.position}</b>
                           </span>}
                       </Table.Cell>
-                      {/*<Table.Cell>{x.laps}</Table.Cell>*/}
                       <Table.Cell>{x.points !== '0' ? <span>+{x.points}</span> : <span>0</span>}</Table.Cell>
                       <Table.Cell><DriverRow driver={x.Driver.driverId}/></Table.Cell>
                       <Table.Cell>{x.grid}</Table.Cell>
@@ -48,7 +47,6 @@ class QualifyBlock extends Component {
                         {x.FastestLap.Time.time}
                           <span className="lap-place-box">Lap: {x.FastestLap.lap}, Time rank: {x.FastestLap.rank}</span>
                       </span>}
-
                       </Table.Cell>
                       <Table.Cell>{x.FastestLap && <span>{x.FastestLap.AverageSpeed.speed} <small>km/h</small></span>}</Table.Cell>
                       <Table.Cell>{x.status}</Table.Cell>

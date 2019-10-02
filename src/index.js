@@ -1,77 +1,27 @@
 /* eslint-disable no-unused-vars */
-// import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 import express from 'express';
 import compression from 'compression';
-// import renderer from './helpers/renderer';
-import { render } from './helpers/renderer';
-import { initialLoads, prepareAns, loadResultsForDrivers, loadResultsForTrack, loadResultsForTrackStats } from './store/createStore';
+import render from './helpers/renderer';
+import { initialLoads, prepareAns, loadResultsForDrivers } from './store/createStore';
 import { loadData, backstore } from './serData/pool';
-import { resolveAssets } from './helpers/assets';
+import { prepareAssets, shouldCompress, ignoreFavicon} from './helper';
 
 const path = require('path');
-const fs = require('fs');
-const mcache = require('memory-cache');
 
+const port = process.env.PORT || 3002;
 const app = express();
 
 app.set('views', path.resolve('./src/views'));
 app.set('view engine', 'ejs');
-const cookieSession = require('cookie-session');
-
-const cache = (duration) => (req, res, next) => {
-  const key = `fi-Stats${req.originalUrl}` || req.url;
-  const cachedBody = mcache.get(key);
-  if (cachedBody) {
-    res.header('from-cache', key);
-    res.send(cachedBody);
-  } else {
-    res.sendResponse = res.send;
-    res.send = (body) => {
-      mcache.put(key, body, duration * 1000);
-      res.sendResponse(body);
-    };
-    next();
-  }
-};
-
-function shouldCompress(req, res) {
-  if (req.headers['x-no-compression']) return false;
-  return compression.filter(req, res);
-}
-function ignoreFavicon(req, res, next) {
-  if (req.originalUrl.includes('favicon.ico')) {
-    res.status(204).json({ nope: true });
-  } else {
-    next();
-  }
-}
-
+app.use(ignoreFavicon);
 app.use(
   compression({
     level: 9, // set compression level from 1 to 9 (6 by default)
     filter: shouldCompress, // set predicate to determine whether to compress
   }),
 );
-
-const port = process.env.PORT || 3002;
-
-app.use(cookieSession({
-  name: 'session',
-  keys: ['key1', 'key2'],
-}));
-
-// To be able to serve static files
 app.use(express.static('public'));
-app.use(ignoreFavicon);
-// app.set("layout extractScripts", true)
-
-
-const renderScriptsTags = (assets) => {
-  return assets.map(function(script) {
-    return '<script src="/' + script + '" async="true"></script>';
-  }).join('\n ');
-}
 
 
 app.get('/robots.txt', (req, res) => {
@@ -79,25 +29,6 @@ app.get('/robots.txt', (req, res) => {
   res.send('User-agent: *\n'
     + 'Disallow: \n'
     + 'Disallow: /cgi-bin/');
-});
-
-app.get('/api/cache-stats', async (req, res) => {
-  const size = mcache.size();
-  const hits = mcache.hits();
-  const keys = mcache.keys();
-  const memsize = mcache.memsize();
-
-  res.json({ memsize, size, hits, keys });
-});
-app.get('/api/cache-clear', async (req, res) => {
-  const cachedBody = mcache.clear();
-  res.json({ clear: true });
-});
-app.get('/api/test', async (req, res) => {
-  res.json(backstore.getState());
-});
-app.get('/api/state', (req, res) => {
-  res.send(backstore.getState().loadInfo);
 });
 
 app.get(
@@ -138,91 +69,51 @@ app.get('/api/seasons', async (req, res) => {
   res.json({ season, years });
 });
 
-app.get(
-  '/api/home',
-  cache(100),
-  (req, res) => {
-    const year = new Date().getFullYear();
-    res.json(prepareAns(year, '1', '/'));
-  },
-);
-
-app.post(
-  '/api/lang',
-  (req, res) => {
-    const { body } = req;
-    console.log(req.body);
-    // req.session.lang = body
-    res.status(200).json({ body });
-  },
-);
-
-app.get(
-  '/api/race/:year/:season',
-  cache(100),
-  (req, res) => {
-    const { season, year } = req.params;
-    const path = `/race/${year}/${season}`;
-    res.json(prepareAns(req.params.year, req.params.season, path));
-  },
-);
-app.get('/api/driver/:driverId/:year', cache(100), (req, res) => {
-  const { driverId, year } = req.params;
-  const path = `/driver/${driverId}/${year}`;
-  res.send(prepareAns(year, req.params.season, path, driverId));
-});
-
 app.get('/api/compare/:driverId', (req, res) => {
   const { driverId, year } = req.params;
   res.send(loadResultsForDrivers(driverId));
 });
 
-app.get('*', cache(100), (req, res) => {
-  const driver = req.path.includes('driver');
-  let driverId = null;
-  let year = req.params.year || 2019;
-  if (driver) {
-    driverId = req.path.split('/')[2];
-    year = req.path.split('/')[3];
-  }
-  const store = initialLoads(year, req.params.season, req.path, driverId);
-  const statsFile = fs.readFileSync('public/stats.json', 'utf8');
-  const context = {};
-  const assets = resolveAssets(statsFile, { chunksOrder: ['manifest', 'vendor', 'client', 'pitStop'] })
-  const content = render(req, store, context, statsFile);
+const loadContent = (req, res) => {
+  res.format({
+    html: function(res, req){
+      loadHtml(res, req);
+    },
+    json: function(res, req){
+      loadJson(res, req)
+    }
+  });
+}
 
-  const scripts = renderScriptsTags(assets.js)
-  res.render('index.ejs', { content, scripts, store });
-});
-
-
-// app.get('/race/:year/:season',
-//   cache(100),
-//   (req, res) => {
-//     loadHtml(req, res);
-//   });
+const loadJson = (req, res) => {
+  const { pageNavigation } = req;
+  const navigation = pageNavigation;
+  res.json(prepareAns(navigation));
+}
 
 const loadHtml = (req, res) => {
-  const driver = req.path.includes('driver');
-  let driverId = null;
-  let year = req.params.year || 2019;
-  if (driver) {
-    driverId = req.path.split('/')[2];
-    year = req.path.split('/')[3];
-  }
-  const store = initialLoads(year, req.params.season, req.path, driverId);
-  const statsFile = fs.readFileSync('public/stats.json', 'utf8');
-  const context = {};
-  const content = renderer(req, store, context, statsFile);
+  const { pageNavigation } = req;
+  const navigation = pageNavigation;
+  const store = initialLoads(navigation);
+  const scripts = prepareAssets();
+  const content = render(navigation.path, store);
+  res.render('index.ejs', { content, scripts, store });
 
-  if (context.notFound) {
-    res.status(404);
-  }
-  res.send(content);
 };
-// app.get('*', async (req, res) => {
-//   loadHtml(req, res);
-// });
+
+const pageDiscover = (req, res, next) => {
+  const splitPath = req.path.split('/')
+  const { driverId, year = 2019, season = 1 } = req.params;
+  const { path } = req;
+  const pageView = splitPath[1] || 'home'
+  const navigation = { year, season, path, driverId, pageView};
+  req.pageNavigation = navigation;
+  next();
+}
+
+app.get('/driver/:driverId/:year', pageDiscover, loadContent);
+app.get('/race/:year/:season', pageDiscover, loadContent);
+app.get('/', pageDiscover, loadContent);
 
 export const startServer = async () => {
   app.listen(port, () => {
@@ -232,5 +123,9 @@ export const startServer = async () => {
     console.log(`Listening on port: ${port}`);
   });
 };
+
+app.get('/api/test', async (req, res) => {
+  res.json(backstore.getState());
+});
 
 loadData();

@@ -51,7 +51,7 @@ class Driver extends Component {
 }
 
 const mapStateToProps = state => ({
-  driverId: state.navigation.driver,
+  driverId: state.navigation.driverId,
   seasonsDrivers: state.data.seasonsDrivers,
   year: state.navigation.year,
 });

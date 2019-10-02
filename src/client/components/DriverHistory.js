@@ -25,7 +25,7 @@ class DriverHistory extends Component {
   }
 
   componentDidUpdate (prevProps) {
-    if (this.props.driver !== prevProps.driver) {
+    if (this.props.driverId !== prevProps.driverId) {
       this.setState({activeItem: this.props.year, chartSelectedYears: [this.props.year]})
     }
   }
@@ -93,7 +93,7 @@ class DriverHistory extends Component {
     this.setState({ chartSelectedYears: selectedYears })
   }
   calculateDataChart = () => {
-    return calculateChart(this.props.driverHistory, this.props.loadedCompareDriver, this.state.chartSelectedYears, this.props.driver, this.state.qualiView)
+    return calculateChart(this.props.driverHistory, this.props.loadedCompareDriver, this.state.chartSelectedYears, this.props.driverId, this.state.qualiView)
   }
   columnViewToggle = () => {
     this.setState({columnView: !this.state.columnView})
@@ -246,8 +246,8 @@ const mapStateToProps = state => ({
   year: state.navigation.year,
   driverInfo: state.data.seasonsDrivers,
   driverHistory: state.driverHistory,
-  driver: state.navigation.driver,
-  seasonsDrivers: state.data.seasonsDrivers[state.navigation.driver] || [],
+  driverId: state.navigation.driverId,
+  seasonsDrivers: state.data.seasonsDrivers[state.navigation.driverId] || [],
   loadedCompareDriver: state.loadedCompareDriver,
 });
 export default connect(mapStateToProps)(DriverHistory);
