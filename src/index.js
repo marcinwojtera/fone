@@ -5,7 +5,7 @@ import compression from 'compression';
 import render from './helpers/renderer';
 import { initialLoads, prepareAns, loadResultsForDrivers } from './store/createStore';
 import { loadData, backstore } from './serData/pool';
-import { prepareAssets, shouldCompress, ignoreFavicon} from './helper';
+import { prepareAssets, shouldCompress, ignoreFavicon } from './helper';
 
 const path = require('path');
 
@@ -63,11 +63,11 @@ app.get(
   },
 );
 
-app.get('/api/seasons', async (req, res) => {
-  const season = backstore.getState().seasons['2019'];
-  const years = backstore.getState().seasonsYear;
-  res.json({ season, years });
-});
+// app.get('/api/seasons', async (req, res) => {
+//   const season = backstore.getState().seasons['2019'];
+//   const years = backstore.getState().seasonsYear;
+//   res.json({ season, years });
+// });
 
 app.get('/api/compare/:driverId', (req, res) => {
   const { driverId, year } = req.params;
@@ -76,20 +76,20 @@ app.get('/api/compare/:driverId', (req, res) => {
 
 const loadContent = (req, res) => {
   res.format({
-    html: function(res, req){
+    html(res, req) {
       loadHtml(res, req);
     },
-    json: function(res, req){
-      loadJson(res, req)
-    }
+    json(res, req) {
+      loadJson(res, req);
+    },
   });
-}
+};
 
 const loadJson = (req, res) => {
   const { pageNavigation } = req;
   const navigation = pageNavigation;
   res.json(prepareAns(navigation));
-}
+};
 
 const loadHtml = (req, res) => {
   const { pageNavigation } = req;
@@ -98,18 +98,17 @@ const loadHtml = (req, res) => {
   const scripts = prepareAssets();
   const content = render(navigation.path, store);
   res.render('index.ejs', { content, scripts, store });
-
 };
 
 const pageDiscover = (req, res, next) => {
-  const splitPath = req.path.split('/')
+  const splitPath = req.path.split('/');
   const { driverId, year = 2019, season = 1 } = req.params;
   const { path } = req;
-  const pageView = splitPath[1] || 'home'
-  const navigation = { year, season, path, driverId, pageView};
+  const pageView = splitPath[1] || 'home';
+  const navigation = { year, season, path, driverId, pageView };
   req.pageNavigation = navigation;
   next();
-}
+};
 
 app.get('/driver/:driverId/:year', pageDiscover, loadContent);
 app.get('/race/:year/:season', pageDiscover, loadContent);

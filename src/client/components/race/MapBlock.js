@@ -3,9 +3,6 @@ import { connect } from 'react-redux';
 import { Grid } from 'semantic-ui-react';
 
 class TrackBlock extends Component {
-  state = {
-    rendered: false,
-  }
 
   render() {
     const trackName = encodeURI(this.props.selectedTrack.displaytitle);

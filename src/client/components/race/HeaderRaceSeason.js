@@ -3,8 +3,7 @@ import { Header } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { find } from 'lodash';
 
-const HeaderRaceSeason = ({ seasonsList, season }) => {
-  const seasonHeader = find(seasonsList, { round: season });
+const HeaderRaceSeason = ({ seasonsList, season, seasonHeader }) => {
 
   return (
     <Header as="h3">
@@ -15,10 +14,7 @@ const HeaderRaceSeason = ({ seasonsList, season }) => {
             {seasonHeader.raceName}
             {' '}
           </span>
-          <small>
-(
-            <span>{seasonHeader.Circuit.circuitName}</span>
-)
+          <small>(<span>{seasonHeader.Circuit.circuitName}</span>)
           </small>
           <Header.Subheader>
             <span>
@@ -26,7 +22,7 @@ const HeaderRaceSeason = ({ seasonsList, season }) => {
               {' '}
               {seasonHeader.round}
               {' '}
-|
+              |
             </span>
             <span>
                   Year:
@@ -49,8 +45,9 @@ const HeaderRaceSeason = ({ seasonsList, season }) => {
 };
 
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   seasonsList: state.data.seasonsList,
   season: state.navigation.season,
+  seasonHeader: find(state.data.seasonsList, { round: state.navigation.season })
 });
 export default connect(mapStateToProps)(HeaderRaceSeason);

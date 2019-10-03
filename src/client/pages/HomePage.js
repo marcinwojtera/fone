@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { find, map } from 'lodash';
 import { Grid, Label } from 'semantic-ui-react';
-import { fetchTrack, fetchTrackYearAgo } from '../actions';
+import { fetchTrack } from '../actions';
 import RaceYearAgo from '../components/homePage/RaceYearAgo';
 import TrackHistory from '../components/TrackHistory';
 
@@ -22,7 +22,7 @@ class HomePage extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.navigation.pathname !== prevProps.navigation.pathname) {
+    if (this.props.navigation.path !== prevProps.navigation.path) {
       this.showNextRace();
     }
   }
@@ -42,7 +42,7 @@ class HomePage extends Component {
         <Label size="mini">{x.points || 0}</Label>
         <span>
           {' '}
--
+          -
           {x.Constructor.name}
         </span>
       </span>
@@ -58,7 +58,7 @@ class HomePage extends Component {
       >
         <span>
           {' '}
--
+          -
           {x.Driver.givenName}
           {' '}
           {x.Driver.familyName}
@@ -106,7 +106,7 @@ class HomePage extends Component {
                   <small>
                     <strong>
                       {' '}
-RACE RESULTS:
+                      RACE RESULTS:
                       {this.props.historyTrack.raceName}
                     </strong>
                   </small>

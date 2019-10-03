@@ -26,7 +26,6 @@ const ChartToolTip = ({ slice, driverHistory }) => (
         >
           <div>
             <small>Pos:</small>
-
             <Label style={{ background: point.serieColor, width: 35, textAlign: 'center', color: '#fff' }}>
               {point.data.yFormatted}
             </Label>

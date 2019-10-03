@@ -1,7 +1,7 @@
 /* eslint-disable global-require */
 import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
-import { filter, min, find } from 'lodash';
+import { filter, find } from 'lodash';
 import reducers from '../client/reducers';
 import { backstore } from '../serData/pool';
 
@@ -29,9 +29,9 @@ export const loadResultsForTrack = (year, season, circuitId) => filterDataByTrac
 
 export const prepareAns = (navigation) => {
 
-  const {year, season, driverId} = navigation;
+  const { year, season = 1, driverId } = navigation;
 
-  const getSeason = !season ? '1' : season;
+  const getSeason = season;
   const getYear = !year ? new Date().getFullYear().toString() : year;
 
   const data = {

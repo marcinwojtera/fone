@@ -21,7 +21,6 @@ const config = {
   },
   entry: {
     client: ['./src/client/client.js', '@nivo/line'],
-    pitStop: ['./src/client/components/block/PitStops.js'],
     vendor: ['react', 'react-dom', 'redux', 'semantic-ui-react', 'lodash'],
   },
   output: {
@@ -49,12 +48,6 @@ const config = {
           chunks: 'all',
           name: 'vendor',
           test: 'vendor',
-          enforce: true,
-        },
-        pitStop: {
-          chunks: 'all',
-          name: 'pitStop',
-          test: 'pitStop',
           enforce: true,
         },
       },

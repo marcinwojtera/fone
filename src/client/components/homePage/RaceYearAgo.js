@@ -1,8 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { fetchTrackYearAgo } from '../../actions'
-import HistoryResults from './HistoryResults'
+import HistoryResults from './HistoryResults';
 
 class RaceYearAgo extends React.Component {
 
@@ -12,7 +11,7 @@ class RaceYearAgo extends React.Component {
   }
 
   render() {
-    return this.props.historyTrack ? <HistoryResults /> : null
+    return this.props.historyTrack ? <HistoryResults /> : null;
   }
 }
 

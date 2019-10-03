@@ -7,7 +7,6 @@ const config = {
   // Tell webpack to root file of our server app
   entry: {
     client: ['./src/client/client.js', '@nivo/line'],
-    pitStop: ['./src/client/components/block/PitStops.js'],
     vendor: ['react', 'react-dom', 'redux', 'semantic-ui-react', 'lodash'],
   },
   // Tell webpack where to put output file
@@ -15,7 +14,7 @@ const config = {
     path: path.resolve(__dirname, 'public'),
     filename: '[name].[chunkhash].js',
     chunkFilename: '[name].[chunkhash].js',
-    jsonpFunction: 'statsJsonp'
+    jsonpFunction: 'statsJsonp',
   },
   devtool: 'inline-source-map',
 };

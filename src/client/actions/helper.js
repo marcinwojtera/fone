@@ -19,3 +19,5 @@ export const calculateChart = (driverHistory, loadedCompareDriver, chartSelected
   });
   return data;
 };
+
+export const getDate = date => date ? new Date(date) : new Date();

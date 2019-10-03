@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {Grid, Table, Label, Icon} from 'semantic-ui-react';
-import DriverRow from "./DriverRow";
+import DriverRow from "../block/DriverRow";
 
 class QualifyBlock extends Component {
   state = {

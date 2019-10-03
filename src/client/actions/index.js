@@ -9,8 +9,8 @@ export const fetchData = (pathname) => (dispatch) => {
   const config = {
     method: 'get',
     url: pathname,
-    headers: { 'Accept': 'application/json' }
-  }
+    headers: { Accept: 'application/json' },
+  };
 
   const getData = axios(config)
     .then(rest => rest.data);

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Grid } from 'semantic-ui-react';
-import { fetchDataWiki } from '../../actions';
+import { fetchDataWiki } from '../../actions/index';
 
 class TrackBlock extends Component {
   state = {
