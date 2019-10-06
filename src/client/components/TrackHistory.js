@@ -1,18 +1,18 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { map } from 'lodash';
 import { Segment, Label } from 'semantic-ui-react';
+import { maps } from '../actions/helper';
 
 const renderDriver = (driver, year) => (
   <Link to={`/driver/${driver.driverId}/${year}`}>
-    <span className={'track-history-link'}>{driver.givenName[0]}. {driver.familyName}</span>
+    <span className="track-history-link">{driver.givenName[0]}. {driver.familyName}</span>
   </Link>
 );
 
-const TrackHistory = ({ loading, trackHistoryStats, track }) => (
+const TrackHistory = ({ trackHistoryStats, track, pageLoader }) => (
   <div>
-    <Segment basic={!!track} loading={loading} style={{minHeight: 90}} className="track-history">
+    <Segment basic={!!track} style={{minHeight: 90}} className="track-history" loading={pageLoader}>
       {trackHistoryStats && <div>
         <div style={{columnCount: 4}}>
           <div><strong><small>WINNER</small></strong></div>
@@ -20,13 +20,15 @@ const TrackHistory = ({ loading, trackHistoryStats, track }) => (
           <div><strong><small>BEST TIME</small></strong></div>
           <div><strong><small>AVG SPEED</small></strong></div>
         </div>
-        {map(trackHistoryStats, (data, year) => {
-          const showRow = data.winner[0] && data.pole[0] && data.fastestLap[0] && data.avgSpeed[0];
+
+        {maps(trackHistoryStats).map(year => {
+          const datas = trackHistoryStats[year];
+          const showRow = datas.winner[0] && datas.pole[0] && datas.fastestLap[0] && datas.avgSpeed[0];
           return showRow && (<div style={{columnCount: 4, columnRule: '1px solid #d8d8d8'}} key={year}>
-            <div><Label size={'mini'}>{year}</Label> -  <span>{renderDriver(data.winner[0], year)}</span></div>
-            <div><Label size={'mini'}>{year}</Label> - <span>{renderDriver(data.pole[0], year)} </span></div>
-            <div><Label size={'mini'}>{year}</Label> - <span> {renderDriver(data.fastestLap[0].driver, year)} - <small><strong className='bold'>{data.avgSpeed[0].time}</strong></small></span></div>
-            <div><Label size={'mini'}>{year}</Label> - <span>{renderDriver(data.avgSpeed[0].driver, year)} - <small><strong className='bold'>{data.avgSpeed[0].speed.split('.')[0]}</strong> (km/h)</small></span></div>
+            <div><Label size={'mini'}>{year}</Label> -  <span>{renderDriver(datas.winner[0], year)}</span></div>
+            <div><Label size={'mini'}>{year}</Label> - <span>{renderDriver(datas.pole[0], year)} </span></div>
+            <div><Label size={'mini'}>{year}</Label> - <span> {renderDriver(datas.fastestLap[0].driver, year)} - <small><strong className='bold'>{datas.avgSpeed[0].time}</strong></small></span></div>
+            <div><Label size={'mini'}>{year}</Label> - <span>{renderDriver(datas.avgSpeed[0].driver, year)} - <small><strong className='bold'>{datas.avgSpeed[0].speed.split('.')[0]}</strong> (km/h)</small></span></div>
           </div>)
         })}
       </div>
@@ -36,9 +38,8 @@ const TrackHistory = ({ loading, trackHistoryStats, track }) => (
   </div>
 );
 
-
 const mapStateToProps = (state) => ({
   trackHistoryStats: state.trackHistoryStats,
-  loading: !state.trackHistoryStats
+  pageLoader: state.pageLoader,
 });
 export default connect(mapStateToProps)(TrackHistory);

@@ -3,7 +3,7 @@ const _ = require('lodash/core');
 export const BACK_FETCH_DRIVER = 'BACK_FETCH_DRIVER';
 const wait = require('wait-for-stuff');
 
-export const loadDriverPerRace = year => (dispatch, getState) => {
+export const loadDriverPerRace = year => (dispatch) => {
   const table = new Array();
   const fetchDrivers = (season) => fetch(`https://ergast.com/api/f1/${year}/${season}/driverStandings.json`)
     .then(data => data.json())
@@ -25,7 +25,7 @@ export const loadDriverPerRace = year => (dispatch, getState) => {
 
   for (let i =  1; i < 1; i++) {
     wait.for.time(0.2);
-    fetchDrivers(i)
+    fetchDrivers(i);
   }
 
 };

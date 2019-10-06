@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { find, map } from 'lodash';
 import { Grid, Label } from 'semantic-ui-react';
 import { fetchTrack } from '../actions';
+import { maps } from '../actions/helper';
 import RaceYearAgo from '../components/homePage/RaceYearAgo';
 import TrackHistory from '../components/TrackHistory';
 
@@ -29,43 +29,40 @@ class HomePage extends Component {
 
   showNextRace = () => {
     const dateNow = new Date();
-    const circInfo = find(this.props.seasonsList, (x => +dateNow <= +new Date(x.date)));
+    const circInfo = this.props.seasonsList && this.props.seasonsList.find(x => +dateNow <= +new Date(x.date))
     if (circInfo) {
       this.setState({ nextTrack: circInfo });
       this.props.dispatch(fetchTrack(circInfo.round));
     }
   }
 
-  showConstructors = () => map(this.props.seasonConstructors, (x => (
+  showConstructors = () => this.props.seasonConstructors.map(x => (
     <div key={x.Constructor.name}>
       <span className="slide-box">
         <Label size="mini">{x.points || 0}</Label>
         <span>
-          {' '}
-          -
-          {x.Constructor.name}
+          {' '} - {x.Constructor.name}
         </span>
       </span>
     </div>
-  )))
+  ))
 
-  showDrivers = (withPlace) => map(this.props.seasonsDrivers, (x => (
-    <div key={`${x.Driver.givenName}-${x.Driver.familyName}`}>
-      {withPlace && <Label size="mini">{x.points || 0}</Label>}
-      <Link
-        className="slide-box"
-        to={`/driver/${x.Driver.driverId}/${this.props.navigation.year}`}
-      >
-        <span>
-          {' '}
-          -
-          {x.Driver.givenName}
-          {' '}
-          {x.Driver.familyName}
-        </span>
-      </Link>
-    </div>
-  )))
+  showDrivers = (withPlace) => {
+    return maps(this.props.seasonsDrivers).map(x => {
+      const driver = this.props.seasonsDrivers[x];
+      return (
+        <div key={`${driver.Driver.givenName}-${driver.Driver.familyName}`}>
+          {withPlace && <Label size="mini">{driver.points || 0}</Label>}
+          <Link
+            className="slide-box"
+            to={`/driver/${driver.Driver.driverId}/${this.props.navigation.year}`}
+          >
+          <span> {' '} - {driver.Driver.givenName}{' '}{driver.Driver.familyName}</span>
+          </Link>
+        </div>
+      );
+    });
+  };
 
   render() {
     return (
@@ -100,8 +97,6 @@ class HomePage extends Component {
           <Grid celled="internally" style={{ height: '100%', borderTop: '1px solid #d4d4d4' }}>
             <Grid.Row>
               <Grid.Column width={11}>
-                {/* <div className='home-constructor-panel'>{this.showConstructors()}</div> */}
-
                 <div>
                   <small>
                     <strong>
@@ -111,9 +106,7 @@ class HomePage extends Component {
                     </strong>
                   </small>
                 </div>
-
                 <TrackHistory track={this.props.historyTrack.raceName} />
-
               </Grid.Column>
               <Grid.Column width={5} className="next-panel race-results">
                 <div className="home-next-panel home-next-results" style={{ height: '100%' }}>

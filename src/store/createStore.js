@@ -27,36 +27,6 @@ export const filterDataBySeason = (data, season) => {
 };
 export const loadResultsForTrack = (year, season, circuitId) => filterDataByTrack(backstore.getState().seasonsResults[year - 1], season, circuitId);
 
-export const prepareAns = (navigation) => {
-
-  const { year, season = 1, driverId } = navigation;
-
-  const getSeason = season;
-  const getYear = !year ? new Date().getFullYear().toString() : year;
-
-  const data = {
-    data: {
-      seasonConstructors: backstore.getState().constructors[getYear],
-      statusesPerRace: filterDataBySeason(backstore.getState().statusesPerRace[getYear], getSeason),
-      constructorsPerRace: filterDataBySeason(backstore.getState().constructorsPerRace[getYear], getSeason),
-      seasonsDrivers: backstore.getState().seasonsDrivers[getYear],
-      // seasonsDriversList: filterDataBySeason(backstore.getState().driversList[year || getCurrentYear()], season),
-      seasonsList: !driverId && backstore.getState().seasons[getYear],
-      seasonQualify: !driverId && filterData(backstore.getState().qualify[getYear], getSeason),
-      seasonsResults: !driverId && filterData(backstore.getState().seasonsResults[getYear], getSeason),
-      seasonsPitStop: !driverId && filterPitStops(backstore.getState().pitStop[getYear], getSeason),
-      seasonsYears: backstore.getState().seasonsYear,
-      statsBySeason: !driverId && filterData(backstore.getState().stats[getYear], getSeason),
-    },
-    navigation,
-    selectedTrack: !driverId && backstore.getState().seasons[getYear][getSeason - 1],
-    driverHistory: driverId ? loadResultsForDrivers(driverId) : [],
-    historyTrack: !driverId && loadResultsForTrackYearAgo(getYear),
-    trackHistoryStats: !driverId && loadResultsForTrackStats(backstore.getState().seasons[getYear][getSeason - 1].raceName),
-  };
-  return data;
-};
-
 export const loadResultsForTrackYearAgo = (year) => {
   const dateNow = new Date();
   const getYear = !year ? new Date().getFullYear().toString() : year;
@@ -65,8 +35,6 @@ export const loadResultsForTrackYearAgo = (year) => {
     return loadResultsForTrack(circInfo.season, circInfo.round, circInfo.Circuit.circuitId);
   } else return false;
 };
-
-
 export const loadResultsForDrivers = (driver) => {
   const results = backstore.getState().seasonsResults;
   const { qualify } = backstore.getState();
@@ -95,7 +63,6 @@ export const loadResultsForDrivers = (driver) => {
   });
   return driverHistory;
 };
-
 export const loadResultsForTrackStats = (track) => {
   const results = backstore.getState().seasonsResults;
   const { qualify } = backstore.getState();
@@ -130,5 +97,35 @@ export const loadResultsForTrackStats = (track) => {
   return trackHistory;
 };
 
-//year, season, req.path, driverId, pageView
+//little kittie die
+export const prepareAns = (navigation) => {
+
+  const { year, season = 1, driverId } = navigation;
+
+  const getSeason = season;
+  const getYear = !year ? new Date().getFullYear().toString() : year;
+
+  const data = {
+    data: {
+      seasonConstructors: backstore.getState().constructors[getYear],
+      statusesPerRace: filterDataBySeason(backstore.getState().statusesPerRace[getYear], getSeason),
+      constructorsPerRace: filterDataBySeason(backstore.getState().constructorsPerRace[getYear], getSeason),
+      seasonsDrivers: backstore.getState().seasonsDrivers[getYear],
+      // seasonsDriversList: filterDataBySeason(backstore.getState().driversList[year || getCurrentYear()], season),
+      seasonsList: !driverId && backstore.getState().seasons[getYear],
+      seasonQualify: !driverId && filterData(backstore.getState().qualify[getYear], getSeason),
+      seasonsResults: !driverId && filterData(backstore.getState().seasonsResults[getYear], getSeason),
+      seasonsPitStop: !driverId && filterPitStops(backstore.getState().pitStop[getYear], getSeason),
+      seasonsYears: backstore.getState().seasonsYear,
+      statsBySeason: !driverId && filterData(backstore.getState().stats[getYear], getSeason),
+    },
+    navigation,
+    selectedTrack: !driverId && backstore.getState().seasons[getYear][getSeason - 1],
+    driverHistory: driverId ? loadResultsForDrivers(driverId) : [],
+    historyTrack: !driverId && loadResultsForTrackYearAgo(getYear),
+    trackHistoryStats: !driverId && loadResultsForTrackStats(backstore.getState().seasons[getYear][getSeason - 1].raceName),
+  };
+  return data;
+};
+
 export const initialLoads = (navigation) => createStore(reducers, prepareAns(navigation), applyMiddleware(thunk));

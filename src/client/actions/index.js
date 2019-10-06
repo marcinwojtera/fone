@@ -1,11 +1,21 @@
 import axios from 'axios';
-import { forEach } from 'lodash';
 
 export const FETCH_DATA = 'FETCH_DATA';
 export const FETCH_DRIVER_DATA = 'FETCH_DRIVER_DATA';
 export const FETCH_DATA_TRACK = 'FETCH_DATA_TRACK';
+export const OPEN_PAGE_LOADER = 'OPEN_PAGE_LOADER';
+
+export const showPageLoader = (open) => (dispatch) => {
+  dispatch({
+    type: OPEN_PAGE_LOADER,
+    payload: open,
+  });
+};
 
 export const fetchData = (pathname) => (dispatch) => {
+
+  dispatch(showPageLoader(true));
+
   const config = {
     method: 'get',
     url: pathname,
@@ -24,6 +34,7 @@ export const fetchData = (pathname) => (dispatch) => {
         selectedTrack: values[0].selectedTrack,
         trackHistoryStats: values[0].trackHistoryStats,
         historyTrack: values[0].historyTrack,
+        pageLoader: false,
       },
     });
   });
@@ -62,11 +73,12 @@ export const fetchDriverToCompare = (driverId) => (dispatch, getState) => {
         payload: { ...getState().loadedCompareDriver, ...{ [driverId]: compare.data } },
       }));
   } else {
-    const list = getState().loadedCompareDriver;
     const newList = {};
-    forEach(list, (data, driver) => {
-      if (driver !== driverId) newList[driver] = data;
-    });
+
+    for (let driver in getState().loadedCompareDriver) {
+      if (driver !== driverId) newList[driver] = getState().loadedCompareDriver[driver];
+    }
+
     dispatch({
       type: FETCH_DRIVER_DATA,
       payload: newList,

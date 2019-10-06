@@ -1,40 +1,29 @@
 import React from 'react';
 import { Header } from 'semantic-ui-react';
-import { connect } from 'react-redux';
-import { find } from 'lodash';
+import { useSelector } from 'react-redux';
 
-const HeaderRaceSeason = ({ seasonsList, season, seasonHeader }) => {
-
+const HeaderRaceSeason = () => {
+  const seasonHeader = useSelector(state => state.data.seasonsList[state.navigation.season - 1]);
   return (
     <Header as="h3">
       <Header.Content>
         {seasonHeader && (
         <span>
           <span>
-            {seasonHeader.raceName}
-            {' '}
+            {seasonHeader.raceName} {' '}
           </span>
-          <small>(<span>{seasonHeader.Circuit.circuitName}</span>)
+          <small>
+            <span>{seasonHeader.Circuit.circuitName}</span>
           </small>
           <Header.Subheader>
             <span>
-                  Round:
-              {' '}
-              {seasonHeader.round}
-              {' '}
-              |
+                  Round: {' '} {seasonHeader.round} {' '} |
             </span>
             <span>
-                  Year:
-              {' '}
-              {seasonHeader.season}
-              {' '}
-|
+                  Year: {' '} {seasonHeader.season} {' '} |
             </span>
             <span>
-                  Date:
-              {' '}
-              {seasonHeader.date}
+                  Date: {' '} {seasonHeader.date}
             </span>
           </Header.Subheader>
         </span>
@@ -44,10 +33,4 @@ const HeaderRaceSeason = ({ seasonsList, season, seasonHeader }) => {
   );
 };
 
-
-const mapStateToProps = state => ({
-  seasonsList: state.data.seasonsList,
-  season: state.navigation.season,
-  seasonHeader: find(state.data.seasonsList, { round: state.navigation.season })
-});
-export default connect(mapStateToProps)(HeaderRaceSeason);
+export default HeaderRaceSeason;

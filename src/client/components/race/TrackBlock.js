@@ -4,9 +4,6 @@ import { Grid } from 'semantic-ui-react';
 import { fetchDataWiki } from '../../actions/index';
 
 class TrackBlock extends Component {
-  state = {
-    rendered: false,
-  }
 
   componentDidMount() {
     this.loadTrackInfo();

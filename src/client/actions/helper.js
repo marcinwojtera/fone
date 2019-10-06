@@ -21,3 +21,5 @@ export const calculateChart = (driverHistory, loadedCompareDriver, chartSelected
 };
 
 export const getDate = date => date ? new Date(date) : new Date();
+
+export const maps = obj => Object.keys(obj).map(x => x);

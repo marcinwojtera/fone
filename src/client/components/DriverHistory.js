@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { map, filter, forEach, pick } from 'lodash';
-import { Grid, Header, Label, Menu, Segment, Table, Icon, Portal, Button } from 'semantic-ui-react';
+import { map, filter } from 'lodash';
+import { Grid, Header, Label, Menu, Segment, Table, Icon, Button } from 'semantic-ui-react';
 import Statistics from './driverHistory/Statistics';
 import RetiresInfo from './driverHistory/RetiresInfo';
 import DriverChart from './driverHistory/DriverChart';
@@ -99,14 +99,12 @@ class DriverHistory extends Component {
   render() {
     const { activeItem } = this.state;
     const stats = this.statistics();
-    const seasons = this.props.driverHistory[this.state.activeItem].drivers || [];
+    const seasons = this.props.seasons;
 
     return (
       <div>
-        {this.state.open && <div className="dimmer" />}
-
-        <HeaderDriverHistory />
-        <Segment>
+        {this.props.driverId && <HeaderDriverHistory />}
+        <Segment loading={this.props.pageLoader} >
 
           <Grid celled="internally" padded="vertically">
             <Grid.Row>
@@ -282,10 +280,11 @@ class DriverHistory extends Component {
 
 const mapStateToProps = state => ({
   year: state.navigation.year,
+  seasons: !!state.driverHistory[state.navigation.year] ? state.driverHistory[state.navigation.year].drivers : [],
   driverInfo: state.data.seasonsDrivers,
   driverHistory: state.driverHistory,
   driverId: state.navigation.driverId,
-  seasonsDrivers: state.data.seasonsDrivers[state.navigation.driverId] || [],
   loadedCompareDriver: state.loadedCompareDriver,
+  pageLoader: state.pageLoader,
 });
 export default connect(mapStateToProps)(DriverHistory);

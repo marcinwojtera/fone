@@ -1,6 +1,6 @@
 import React from 'react';
 import { Segment } from 'semantic-ui-react';
-import { map } from 'lodash';
+import { maps } from '../../actions/helper';
 
 const RetiresInfo = ({ stats }) => (
   <div>
@@ -10,7 +10,7 @@ const RetiresInfo = ({ stats }) => (
       </strong>
     </small>
     <Segment vertical>
-      {map(stats.status, (stat, num) => (
+      {maps(stats.status).map((stat, num) => (
         <span style={{ marginRight: '10px' }} key={num}>
           <span style={{ marginRight: '5px' }}>
             <strong>{stat}</strong>

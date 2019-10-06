@@ -1,4 +1,5 @@
 import fetch from 'node-fetch';
+
 export const BACK_FETCH_SEASONS = 'BACK_FETCH_SEASONS';
 export const BACK_YEARS_SEASONS = 'BACK_YEARS_SEASONS';
 
@@ -14,8 +15,9 @@ export const loadSeasons = (year) => dispatch => {
       type: BACK_FETCH_SEASONS,
       payload: { year, values },
     });
-      console.log('load Races for year ', year)
-    }).catch(function(err) {
+    console.log('load Races for year ', year);
+  })
+    .catch((err) => {
       console.log(err.message);
     });
 };

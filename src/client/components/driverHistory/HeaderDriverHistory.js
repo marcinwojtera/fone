@@ -2,7 +2,7 @@ import React from 'react';
 import { Header } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 
-const HeaderDriverHistory = ({ seasonsDrivers, simple }) => (
+const HeaderDriverHistory = ({ seasonsDrivers, simple }) => seasonsDrivers ? (
   <Header as="h3">
     <Header.Content>
       <span>
@@ -17,7 +17,8 @@ const HeaderDriverHistory = ({ seasonsDrivers, simple }) => (
           {' '}| Code: {seasonsDrivers.Driver.code}
           {!simple && (
           <span> | Nationality: {seasonsDrivers.Driver.nationality}
-            {' '} | Date of birth:
+            {' '} |
+                    Date of birth:
             {seasonsDrivers.Driver.dateOfBirth}
           </span>
           )}
@@ -25,7 +26,7 @@ const HeaderDriverHistory = ({ seasonsDrivers, simple }) => (
       </Header.Subheader>
     </Header.Content>
   </Header>
-);
+): null;
 
 
 const mapStateToProps = state => ({

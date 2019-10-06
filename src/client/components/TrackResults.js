@@ -1,5 +1,5 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Tab } from 'semantic-ui-react';
 import { Helmet } from 'react-helmet';
 import QualifyBlock from './race/QualifyBlock';
@@ -34,26 +34,25 @@ const panes = [
 ];
 
 
-const TrackResults = ({ selectedTrack }) => (
-  <div>
-    <Helmet>
-      <meta charSet="utf-8" />
-      <title>
-        F1 statistics -
-        {`${selectedTrack.raceName} Year: ${selectedTrack.season}`}
-      </title>
-      <meta name="description" content={`${selectedTrack.raceName} Year - ${selectedTrack.season}`} />
-    </Helmet>
+const TrackResults = () => {
+  const selectedTrack = useSelector(state => state.selectedTrack);
+  return (
     <div>
-      <HeaderRaceSeason />
-      <TrackHistory />
-      <Tab panes={panes} />
+      {/*<Helmet>*/}
+        {/*<meta charSet="utf-8" />*/}
+        {/*<title>*/}
+          {/*F1 statistics -*/}
+          {/*{`${selectedTrack.raceName} Year: ${selectedTrack.season}`}*/}
+        {/*</title>*/}
+        {/*<meta name="description" content={`${selectedTrack.raceName} Year - ${selectedTrack.season}`} />*/}
+      {/*</Helmet>*/}
+      <div>
+        <HeaderRaceSeason />
+        <TrackHistory />
+        <Tab panes={panes} />
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
-
-const mapStateToProps = state => ({
-  selectedTrack: state.selectedTrack,
-});
-export default connect(mapStateToProps)(TrackResults);
+export default TrackResults;

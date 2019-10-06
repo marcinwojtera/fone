@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Table } from 'semantic-ui-react';
 import PerfectScrollbar from 'react-perfect-scrollbar';
-import { DriverRow } from '../block/DriverRow';
+import DriverRow from '../block/DriverRow';
 
 const HistoryResults = ({ seasonsResults, season }) => (
   <div style={{ height: '100%' }}>

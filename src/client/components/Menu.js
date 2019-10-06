@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
 import { Menu, Popup } from 'semantic-ui-react';
-import { withRouter } from 'react-router';
+import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { map } from 'lodash';
 import { fetchData } from '../actions';
+import { maps } from '../actions/helper';
 
 export class MenuComponent extends Component {
   state = { activeItem: this.props.year }
 
-  handleItemClick = (e, { name }) => {
-    this.props.history.push(`/race/${name}/${this.props.season}`);
+  handleItemClick = (name) => {
+    const url = `/race/${name}/${this.props.season}`;
+    this.props.history.push(url);
     this.setState({ activeItem: name });
   }
 
@@ -22,7 +23,7 @@ export class MenuComponent extends Component {
   handleDriverChange = (driver) => {
     const url = `/driver/${driver}/${this.props.year}`;
     this.props.history.push(url);
-    this.setState({ activeItem: name });
+    this.setState({ activeItem: driver });
   }
 
   render() {
@@ -36,14 +37,14 @@ export class MenuComponent extends Component {
             active={activeItem === 'home'}
             onClick={this.handleHompageClick}
           />
-          {this.props.seasonsYears.map((x) => (
+          {this.props.seasonsYears.map((year) => (
             <Menu.Item
-              name={x.toString()}
-              key={x}
-              active={this.props.year == x}
-              onClick={this.handleItemClick}
+              name={year.toString()}
+              key={year}
+              active={this.props.year == year}
+              onClick={() => this.handleItemClick(year)}
             >
-              {x}
+              {year}
             </Menu.Item>
           ))}
 
@@ -57,28 +58,28 @@ export class MenuComponent extends Component {
           </Menu.Item>
 
           <Menu.Menu>
-            {map(this.props.seasonsDrivers, z => (
+            {maps(this.props.seasonsDrivers).map(z => (
               <Menu.Item
-                active={this.props.driverId === z.Driver.driverId}
-                name={z.Driver.code}
-                key={z.Driver.code}
+                active={this.props.driverId === this.props.seasonsDrivers[z].Driver.driverId}
+                name={this.props.seasonsDrivers[z].Driver.code}
+                key={this.props.seasonsDrivers[z].Driver.code}
                 style={{ padding: 0 }}
-                onClick={() => this.handleDriverChange(z.Driver.driverId)}
+                onClick={() => this.handleDriverChange(this.props.seasonsDrivers[z].Driver.driverId)}
               >
-
                 <Popup
-                  trigger={<span>{z.Driver.code}</span>}
+                  trigger={<span>{this.props.seasonsDrivers[z].Driver.code}</span>}
                   content={(
                     <span>
-                      {z.Driver.givenName}
+                      {this.props.seasonsDrivers[z].Driver.givenName}
                       {' '}
-                      {z.Driver.familyName}
+                      {this.props.seasonsDrivers[z].Driver.familyName}
                     </span>
-)}
+                  )}
                   position="bottom left"
                 />
               </Menu.Item>
-            ))}
+            ))
+            }
           </Menu.Menu>
         </Menu>
       </div>

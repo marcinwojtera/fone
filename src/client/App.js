@@ -1,18 +1,17 @@
 import React from 'react';
 import { Route, Switch, withRouter } from 'react-router-dom';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
 import ErrorBoundary from './components/ErrorBoundry';
 import MenuComponent from './components/Menu';
 import HomePage from './pages/HomePage';
 import Race from './pages/Race';
 import Driver from './pages/Driver';
 import './app.scss';
+import { Segment, Dimmer } from 'semantic-ui-react';
 
 const App = () => (
   <div className="app-container">
-    <div style={{ height: '100%' }}>
-      <MenuComponent />
+    <MenuComponent />
+    <Dimmer.Dimmable as={Segment} dimmed style={{ margin: 0, height: 'calc(100% - 65px)' }}>
       <ErrorBoundary>
         <Switch>
           <Route exact path="/" component={HomePage} />
@@ -20,20 +19,9 @@ const App = () => (
           <Route path="/race/:year/:season" component={Race} />
         </Switch>
       </ErrorBoundary>
-    </div>
+    </Dimmer.Dimmable>
   </div>
 );
 
-App.propTypes = {
-  route: PropTypes.objectOf(PropTypes.any),
-};
 
-App.defaultProps = {
-  route: null,
-};
-
-const mapStateToProps = state => ({
-  navigation: state.navigation,
-});
-
-export default withRouter(connect(mapStateToProps)(App));
+export default withRouter(App);

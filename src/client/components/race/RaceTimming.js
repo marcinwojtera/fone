@@ -8,7 +8,6 @@ import PerfectScrollbar from 'react-perfect-scrollbar';
 
 class RaceTimming extends Component {
   state = {
-    rendered: false,
     selected: [],
     driversListToShow: ['leclerc', 'hamilton', 'max_verstappen', 'kubica'],
   }
@@ -32,7 +31,7 @@ class RaceTimming extends Component {
         <Helmet>
           <meta charSet="utf-8" />
           <title>
-F1 statistics -
+            F1 statistics -
             {`${this.props.selectedTrack.raceName} Year: ${this.props.selectedTrack.season}`}
           </title>
           <meta name="description" content={`${this.props.selectedTrack.raceName} Year - ${this.props.selectedTrack.season} Race timming`} />

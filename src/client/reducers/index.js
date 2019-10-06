@@ -6,6 +6,7 @@ import { trackHistoryStats,
   navigation,
   selectedTrack,
   loadedCompareDriver,
+  pageLoader,
 } from './reducers';
 
 export default combineReducers({
@@ -17,4 +18,5 @@ export default combineReducers({
   loadedTrackHome,
   historyTrack,
   trackHistoryStats,
+  pageLoader,
 });

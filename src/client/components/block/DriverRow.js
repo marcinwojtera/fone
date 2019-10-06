@@ -1,32 +1,26 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React from 'react';
+import { useSelector } from 'react-redux';
 
-export class DriverRow extends Component {
-  state = {
-    open: false,
-  }
+const DriverRow = ({ driver, homeView, constructorData, driverData }) => {
 
-  render() {
-    const { seasonsDrivers, driver, homeView } = this.props;
-    const driverData = homeView ? this.props.driverData : seasonsDrivers[driver].Driver;
-    const constructorData = homeView ? this.props.constructorData : seasonsDrivers[driver].Constructors[0]
+  const driverDatas = useSelector(state => {
+    return homeView ? driverData : state.data.seasonsDrivers[driver].Driver;
+  });
+  const constructorDatas = useSelector(state => {
+    return homeView ? constructorData : state.data.seasonsDrivers[driver].Constructors[0];
+  });
 
-    return (
-      <div className="driver-box">
+  return (
+    <div className="driver-box">
         <span className="info">
-          {driverData.givenName} {driverData.familyName}
-          <small><i> ({driverData.number || driverData.permanentNumber})
-            <small> {driverData.code}</small></i></small>
+          {driverDatas.givenName} {driverDatas.familyName}
+          <small><i> ({driverDatas.number || driverDatas.permanentNumber})
+            <small> {driverDatas.code}</small></i></small>
         </span>
-        <span className="constructor-box">{constructorData.name}</span>
+      <span className="constructor-box">{constructorDatas.name}</span>
     </div>
-    );
-  }
-}
+  );
+};
 
-const mapStateToProps = state => ({
-  selectedTrack: state.selectedTrack,
-  seasonsDrivers: state.data.seasonsDrivers
-});
-export default connect(mapStateToProps)(DriverRow);
+export default DriverRow;
 

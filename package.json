@@ -15,7 +15,7 @@
     "webpack-prod": "rm -rf build && rm -rf public && webpack -p --progress --config webpack.client.prod.js --mode production",
     "dev": "npm-run-all --parallel dev:* ",
     "build-server": "webpack --config webpack.server.js",
-    "dev:build-server": "webpack --config webpack.server.js --watch",
+    "dev:build-server": "webpack --config webpack.server.js ",
     "dev:build-client": "webpack --config webpack.client.js --watch",
     "dev:server": "nodemon --watch build --exec \"node build/bundle.js\"",
     "precommit": "pretty-quick --staged"
@@ -38,7 +38,7 @@
     "react-dom": "16.8.2",
     "react-helmet": "5.2.0",
     "react-perfect-scrollbar": "^1.5.3",
-    "react-redux": "6.0.0",
+    "react-redux": "^7.1.1",
     "react-router-dom": "4.3.1",
     "redux": "4.0.1",
     "redux-thunk": "2.3.0",

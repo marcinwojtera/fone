@@ -1,5 +1,15 @@
-import { FETCH_DATA, FETCH_DRIVER_DATA, FETCH_DATA_TRACK } from '../actions/index';
+import { FETCH_DATA, FETCH_DRIVER_DATA, FETCH_DATA_TRACK, OPEN_PAGE_LOADER } from '../actions/index';
 
+export const pageLoader = (state = false, action) => {
+  switch (action.type) {
+    case FETCH_DATA:
+      return action.payload.pageLoader;
+    case OPEN_PAGE_LOADER:
+      return true;
+    default:
+      return state;
+  }
+};
 
 export const historyTrack = (state = false, action) => {
   switch (action.type) {
@@ -31,7 +41,7 @@ export const loadedCompareDriver = (state = {}, action) => {
 export const loadedData = (state = [], action) => {
   switch (action.type) {
     case FETCH_DATA:
-      return action.payload.data;
+      return { ...state.data, ...action.payload.data }
     default:
       return state;
   }

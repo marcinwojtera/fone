@@ -4,12 +4,6 @@ import { withRouter } from 'react-router-dom';
 import HistoryResults from './HistoryResults';
 
 class RaceYearAgo extends React.Component {
-
-  constructor(props) {
-    super(props);
-    this.state = { width: 0, height: 0 };
-  }
-
   render() {
     return this.props.historyTrack ? <HistoryResults /> : null;
   }
