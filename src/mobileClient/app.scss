@@ -10,9 +10,9 @@ body {
   position: fixed;
   width: 100%;
   top: 0px;
-  z-index: 4;
+  z-index: 99;
   height: 45px;
-  background: #c337b7;
+  background: #108ee9;
   line-height: 45px;
   font-size: 20px;
   text-align: center;
@@ -23,6 +23,31 @@ body {
   position: fixed;
   width: 100%;
   top: 45px;
-  z-index: 2;
+  z-index: 99;
   box-shadow: 0px 0px 30px 1px #999;
+}
+
+.next-race {
+  position: absolute;
+  height: calc(100% - 145px);
+  width: 100%;
+  top: 145px;
+  bottom: 45px;
+  overflow: auto;
+}
+
+.am-card {
+  min-height: auto;
+}
+
+.badge-pink {
+
+  border-radius: 0;
+
+  .am-badge-text {
+    border-radius: 0;
+    background-color: #c337b7;
+    font-size: 14px;
+    min-width: 30px;
+  }
 }

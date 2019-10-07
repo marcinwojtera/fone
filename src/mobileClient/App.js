@@ -1,13 +1,21 @@
 import React from 'react';
-import { List, Card, WhiteSpace, WingBlank, Picker, TabBar } from 'antd-mobile';
+import { List, Card, WhiteSpace, Badge, Picker, Tabs } from 'antd-mobile';
 import { Icon } from 'semantic-ui-react';
 import './app.scss';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { fetchData, fetchTrack, fetchTrackMedia } from '../client/actions';
+import { fetchData, fetchTrackMedia } from '../client/actions';
+import { maps } from '../client/actions/helper';
+import DriverRow from './driverList/DriverRow';
+import ConstructorRow from './driverList/ConstructorRow';
+
+
+const tabs = [
+  { title: <Badge>Drivers</Badge> },
+  { title: <Badge>Constructors</Badge> },
+];
 
 class App extends React.Component {
-
   constructor(props) {
     super(props);
     this.state = {
@@ -18,21 +26,24 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    this.showNextRace();
+    this.props.isHomeView && this.showNextRace();
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if((this.state.year !== prevState.year) || (this.state.track !== prevState.track)) {
+    if ((this.state.year !== prevState.year) || (this.state.track !== prevState.track)) {
       this.loadData();
     }
   }
-  seasons = () => {
-    return [this.props.seasonsYears.map(x => ({label: x, value: x}))]
-  }
 
-  tracks = () => {
-    return [this.props.seasonsList.map(x => ({label: x.raceName, value: x.round}))]
-  }
+  seasons = () => [this.props.seasonsYears.map(x => ({
+    label: x,
+    value: x
+  }))];
+
+  tracks = () => [this.props.seasonsList.map(x => ({
+    label: x.raceName,
+    value: x.round
+  }))];
 
   onChangeYear = (year) => {
     this.setState({ year });
@@ -44,12 +55,12 @@ class App extends React.Component {
 
   loadData = () => {
     const url = `/race/${this.state.year}/${this.state.track}`;
-    this.props.dispatch(fetchData(url))
+    this.props.dispatch(fetchData(url));
   }
 
   showNextRace = () => {
     const dateNow = new Date();
-    const circInfo = this.props.seasonsList.find(x => +dateNow <= +new Date(x.date))
+    const circInfo = this.props.seasonsList.find(x => +dateNow <= +new Date(x.date));
     if (circInfo) {
       this.setState({ nextTrack: circInfo });
       this.props.dispatch(fetchTrackMedia(circInfo.round));
@@ -65,8 +76,8 @@ class App extends React.Component {
         <div className="track-picker">
           <Picker
             data={this.seasons()}
-            okText={'Ok'}
-            dismissText={'Cancel'}
+            okText="Ok"
+            dismissText="Cancel"
             cascade={false}
             extra={this.props.year}
             value={this.state.year}
@@ -77,8 +88,8 @@ class App extends React.Component {
           </Picker>
           <Picker
             data={this.tracks()}
-            okText={'Ok'}
-            dismissText={'Cancel'}
+            okText="Ok"
+            dismissText="Cancel"
             cascade={false}
             extra={this.props.selectedTrack.raceName}
             value={this.state.track}
@@ -89,7 +100,9 @@ class App extends React.Component {
           </Picker>
         </div>
 
-      <div style={{ position: 'absolute', height: 'calc(100% - 45px)', width: '100%', top: 135, bottom: 45 }}>
+        <div className="next-race">
+
+          {this.props.isHomeView &&
           <Card full>
             <Card.Header
               title="NEXT RACE:"
@@ -97,68 +110,40 @@ class App extends React.Component {
             />
             <Card.Body>
               <div>
-                {this.props.trackImg && <img src={this.props.trackImg.original.source} style={{ width: '100%' }} />}
+                {this.props.trackImg && <img src={this.props.trackImg.original.source} style={{ width: '100%' }}/>}
               </div>
             </Card.Body>
-            <Card.Footer content={this.state.nextTrack && this.state.nextTrack.Circuit.circuitName} extra={<div>{this.state.nextTrack.raceName}</div>} />
+            <Card.Footer content={this.state.nextTrack && this.state.nextTrack.Circuit.circuitName} extra={<div>{this.state.nextTrack.raceName}</div>}/>
           </Card>
+          }
 
+          <WhiteSpace/>
 
-        <Card full>
-          <Card.Header
-            title="NEXT RACE:"
-            extra={<span>{this.state.nextTrack.date}</span>}
-          />
-          <Card.Body>
-            <div>
-              {this.props.trackImg && <img src={this.props.trackImg.original.source} style={{ width: '100%' }} />}
+          <Tabs tabs={tabs}
+                initialPage={0}
+                onChange={(tab, index) => { console.log('onChange', index, tab); }}
+                onTabClick={(tab, index) => { console.log('onTabClick', index, tab); }}
+          >
+            <div style={{ backgroundColor: '#fff' }}>
+              <List renderHeader={() => `Drivers:`} className="my-list">
+                {maps(this.props.seasonsDrivers)
+                  .map(driver => (
+                    <DriverRow driverId={driver}/>
+                  ))}
+              </List>
             </div>
-          </Card.Body>
-          <Card.Footer content={this.state.nextTrack && this.state.nextTrack.Circuit.circuitName} extra={<div>{this.state.nextTrack.raceName}</div>} />
-        </Card>
-        <Card full>
-          <Card.Header
-            title="NEXT RACE:"
-            extra={<span>{this.state.nextTrack.date}</span>}
-          />
-          <Card.Body>
-            <div>
-              {this.props.trackImg && <img src={this.props.trackImg.original.source} style={{ width: '100%' }} />}
+            <div style={{ backgroundColor: '#fff' }}>
+              <List renderHeader={() => `Drivers:`} className="my-list">
+                {this.props.seasonConstructors.map(constructor => (
+                  <ConstructorRow constructor={constructor}/>
+                ))}
+              </List>
             </div>
-          </Card.Body>
-          <Card.Footer content={this.state.nextTrack && this.state.nextTrack.Circuit.circuitName} extra={<div>{this.state.nextTrack.raceName}</div>} />
-        </Card>
-        <Card full>
-          <Card.Header
-            title="NEXT RACE:"
-            extra={<span>{this.state.nextTrack.date}</span>}
-          />
-          <Card.Body>
-            <div>
-              {this.props.trackImg && <img src={this.props.trackImg.original.source} style={{ width: '100%' }} />}
-            </div>
-          </Card.Body>
-          <Card.Footer content={this.state.nextTrack && this.state.nextTrack.Circuit.circuitName} extra={<div>{this.state.nextTrack.raceName}</div>} />
-        </Card>
+          </Tabs>
 
-        <Card full>
-          <Card.Header
-            title="DRIVERS:"
-            extra={<span>{this.state.nextTrack.date}</span>}
-          />
-          <Card.Body>
-            <div>
-            dfdfdf
-            </div>
-          </Card.Body>
-          <Card.Footer content="footer content" extra={<div>{this.state.nextTrack.raceName}</div>} />
-        </Card>
-
-        <div>
+          <div/>
 
         </div>
-
-      </div>
       </div>
     );
   }
@@ -173,59 +158,7 @@ const mapStateToProps = state => ({
   season: state.navigation.season,
   driverId: state.navigation.driverId,
   trackImg: state.loadedTrackHome,
+  isHomeView: state.navigation.pageView === 'home',
 });
 
 export default withRouter(connect(mapStateToProps)(App));
-
-
-
-// <TabBar
-//             prerenderingSiblingsNumber={0}
-//             unselectedTintColor="#949494"
-//             tintColor="#33A3F4"
-//             barTintColor="white"
-//             hidden={this.state.hidden}
-//           >
-//             <TabBar.Item
-//               title="Seasons"
-//               key="seasons"
-//               icon={<Icon name='users' />}
-//               selectedIcon={<Icon disabled name='users' />}
-//               selected={this.state.selectedTab === 'seasons'}
-//               badge={1}
-//               onPress={() => {
-//                 this.setState({
-//                   selectedTab: 'seasons',
-//                 });
-//               }}
-//               data-seed="logId"
-//             />
-//
-//             <TabBar.Item
-//               icon={<Icon name='flag checkered' />}
-//               selectedIcon={<Icon disabled name='flag checkered' />}
-//               title="Drivers"
-//               key="drivers"
-//               selected={this.state.selectedTab === 'drivers'}
-//               onPress={() => {
-//                 this.setState({
-//                   selectedTab: 'drivers',
-//                 });
-//               }}
-//             />
-//
-//             <TabBar.Item
-//               title="Constructors"
-//               key="constructors"
-//               icon={<Icon name='users' />}
-//               selectedIcon={<Icon disabled name='users' />}
-//               selected={this.state.selectedTab === 'constructors'}
-//               badge={1}
-//               onPress={() => {
-//                 this.setState({
-//                   selectedTab: 'constructors',
-//                 });
-//               }}
-//               data-seed="logId"
-//             />
-//           </TabBar>
