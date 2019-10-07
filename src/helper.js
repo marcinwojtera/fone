@@ -58,7 +58,11 @@ export function loadHtml(req, res) {
   if(navigation.mobile) {
     const content = mobileRender(navigation.path, store);
     const scripts = prepareAssetsForMobile();
-    res.render('mobileindex.ejs', { content, scripts, store });
+    res.render('mobileIndex.ejs', {
+      content,
+      scripts,
+      store
+    });
   }
   else {
     const scripts = prepareAssets();
