@@ -90,7 +90,6 @@ class App extends React.Component {
         </div>
 
       <div style={{ position: 'absolute', height: 'calc(100% - 45px)', width: '100%', top: 135, bottom: 45 }}>
-
           <Card full>
             <Card.Header
               title="NEXT RACE:"
