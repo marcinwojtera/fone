@@ -1,0 +1,28 @@
+@import '~antd-mobile/dist/antd-mobile.css';
+@import '~semantic-ui-css/components/icon.min.css';
+
+body {
+  font-family: sans-serif;
+}
+
+
+.heads {
+  position: fixed;
+  width: 100%;
+  top: 0px;
+  z-index: 4;
+  height: 45px;
+  background: #c337b7;
+  line-height: 45px;
+  font-size: 20px;
+  text-align: center;
+  color: #fff;
+}
+
+.track-picker {
+  position: fixed;
+  width: 100%;
+  top: 45px;
+  z-index: 2;
+  box-shadow: 0px 0px 30px 1px #999;
+}

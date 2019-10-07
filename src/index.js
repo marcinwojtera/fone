@@ -4,7 +4,7 @@ import express from 'express';
 import compression from 'compression';
 import { loadResultsForDrivers } from './store/createStore';
 import { loadData, backstore } from './serData/pool';
-import { pageDiscover, loadHtml, loadJson, shouldCompress, ignoreFavicon } from './helper';
+import { pageDiscover, loadHtml, loadJson, shouldCompress, ignoreFavicon, loadMobile } from './helper';
 
 const path = require('path');
 const port = process.env.PORT || 3002;
@@ -20,7 +20,6 @@ app.use(
   }),
 );
 app.use(express.static('public'));
-
 
 app.get('/robots.txt', (req, res) => {
   res.type('text/plain');
@@ -82,8 +81,6 @@ const loadContent = (req, res) => {
     },
   });
 };
-
-
 
 app.get('/driver/:driverId/:year', pageDiscover, loadContent);
 app.get('/race/:year/:season', pageDiscover, loadContent);

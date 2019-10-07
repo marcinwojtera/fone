@@ -20,8 +20,9 @@ const config = {
     children: true,
   },
   entry: {
-    client: ['./src/client/client.js', '@nivo/line'],
-    vendor: ['react', 'react-dom', 'redux', 'semantic-ui-react', 'lodash'],
+    client: ['./src/client/client.js', 'semantic-ui-react', '@nivo/line'],
+    mobileClient: ['./src/mobileClient/client.js', 'antd-mobile'],
+    vendor: ['react', 'react-dom', 'redux', 'lodash'],
   },
   output: {
     path: path.resolve(__dirname, 'public'),
@@ -45,7 +46,7 @@ const config = {
           reuseExistingChunk: true,
         },
         vendor: {
-          chunks: 'all',
+          chunks: 'initial',
           name: 'vendor',
           test: 'vendor',
           enforce: true,

@@ -6,10 +6,10 @@ const config = {
   mode: 'development',
   // Tell webpack to root file of our server app
   entry: {
-    client: ['./src/client/client.js', '@nivo/line'],
-    vendor: ['react', 'react-dom', 'redux', 'semantic-ui-react', 'lodash'],
+    client: ['./src/client/client.js', 'semantic-ui-react', '@nivo/line'],
+    mobileClient: ['./src/mobileClient/client.js', 'antd-mobile'],
+    vendor: ['react', 'react-dom', 'redux', 'lodash'],
   },
-  // Tell webpack where to put output file
   output: {
     path: path.resolve(__dirname, 'public'),
     filename: '[name].[chunkhash].js',

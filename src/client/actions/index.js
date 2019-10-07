@@ -52,6 +52,19 @@ export const fetchDataWiki = (navigation) => (dispatch, getState) => {
     });
 };
 
+
+export const fetchTrackMedia = (season) => (dispatch, getState) => {
+  const selectedTrack = season ? getState().data.seasonsList[season - 1] : null;
+  const circuit = selectedTrack ? selectedTrack.Circuit.url.split('/').slice(-1).pop() : false;
+  axios.get(`https://pl.wikipedia.org/api/rest_v1/page/media/${circuit}`)
+    .then(rest => {
+      dispatch({
+        type: FETCH_DATA_TRACK,
+        payload: { loadedTrackHome: rest.data.items[0] },
+      });
+    });
+};
+
 export const fetchTrack = (season) => (dispatch, getState) => {
   const selectedTrack = season ? getState().data.seasonsList[season - 1] : null;
   const circuit = selectedTrack ? selectedTrack.Circuit.url.split('/').slice(-1).pop() : false;

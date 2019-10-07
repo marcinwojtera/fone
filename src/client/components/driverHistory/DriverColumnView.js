@@ -34,6 +34,6 @@ const DriverChart = ({ data }) => {
       </div>
     </Segment>
   );
-}
+};
 
 export default DriverChart;
