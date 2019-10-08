@@ -11,7 +11,6 @@ const ConstructorRow = ({ constructor }) => {
 
     <Item
       extra={<Badge className="badge-pink" text={constructor.points} size="large" overflowCount={constructor.points}/>}
-      align="top"
       arrow="horizontal"
       platform="android"
       onClick={() => {}}
