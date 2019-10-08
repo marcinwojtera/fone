@@ -1,164 +1,81 @@
-import React from 'react';
-import { List, Card, WhiteSpace, Badge, Picker, Tabs } from 'antd-mobile';
-import { Icon } from 'semantic-ui-react';
-import './app.scss';
-import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
-import { fetchData, fetchTrackMedia } from '../client/actions';
+import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { List, Card, WhiteSpace, Badge, Tabs } from 'antd-mobile';
+import { Route, Switch, withRouter } from 'react-router-dom';
 import { maps } from '../client/actions/helper';
-import DriverRow from './driverList/DriverRow';
-import ConstructorRow from './driverList/ConstructorRow';
+import { fetchTrackMedia } from '../client/actions';
+import Menu from './menu/Menu';
+import Home from './home/Home';
+import Race from './race/Race';
+import './app.scss';
 
+const App = () => {
+  const seasonsList = useSelector(state => state.data.seasonsList);
+  const isHomeView = useSelector(state => state.navigation.pageView === 'home');
+  const trackImg = useSelector(state => state.loadedTrackHome);
+  const dispatch = useDispatch();
 
-const tabs = [
-  { title: <Badge>Drivers</Badge> },
-  { title: <Badge>Constructors</Badge> },
-];
+  const [nextTrack, onLoadTrack] = useState(false);
 
-class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      year: [props.year],
-      track: [props.selectedTrack.round],
-      nextTrack: false,
-    };
-  }
-
-  componentDidMount() {
-    this.props.isHomeView && this.showNextRace();
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    if ((this.state.year !== prevState.year) || (this.state.track !== prevState.track)) {
-      this.loadData();
-    }
-  }
-
-  seasons = () => [this.props.seasonsYears.map(x => ({
-    label: x,
-    value: x
-  }))];
-
-  tracks = () => [this.props.seasonsList.map(x => ({
-    label: x.raceName,
-    value: x.round
-  }))];
-
-  onChangeYear = (year) => {
-    this.setState({ year });
-  };
-
-  onChangeTrack = (track) => {
-    this.setState({ track });
-  };
-
-  loadData = () => {
-    const url = `/race/${this.state.year}/${this.state.track}`;
-    this.props.dispatch(fetchData(url));
-  }
-
-  showNextRace = () => {
+  const showNextRace = () => {
     const dateNow = new Date();
-    const circInfo = this.props.seasonsList.find(x => +dateNow <= +new Date(x.date));
+    const circInfo = seasonsList.find(x => +dateNow <= +new Date(x.date));
     if (circInfo) {
-      this.setState({ nextTrack: circInfo });
-      this.props.dispatch(fetchTrackMedia(circInfo.round));
+      onLoadTrack(circInfo);
+      dispatch(fetchTrackMedia(circInfo.round));
     }
-  }
+  };
 
-  render() {
-    return (
-      <div>
-        <div className="heads">
-          sss
-        </div>
-        <div className="track-picker">
-          <Picker
-            data={this.seasons()}
-            okText="Ok"
-            dismissText="Cancel"
-            cascade={false}
-            extra={this.props.year}
-            value={this.state.year}
-            cols={1}
-            onOk={(year) => this.onChangeYear(year)}
-          >
-            <List.Item arrow="horizontal">Year</List.Item>
-          </Picker>
-          <Picker
-            data={this.tracks()}
-            okText="Ok"
-            dismissText="Cancel"
-            cascade={false}
-            extra={this.props.selectedTrack.raceName}
-            value={this.state.track}
-            cols={1}
-            onOk={(track) => this.onChangeTrack(track)}
-          >
-            <List.Item arrow="horizontal">Track</List.Item>
-          </Picker>
-        </div>
+  useEffect(() => {
+    // showNextRace();
+  }, []);
 
-        <div className="next-race">
-
-          {this.props.isHomeView &&
-          <Card full>
-            <Card.Header
-              title="NEXT RACE:"
-              extra={<span>{this.state.nextTrack.date}</span>}
-            />
-            <Card.Body>
-              <div>
-                {this.props.trackImg && <img src={this.props.trackImg.original.source} style={{ width: '100%' }}/>}
-              </div>
-            </Card.Body>
-            <Card.Footer content={this.state.nextTrack && this.state.nextTrack.Circuit.circuitName} extra={<div>{this.state.nextTrack.raceName}</div>}/>
-          </Card>
-          }
-
-          <WhiteSpace/>
-
-          <Tabs tabs={tabs}
-                initialPage={0}
-                onChange={(tab, index) => { console.log('onChange', index, tab); }}
-                onTabClick={(tab, index) => { console.log('onTabClick', index, tab); }}
-          >
-            <div style={{ backgroundColor: '#fff' }}>
-              <List renderHeader={() => `Drivers:`} className="my-list">
-                {maps(this.props.seasonsDrivers)
-                  .map(driver => (
-                    <DriverRow driverId={driver}/>
-                  ))}
-              </List>
-            </div>
-            <div style={{ backgroundColor: '#fff' }}>
-              <List renderHeader={() => `Drivers:`} className="my-list">
-                {this.props.seasonConstructors.map(constructor => (
-                  <ConstructorRow constructor={constructor}/>
-                ))}
-              </List>
-            </div>
-          </Tabs>
-
-          <div/>
-
-        </div>
+  return (
+    <div>
+      <div className="heads">
+        sss
       </div>
-    );
-  }
-}
-const mapStateToProps = state => ({
-  seasonsYears: state.data.seasonsYears,
-  seasonsDrivers: state.data.seasonsDrivers,
-  seasonConstructors: state.data.seasonConstructors,
-  seasonsList: state.data.seasonsList || [],
-  selectedTrack: state.selectedTrack,
-  year: state.navigation.year,
-  season: state.navigation.season,
-  driverId: state.navigation.driverId,
-  trackImg: state.loadedTrackHome,
-  isHomeView: state.navigation.pageView === 'home',
-});
+      <Menu />
 
-export default withRouter(connect(mapStateToProps)(App));
+      <div className="next-race">
+
+        <WhiteSpace />
+        <Switch>
+          <Route exact path="/" component={Home} />
+          {/*<Route path="/driver/:driverId" component={Driver} />*/}
+          <Route path="/race/:year/:season" component={Race} />
+        </Switch>
+
+
+        <WhiteSpace />
+
+
+        <div />
+
+      </div>
+    </div>
+
+  );
+};
+
+
+export default withRouter(App);
+
+
+//
+// {isHomeView
+// && (
+//   <Card full>
+//     <Card.Header
+//       title="NEXT RACE:"
+//       extra={<span>{nextTrack.date}</span>}
+//     />
+//     <Card.Body>
+//       <div>
+//         {trackImg && <img src={trackImg.original.source} style={{ width: '100%' }} />}
+//       </div>
+//     </Card.Body>
+//     <Card.Footer content={nextTrack && nextTrack.Circuit.circuitName} extra={<div>{nextTrack.raceName}</div>} />
+//   </Card>
+// )
+// }

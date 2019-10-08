@@ -13,7 +13,6 @@ const DriverRow = ({ driverId }) => {
   return (
 
     <Item
-
       extra={<Badge className="badge-pink" text={driver.points} size="large" overflowCount={driver.points}/>}
       align="top"
       multipleLine
@@ -29,11 +28,3 @@ const DriverRow = ({ driverId }) => {
 };
 
 export default DriverRow;
-
-{/*<Card full>*/}
-{/*<Card.Header*/}
-{/*title=*/}
-{/*extra=*/}
-{/*/>*/}
-{/*<Card.Footer content='sssss' extra={<div>ddddd</div>} />*/}
-{/*</Card>*/}

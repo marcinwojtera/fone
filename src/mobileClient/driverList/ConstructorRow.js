@@ -10,7 +10,6 @@ const ConstructorRow = ({ constructor }) => {
   return (
 
     <Item
-
       extra={<Badge className="badge-pink" text={constructor.points} size="large" overflowCount={constructor.points}/>}
       align="top"
       arrow="horizontal"
