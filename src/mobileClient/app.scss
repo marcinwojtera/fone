@@ -20,9 +20,37 @@ body {
   overflow: auto;
 }
 
+.sticky-segment {
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  background: #f5f5f9;
+  padding: 0px 15px 10px;
+  margin: 0 !important;
+}
+
+//list custom style
+.am-list-content {
+  overflow: visible !important;
+}
 .am-card {
   min-height: auto;
 }
+
+.am-list-extra {
+  font-size: 13px !important;
+}
+
+.am-list-brief {
+  font-size: 12px !important;
+}
+
+.am-list-line-multiple {
+  padding: 5px 10px 5px 0px !important;
+}
+
+
+
 
 .badge-pink {
 
@@ -32,6 +60,6 @@ body {
     border-radius: 0;
     background-color: #c337b7;
     font-size: 14px;
-    min-width: 30px;
+
   }
 }

@@ -16,24 +16,20 @@ const Results = () => {
       {seasonsResults.map(x => (
         <Item
           key={`${x.number}-${season}`}
-          extra={<Badge className="badge-pink" text={x.positionText == 'R' ? <Badge color="red">R</Badge>
-            : <b>{x.position}</b>} size="large" overflowCount={x.position}/>}
+          extra={<span>{x.status}</span>}
           multipleLine
           arrow="horizontal"
           platform="android"
           onClick={() => {}}
         >
-          {x.Driver.givenName} {x.Driver.familyName}
-
-          {x.points !== '0' ? (
-            <span> + {x.points} </span>
-          ) : <span>0</span>}
+          <Badge className="badge-pink" text={(<b>{x.position}</b>)}/> {x.Driver.givenName} {x.Driver.familyName}
 
           <Brief>
-            Grid: {x.grid}
-            Fastest lap: {x.FastestLap && <span> {x.FastestLap.AverageSpeed.speed}{' '}
+            Pts: {x.points !== '0' ? (
+            <span> + {x.points} </span>
+          ) : <span>0</span>}
+            {x.FastestLap && <span> |{' '} Fastest lap: {x.FastestLap.AverageSpeed.speed}{' '}
             <small>km/h</small></span>}
-            Status: {<span>{x.status}</span>}
           </Brief>
         </Item>
 
