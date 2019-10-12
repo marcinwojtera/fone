@@ -18,7 +18,7 @@ export const loadRaceStatuses = year => (dispatch) => {
     .catch(err => {
       console.log(err);
     });
-
+  // change this shit
   for (let i =  1; i < 1; i++) {
     wait.for.time(0.1);
     fetchStatuses(i);

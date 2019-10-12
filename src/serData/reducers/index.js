@@ -1,5 +1,16 @@
 import { combineReducers } from 'redux';
-import { backStatusesPerRace, backConstructorsPerRace, backConstructors, backPitStop, backSeasons, backDriverList, backRaceResults, backQualifyList, backYears, backStatsBySeason, loadInfo } from './reducers';
+import {
+  backStatusesPerRace,
+  backConstructorsPerRace,
+  backConstructors,
+  backPitStop,
+  backSeasons,
+  backDriverList,
+  backRaceResults,
+  backQualifyList,
+  backYears,
+  backStatsBySeason
+} from './reducers';
 
 // export default combineReducers(JSON.parse(json));
 export default combineReducers({
@@ -13,5 +24,4 @@ export default combineReducers({
   qualify: backQualifyList,
   pitStop: backPitStop,
   stats: backStatsBySeason,
-  loadInfo,
 });

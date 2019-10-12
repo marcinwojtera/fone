@@ -4,7 +4,6 @@ const baseConfig = require('./webpack.base');
 
 const config = {
   mode: 'development',
-  // Tell webpack to root file of our server app
   entry: {
     client: ['./src/client/client.js', 'semantic-ui-react', '@nivo/line'],
     mobileClient: ['./src/mobileClient/client.js', 'antd-mobile'],

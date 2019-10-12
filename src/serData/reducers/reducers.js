@@ -3,7 +3,6 @@ import { BACK_FETCH_DRIVER_STANDINGS } from '../actions/loadDriverStandings';
 import { BACK_FETCH_RESULTS } from '../actions/loadResults';
 import { BACK_FETCH_QUALIFY } from '../actions/loadQualify';
 import { BACK_FETCH_STATS } from '../actions/loadStats';
-import { BACK_FETCH_DRIVER } from '../actions/loadDriverPerRace';
 import { BACK_FETCH_PITS } from '../actions/loadPitStops';
 import { BACK_FETCH_CONSTRUCTORS_PER_RACE } from '../actions/loadConstructorsPerRace';
 import { BACK_FETCH_CONSTRUCTORS } from '../actions/loadConstructors';
@@ -28,17 +27,6 @@ export const backDriverList = (state = {}, action) => {
       return state;
   }
 };
-
-//
-// export const backDrivers = (state = {}, action) => {
-//   switch (action.type) {
-//     case BACK_FETCH_DRIVER:
-//       console.log(action.payload.values)
-//       return { ...state, ...{ [action.payload.year]: action.payload.values } };
-//     default:
-//       return state;
-//   }
-// };
 
 
 export const backPitStop = (state = {}, action) => {
@@ -111,36 +99,6 @@ export const backConstructorsPerRace = (state = {}, action) => {
   switch (action.type) {
     case BACK_FETCH_CONSTRUCTORS_PER_RACE:
       return { ...state, ...{ [action.payload.year]: action.payload.values } };
-    default:
-      return state;
-  }
-};
-
-const loadInfoInitioal = {
-  statsBySeason: false,
-  seasonQualify: false,
-  seasonsResults: false,
-  seasonsDrivers: false,
-  seasonsDriversList: false,
-  seasonsYears: false,
-  seasonsList: false
-}
-export const loadInfo = (state = loadInfoInitioal, action) => {
-  switch (action.type) {
-    case BACK_FETCH_STATS:
-      return { ...state, ...{ statsBySeason: true } };
-    case BACK_FETCH_QUALIFY:
-      return { ...state, ...{ seasonQualify: true } };
-    case BACK_FETCH_RESULTS:
-      return { ...state, ...{ seasonsResults: true } };
-    case BACK_FETCH_DRIVER:
-      return { ...state, ...{ seasonsDrivers: true } };
-    case BACK_FETCH_DRIVER_STANDINGS:
-      return { ...state, ...{ seasonsDriversList: true } };
-    case BACK_YEARS_SEASONS:
-      return { ...state, ...{ seasonsYears: true } };
-    case BACK_FETCH_SEASONS:
-      return { ...state, ...{ seasonsList: true } };
     default:
       return state;
   }

@@ -63,3 +63,151 @@ body {
 
   }
 }
+
+.race-timming {
+  display: flex;
+  overflow: hidden;
+
+  .race-timming-sticky {
+    width: 55px;
+    box-shadow: 1px 18px 20px 5px #999;
+
+    &:first-child {
+      text-align: center;
+    }
+    .race-driver {
+      height: 25px;
+      line-height: 18px;
+      padding: 6px 8px;
+      border-bottom: 1px solid rgba(34, 36, 38, 0.1);
+    }
+  }
+
+  .race-timming-slide {
+    width: calc(100% - 50px);
+    display: block;
+    padding-bottom: 10px;
+    background: #fff;
+
+    .timming-row {
+      display: inline-flex;
+
+      .green-box {
+        position: absolute;
+        left: -50px;
+        bottom: -1px;
+        top: 0px;
+        right: 0;
+        background: rgba(255, 255, 255, 0);
+        background: -moz-linear-gradient(left, rgba(255, 255, 255, 0) 0%, rgba(26, 173, 58, 0.21) 100%);
+        background: -webkit-gradient(left top, right top, color-stop(0%, rgba(255, 255, 255, 0)), color-stop(100%, rgba(26, 173, 58, 0.21)));
+        background: -webkit-linear-gradient(left, rgba(255, 255, 255, 0) 0%, rgba(26, 173, 58, 0.21) 100%);
+        background: -o-linear-gradient(left, rgba(255, 255, 255, 0) 0%, rgba(26, 173, 58, 0.21) 100%);
+        background: -ms-linear-gradient(left, rgba(255, 255, 255, 0) 0%, rgba(26, 173, 58, 0.21) 100%);
+        background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(26, 173, 58, 0.21) 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#1aad3a', GradientType=1);
+      }
+      .red-box {
+        position: absolute;
+        left: -50px;
+        bottom: -1px;
+        top: 0px;
+        right: 0;
+        background: rgba(255, 255, 255, 0);
+        background: -moz-linear-gradient(left, rgba(255, 255, 255, 0) 0%, rgba(204, 2, 2, 0.21) 100%);
+        background: -webkit-gradient(left top, right top, color-stop(0%, rgba(255, 255, 255, 0)), color-stop(100%, rgba(204, 2, 2, 0.21)));
+        background: -webkit-linear-gradient(left, rgba(255, 255, 255, 0) 0%, rgba(204, 2, 2, 0.21) 100%);
+        background: -o-linear-gradient(left, rgba(255, 255, 255, 0) 0%, rgba(204, 2, 2, 0.21) 100%);
+        background: -ms-linear-gradient(left, rgba(255, 255, 255, 0) 0%, rgba(204, 2, 2, 0.21) 100%);
+        background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(204, 2, 2, 0.21) 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#cc0202', GradientType=1);
+      }
+      &:first-of-type {
+        cursor: auto;
+        background: #f9fafb;
+        text-align: inherit;
+        color: rgba(0, 0, 0, .87);
+        vertical-align: inherit;
+        font-weight: 700;
+        text-transform: none;
+        border-left: none;
+
+        .race-time-box {
+          font-weight: unset;
+          line-height: 20px;
+          height: 20px;
+          padding: 0 8px;
+          background: #108ee9;
+          color: #fff;
+        }
+        &:hover {
+          background: none;
+        }
+      }
+      &:hover {
+        background: rgba(0, 0, 0, .05) !important;
+      }
+      .race-lap {
+        text-align: center;
+        display: grid;
+        padding: 6px;
+        border-bottom: 1px solid rgba(34, 36, 38, .1);
+      }
+      .race-time-box {
+        display: grid;
+        height: 30px;
+        line-height: 20px;
+        width: 105px;
+        padding: 6px 8px;
+        border-bottom: 1px solid rgba(34, 36, 38, 0.1);
+        text-align: center;
+        position: relative;
+        border-right: 1px solid #e8e9e9;
+
+        .box-place {
+          position: absolute;
+          bottom: 0;
+          right: 0;
+          font-size: 11px;
+          padding: 1px 4px;
+          font-weight: bold;
+          display: block;
+          line-height: 12px;
+          width: 20px;
+          color: #999;
+
+          .gap {
+            position: absolute;
+            bottom: 1px;
+            right: 20px;
+            width: 50px;
+            text-align: right;
+
+            .plus {
+              color: #137b2b;
+            }
+            .minus {
+              color: #a72b2b;
+            }
+          }
+        }
+        &.best-time {
+          background: #21ba45;
+          color: #fff;
+          text-shadow: 0px 0px 3px #065017;
+        }
+        &.last-time {
+          background: #db2828;
+          color: #fff;
+        }
+        .race-driver {
+          font-size: 12px;
+          color: #848181;
+        }
+        .race-time {
+          font-weight: bold;
+        }
+      }
+    }
+  }
+}

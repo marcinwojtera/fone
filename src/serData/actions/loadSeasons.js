@@ -5,12 +5,13 @@ export const BACK_YEARS_SEASONS = 'BACK_YEARS_SEASONS';
 
 
 export const loadSeasons = (year) => dispatch => {
-  const raceTable = (year) => fetch(`https://ergast.com/api/f1/${year}.json?limit=1000`)
+  const raceTable = fetch(`https://ergast.com/api/f1/${year}.json?limit=1000`)
     .then(data => data.json())
     .then(data => data.MRData.RaceTable.Races)
     .catch(err => console.log(err));
 
-  Promise.all([raceTable(year)]).then(values => {
+  Promise.all([raceTable])
+    .then(values => {
     dispatch({
       type: BACK_FETCH_SEASONS,
       payload: { year, values },

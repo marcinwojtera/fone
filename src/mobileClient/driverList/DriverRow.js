@@ -11,7 +11,6 @@ const DriverRow = ({ driverId }) => {
   });
   const driver = useSelector(state => state.data.seasonsDrivers[driverId]);
   return (
-
     <Item
       extra={<Badge className="badge-pink" text={driver.points} size="large" overflowCount={driver.points}/>}
       align="top"
@@ -23,7 +22,6 @@ const DriverRow = ({ driverId }) => {
       {<span>{driver.Driver.givenName} {driver.Driver.familyName}</span>}
       <Brief>{<span>{constructor.name}</span>}</Brief>
     </Item>
-
   );
 };
 

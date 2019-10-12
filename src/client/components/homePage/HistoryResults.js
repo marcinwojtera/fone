@@ -1,11 +1,14 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Table } from 'semantic-ui-react';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import DriverRow from '../block/DriverRow';
 
-const HistoryResults = ({ seasonsResults, season }) => (
-  <div style={{ height: '100%' }}>
+const HistoryResults = () => {
+  const season = useSelector(state => state.navigation.season);
+  const seasonsResults = useSelector(state => state.historyTrack ? state.historyTrack.Results : []);
+
+  return (<div style={{ height: '100%' }}>
     <Table style={{ marginBottom: '-2px' }}>
       <Table.Header>
         <Table.Row>
@@ -55,9 +58,6 @@ const HistoryResults = ({ seasonsResults, season }) => (
     <div />
   </div>
 );
+}
 
-const mapStateToProps = state => ({
-  seasonsResults: state.historyTrack ? state.historyTrack.Results : [],
-  season: state.navigation.season,
-});
-export default connect(mapStateToProps)(HistoryResults);
+export default HistoryResults;

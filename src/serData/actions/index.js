@@ -3,7 +3,6 @@ import { loadDriverStandings } from './loadDriverStandings';
 import { loadQualify } from './loadQualify';
 import { BACK_YEARS_SEASONS, loadSeasons } from './loadSeasons';
 import { loadStats } from './loadStats';
-import { loadDriverPerRace } from './loadDriverPerRace';
 import { loadPits } from './loadPitStops';
 import { loadConstructorsPerRace } from './loadConstructorsPerRace';
 import { loadConstructors } from './loadConstructors';
@@ -22,7 +21,6 @@ export const fetchByYears = (years) => dispatch => {
     dispatch(loadQualify(x));
     dispatch(loadPits(x));
     dispatch(loadRace(x));
-    // dispatch(loadDriverPerRace(x));
     dispatch(loadRaceStatuses(x));
   });
 };
@@ -38,6 +36,8 @@ export const fetchData = (years) => dispatch => {
 
   wait.for.time(2);
   startServer().then(() => {
+
+    //load stats from file
     dispatch(loadStats(2019));
     dispatch(loadStats(2017));
     dispatch(loadStats(2018));

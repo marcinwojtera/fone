@@ -15,8 +15,8 @@ app.set('view engine', 'ejs');
 app.use(ignoreFavicon);
 app.use(
   compression({
-    level: 9, // set compression level from 1 to 9 (6 by default)
-    filter: shouldCompress, // set predicate to determine whether to compress
+    level: 9,
+    filter: shouldCompress,
   }),
 );
 app.use(express.static('public'));
@@ -67,7 +67,7 @@ app.get('/api/seasons', async (req, res) => {
 });
 
 app.get('/api/compare/:driverId', (req, res) => {
-  const { driverId, year } = req.params;
+  const { driverId } = req.params;
   res.send(loadResultsForDrivers(driverId));
 });
 

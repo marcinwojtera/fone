@@ -8,7 +8,6 @@ const Brief = Item.Brief;
 const ConstructorRow = ({ constructor }) => {
 
   return (
-
     <Item
       extra={<Badge className="badge-pink" text={constructor.points} size="large" overflowCount={constructor.points}/>}
       arrow="horizontal"
@@ -17,10 +16,7 @@ const ConstructorRow = ({ constructor }) => {
     >
       {<span>{constructor.Constructor.name}</span>}
       <Brief>{<span>Wins: {constructor.wins}</span>}</Brief>
-
-
     </Item>
-
   );
 };
 

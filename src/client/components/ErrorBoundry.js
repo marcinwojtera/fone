@@ -18,7 +18,6 @@ class ErrorBoundary extends React.Component {
     const { state } = this;
     const { children } = this.props;
     if (state.errorInfo) {
-      // Error path
       return (
         <>
           <h2>Something went wrong.</h2>
@@ -29,7 +28,7 @@ class ErrorBoundary extends React.Component {
   }
 }
 ErrorBoundary.propTypes = {
-  children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]).isRequired
+  children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]).isRequired,
 };
 
 export default ErrorBoundary;
