@@ -39,7 +39,7 @@ class DriverHistory extends Component {
     let ret = 0;
     const status = {};
 
-    this.props.driverHistory.forEach(year => map(year.drivers, season => {
+    map(this.props.driverHistory).map(year => map(year.drivers, season => {
       if (season.data.grid == 1) {
         pole += 1;
       }
@@ -282,7 +282,7 @@ const mapStateToProps = state => ({
   year: state.navigation.year,
   seasons: !!state.driverHistory[state.navigation.year] ? state.driverHistory[state.navigation.year].drivers : [],
   driverInfo: state.data.seasonsDrivers,
-  driverHistory: state.driverHistory,
+  driverHistory: state.driverHistory || [],
   driverId: state.navigation.driverId,
   loadedCompareDriver: state.loadedCompareDriver,
   pageLoader: state.pageLoader,

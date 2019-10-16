@@ -1,8 +1,10 @@
 import React from 'react';
 import { Header } from 'semantic-ui-react';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 
-const HeaderDriverHistory = ({ seasonsDrivers, simple }) => seasonsDrivers ? (
+const HeaderDriverHistory = ({ simple }) => {
+  const seasonsDrivers = useSelector(state => state.data.seasonsDrivers[state.navigation.driverId] || []);
+  return seasonsDrivers ? (
   <Header as="h3">
     <Header.Content>
       <span>
@@ -16,20 +18,16 @@ const HeaderDriverHistory = ({ seasonsDrivers, simple }) => seasonsDrivers ? (
           {seasonsDrivers.Driver.permanentNumber}
           {' '}| Code: {seasonsDrivers.Driver.code}
           {!simple && (
-          <span> | Nationality: {seasonsDrivers.Driver.nationality}
-            {' '} |
+            <span> | Nationality: {seasonsDrivers.Driver.nationality}
+              {' '} |
                     Date of birth:
-            {seasonsDrivers.Driver.dateOfBirth}
+              {seasonsDrivers.Driver.dateOfBirth}
           </span>
           )}
         </span>
       </Header.Subheader>
     </Header.Content>
   </Header>
-): null;
+) : null}
 
-
-const mapStateToProps = state => ({
-  seasonsDrivers: state.data.seasonsDrivers[state.navigation.driverId] || [],
-});
-export default connect(mapStateToProps)(HeaderDriverHistory);
+export default HeaderDriverHistory;

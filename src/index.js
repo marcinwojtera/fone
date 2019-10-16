@@ -86,6 +86,9 @@ app.get('/driver/:driverId/:year', pageDiscover, loadContent);
 app.get('/race/:year/:season', pageDiscover, loadContent);
 app.get('/', pageDiscover, loadContent);
 
+
+
+
 export const startServer = async () => {
   app.listen(port, () => {
     // const dayInMilliseconds = 1000 * 60 * 60 * 24;

@@ -23,4 +23,3 @@ const DriverRow = ({ driver, homeView, constructorData, driverData }) => {
 };
 
 export default DriverRow;
-
