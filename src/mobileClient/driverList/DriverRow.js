@@ -1,15 +1,27 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Badge, List } from 'antd-mobile';
+import { withRouter } from 'react-router-dom';
+import { fetchData } from '../../client/actions';
 
 const Item = List.Item;
 const Brief = Item.Brief;
 
-const DriverRow = ({ driverId }) => {
+const DriverRow = ({ driverId, history }) => {
   const constructor = useSelector(state => {
     return state.data.seasonsDrivers[driverId].Constructors[0];
   });
   const driver = useSelector(state => state.data.seasonsDrivers[driverId]);
+  const year = useSelector(state => state.navigation.year);
+  const dispatch = useDispatch();
+
+  const loadDriver = () =>{
+    console.log(history)
+    const url = `/driver/${driverId}/${year}`;
+    history.push(url);
+    dispatch(fetchData(url));
+  }
+
   return (
     <Item
       extra={<Badge className="badge-pink" text={driver.points} size="large" overflowCount={driver.points}/>}
@@ -17,7 +29,7 @@ const DriverRow = ({ driverId }) => {
       multipleLine
       arrow="horizontal"
       platform="android"
-      onClick={() => {}}
+      onClick={() => loadDriver()}
     >
       {<span>{driver.Driver.givenName} {driver.Driver.familyName}</span>}
       <Brief>{<span>{constructor.name}</span>}</Brief>
@@ -25,4 +37,4 @@ const DriverRow = ({ driverId }) => {
   );
 };
 
-export default DriverRow;
+export default withRouter(DriverRow);

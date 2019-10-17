@@ -3,7 +3,7 @@ import { Segment } from 'semantic-ui-react';
 import { ResponsiveLine } from '@nivo/line';
 import ChartToolTip from './ChartToolTip';
 
-const DriverChart = ({ selected, height, data }) => {
+const DriverChart = ({ selected, height, data, mobile }) => {
   const selectedChart = selected && selected.length !== 0;
   return (
     <Segment vertical>
@@ -11,12 +11,16 @@ const DriverChart = ({ selected, height, data }) => {
         <ResponsiveLine
           data={data}
           enableSlices="x"
-          margin={{ top: 10, right: 5, bottom: 50, left: 40 }}
+          margin={{ top: 10, right: 5, bottom: 50, left: !mobile ? 40 : 5 }}
           xScale={{ type: 'point' }}
           yScale={{ type: 'linear', stacked: false, min: 0, max: 'auto' }}
-          sliceTooltip={({ slice }) => <ChartToolTip slice={slice} />}
+          sliceTooltip={({ slice }) => !mobile && <ChartToolTip slice={slice} />}
           axisTop={null}
           axisRight={null}
+          enablePointLabel={mobile}
+          isInteractive={!mobile}
+          pointLabel="y"
+          pointLabelYOffset={2}
           axisBottom={{
             orient: 'bottom',
             tickSize: 5,
@@ -26,15 +30,15 @@ const DriverChart = ({ selected, height, data }) => {
             legendOffset: 40,
             legendPosition: 'middle',
           }}
-          axisLeft={{
+          axisLeft={ !mobile ? {
             orient: 'left',
             tickSize: 5,
             tickPadding: 5,
             tickRotation: 0,
             legend: 'Position',
-            legendOffset: -30,
+            legendOffset: 30,
             legendPosition: 'middle',
-          }}
+          }: null}
           colors={{ scheme: 'dark2' }}
           lineWidth={1}
           pointSize={3}

@@ -55,7 +55,7 @@ export function loadHtml(req, res) {
   const navigation = pageNavigation;
   const store = initialLoads(navigation);
 
-  if(navigation.mobile) {
+  if (navigation.mobile) {
     const content = mobileRender(navigation.path, store);
     const scripts = prepareAssetsForMobile();
     res.render('mobileIndex.ejs', {
@@ -81,6 +81,7 @@ export function pageDiscover(req, res, next) {
   const { path } = req;
   const pageView = splitPath[1] || 'home';
   const navigation = { year, season, path, driverId, pageView, mobile };
+  console.log(navigation)
   req.pageNavigation = navigation;
   next();
 };

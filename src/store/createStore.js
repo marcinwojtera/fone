@@ -5,6 +5,10 @@ import { filter, find } from 'lodash';
 import reducers from '../client/reducers';
 import { backstore } from '../serData/pool';
 
+// ------
+// DO ZAORANIA CALY PLIK
+// ------
+
 const _ = require('lodash/core');
 
 export const filterPitStops = (data, season) => {
@@ -112,7 +116,7 @@ export const prepareAns = (navigation) => {
       constructorsPerRace: filterDataBySeason(backstore.getState().constructorsPerRace[getYear], getSeason),
       seasonsDrivers: backstore.getState().seasonsDrivers[getYear],
       // seasonsDriversList: filterDataBySeason(backstore.getState().driversList[year || getCurrentYear()], season),
-      seasonsList: !driverId && backstore.getState().seasons[getYear],
+      seasonsList:  backstore.getState().seasons[getYear],
       seasonQualify: !driverId && filterData(backstore.getState().qualify[getYear], getSeason),
       seasonsResults: !driverId && filterData(backstore.getState().seasonsResults[getYear], getSeason),
       seasonsPitStop: !driverId && filterPitStops(backstore.getState().pitStop[getYear], getSeason),
@@ -120,7 +124,7 @@ export const prepareAns = (navigation) => {
       statsBySeason: !driverId && filterData(backstore.getState().stats[getYear], getSeason),
     },
     navigation,
-    selectedTrack: !driverId && backstore.getState().seasons[getYear][getSeason - 1],
+    selectedTrack: backstore.getState().seasons[getYear][getSeason - 1],
     driverHistory: driverId ? loadResultsForDrivers(driverId) : [],
     historyTrack: !driverId && loadResultsForTrackYearAgo(getYear),
     trackHistoryStats: !driverId && loadResultsForTrackStats(backstore.getState().seasons[getYear][getSeason - 1].raceName),
