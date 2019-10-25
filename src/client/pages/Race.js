@@ -42,5 +42,3 @@ const Race = () => {
 }
 
 export default UrlWrapper(Race);
-
-

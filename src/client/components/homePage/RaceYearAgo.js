@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import HistoryResults from './HistoryResults';
 
+//remove this file
 class RaceYearAgo extends React.Component {
   render() {
     return this.props.historyTrack ? <HistoryResults /> : null;

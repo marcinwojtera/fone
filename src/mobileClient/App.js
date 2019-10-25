@@ -5,7 +5,7 @@ import { Route, Switch, withRouter } from 'react-router-dom';
 import Menu from './menu/Menu';
 import Home from './home/Home';
 import Race from './race/Race';
-import DriverMobile from './driver/DriverMobile';
+import Driver from './driver/Driver';
 import './app.scss';
 
 const App = ({ history }) => {
@@ -24,7 +24,7 @@ const App = ({ history }) => {
       <div className="next-race">
         <Switch>
           <Route exact path="/" component={Home} />
-          <Route path="/driver/:driverId/:year" component={DriverMobile} />
+          <Route path="/driver/:driverId/:year" component={Driver} />
           <Route path="/race/:year/:season" component={Race} />
         </Switch>
         <WhiteSpace />

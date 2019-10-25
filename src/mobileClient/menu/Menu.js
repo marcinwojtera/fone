@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Picker, List } from 'antd-mobile';
+import { Picker, List, Tabs } from 'antd-mobile';
 import { fetchData } from '../../client/actions';
 import { withRouter } from 'react-router-dom';
+import { map } from 'lodash';
 
 const Menu = ({history}) => {
   const selectedTrack = useSelector(state => state.selectedTrack);
@@ -28,22 +29,24 @@ const Menu = ({history}) => {
     }
   }, [trackSelected, yearSelected]);
 
-  const seasons = [seasonsYears.map(x => ({ label: x, value: x }))];
   const tracks = [seasonsList.map(x => ({ label: x.raceName, value: x.round}))];
+  const tabs = seasonsYears.map(year => ({ title: year, key: year }) );
 
+  const track = seasonsYears.map(x => ({ title: x.raceName, key: x.round }) );
+console.log()
   return (
     <div className="track-picker">
-      <Picker
-        data={seasons}
-        okText="Ok"
-        dismissText="Cancel"
-        cascade={false}
-        extra={year}
-        cols={1}
-        onOk={(year) => onChangeYear(year)}
-      >
-        <List.Item arrow="horizontal">Year</List.Item>
-      </Picker>
+
+      <Tabs tabs={tabs}
+            initialPage={year}
+            onTabClick={(year) => onChangeYear(year.title)}
+      />
+
+      <Tabs tabs={track}
+            initialPage={selectedTrack.round}
+            onTabClick={(track) => onChangeTrack(track.key)}
+      />
+
       <Picker
         data={tracks}
         okText="Ok"

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { map, filter } from 'lodash';
-import { Grid, Header, Label, Menu, Segment, Table, Icon, Button } from 'semantic-ui-react';
+import { Grid, Header, Label, Segment, Table, Icon, Button } from 'semantic-ui-react';
 import Statistics from './driverHistory/Statistics';
 import RetiresInfo from './driverHistory/RetiresInfo';
 import DriverChart from './driverHistory/DriverChart';
@@ -9,13 +9,13 @@ import HeaderDriverHistory from './driverHistory/HeaderDriverHistory';
 import DriverColumnView from './driverHistory/DriverColumnView';
 import { calculateChart } from '../actions/helper';
 import DriverList from './driverHistory/DriverList';
+import DriverHistoryYears from './driverHistory/DriverHistoryYears';
 
 class DriverHistory extends Component {
   constructor(props) {
     super(props);
     this.state = {
       activeItem: props.year,
-      open: false,
       chartSelectedYears: [props.year],
       columnView: false,
       resultView: true,
@@ -25,48 +25,11 @@ class DriverHistory extends Component {
 
   componentDidUpdate(prevProps) {
     if (this.props.driverId !== prevProps.driverId) {
-      this.setState({ activeItem: this.props.year, chartSelectedYears: [this.props.year] });
+      this.setState({ chartSelectedYears: [this.props.year] });
     }
   }
 
   handleItemClick = (e, { name }) => this.setState({ activeItem: name })
-
-  statistics = () => {
-    let won = 0;
-    let second = 0;
-    let third = 0;
-    let pole = 0;
-    let ret = 0;
-    const status = {};
-
-    map(this.props.driverHistory).map(year => map(year.drivers, season => {
-      if (season.data.grid == 1) {
-        pole += 1;
-      }
-      if (season.data.position == 1) {
-        won += 1;
-      }
-      if (season.data.position == 2) {
-        second += 1;
-      }
-      if (season.data.position == 3) {
-        third += 1;
-      }
-      if (season.data.position == 3) {
-        third += 1;
-      }
-      if (season.data.positionText == 'R') {
-        ret += 1;
-
-        if (status[season.data.status]) {
-          status[season.data.status] = status[season.data.status] + 1;
-        } else {
-          status[season.data.status] = 1;
-        }
-      }
-    }));
-    return { won, second, third, pole, ret, status };
-  }
 
 
   selectChartYear = (year) => {
@@ -98,8 +61,7 @@ class DriverHistory extends Component {
 
   render() {
     const { activeItem } = this.state;
-    const stats = this.statistics();
-    const seasons = this.props.seasons;
+    const seasons = !!this.props.driverHistory[this.props.year] ? this.props.driverHistory[this.props.year].drivers : [];
 
     return (
       <div>
@@ -185,27 +147,17 @@ class DriverHistory extends Component {
                   }
 
                 </small>
-                <Statistics stats={stats} />
+                <Statistics />
                 <br />
-                <RetiresInfo stats={stats} />
+                <RetiresInfo />
               </Grid.Column>
               <Grid.Column width={3}>
                 <DriverList />
               </Grid.Column>
             </Grid.Row>
           </Grid>
-          <Menu inverted pointing>
-            {map(this.props.driverHistory, (data, year) => (
-              <Menu.Item
-                name={year}
-                key={year}
-                disabled={!data}
-                active={activeItem === year}
-                onClick={this.handleItemClick}
-              />
-            ))
-            }
-          </Menu>
+
+          <DriverHistoryYears />
 
           <Table definition>
             <Table.Header>

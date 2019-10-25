@@ -7,12 +7,13 @@ import DriverChart from '../../client/components/driverHistory/DriverChart';
 import { calculateChart } from '../../client/actions/helper';
 
 
-const DriverMobile = () => {
+const Driver = () => {
   const driverHistory = useSelector(state => state.driverHistory);
   const loadedCompareDriver = useSelector(state => state.loadedCompareDriver);
 
   const year = useSelector(state => state.navigation.year);
   const driverId = useSelector(state => state.navigation.driverId);
+
   const calculateDataChart = (selectedYears) => calculateChart(driverHistory, loadedCompareDriver, selectedYears, driverId, false)
 
   const [chartSelectedYears, onChangeYear] = useState([year]);
@@ -23,7 +24,9 @@ const DriverMobile = () => {
   }
   const tabs = filter(map(driverHistory, (data, year) => data && ({ title: year, key: year }) ), 'title');
 
-
+  useEffect(() => {
+    onChartChange(calculateDataChart([year]))
+  }, [driverId]);
 
   return driverId ? (
     <>
@@ -34,23 +37,11 @@ const DriverMobile = () => {
         <Tabs tabs={tabs}
               initialPage={year}
               onTabClick={(tab) => { selectChartYear(tab.title) }}
-        >
-
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '250px', backgroundColor: '#fff' }}>
-            Content of first tab
-          </div>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '250px', backgroundColor: '#fff' }}>
-            Content of second tab
-          </div>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '250px', backgroundColor: '#fff' }}>
-            Content of third tab
-          </div>
-        </Tabs>
+        />
         <WhiteSpace />
       </div>
-      <div style={{overflowX: 'scroll', overflowY: 'hidden', width: '100%' }}>
+      <div style={{overflowX: 'scroll', overflowY: 'hidden', width: '100%', background: '#fff' }}>
       <div style={{width: '200%'}}>
-
         <DriverChart
           key={chartSelectedYears}
           height={290}
@@ -63,4 +54,4 @@ const DriverMobile = () => {
   ) : null;
 };
 
-export default DriverMobile;
+export default Driver;
