@@ -10,12 +10,13 @@ import DriverColumnView from './driverHistory/DriverColumnView';
 import { calculateChart } from '../actions/helper';
 import DriverList from './driverHistory/DriverList';
 import DriverHistoryYears from './driverHistory/DriverHistoryYears';
+import DriverSeason from './driverHistory/DriverSeason';
+
 
 class DriverHistory extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      activeItem: props.year,
       chartSelectedYears: [props.year],
       columnView: false,
       resultView: true,
@@ -60,8 +61,6 @@ class DriverHistory extends Component {
   }
 
   render() {
-    const { activeItem } = this.state;
-    const seasons = !!this.props.driverHistory[this.props.year] ? this.props.driverHistory[this.props.year].drivers : [];
 
     return (
       <div>
@@ -71,12 +70,10 @@ class DriverHistory extends Component {
           <Grid celled="internally" padded="vertically">
             <Grid.Row>
               <Grid.Column width={13}>
-
                 <small>
                   <strong>
                     YEAR:
                   </strong>
-
                   {map(this.props.driverHistory, (data, year) => data && (
                     <Button
                       color={this.state.chartSelectedYears.indexOf(year) >= 0 ? 'pink' : null}
@@ -156,9 +153,7 @@ class DriverHistory extends Component {
               </Grid.Column>
             </Grid.Row>
           </Grid>
-
           <DriverHistoryYears />
-
           <Table definition>
             <Table.Header>
               <Table.Row>
@@ -171,58 +166,7 @@ class DriverHistory extends Component {
                 <Table.HeaderCell>Status</Table.HeaderCell>
               </Table.Row>
             </Table.Header>
-
-            <Table.Body>
-              {seasons.map(x => (
-                <Table.Row key={x.circuit.raceName} error={x.data.positionText == 'R'}>
-                  <Table.Cell>{x.circuit.raceName}</Table.Cell>
-                  <Table.Cell>
-                    {x.data.positionText == 'R' ? <Label ribbon color="red">R</Label>
-                      : (
-                        <span>
-                          <b>{x.data.position}</b>
-                        </span>
-                      )}
-                  </Table.Cell>
-                  <Table.Cell>
-                    {x.data.points !== '0' ? (
-                      <span>
-+
-                        {x.data.points}
-                      </span>
-                    ) : <span>0</span>}
-                  </Table.Cell>
-                  <Table.Cell>{x.data.grid}</Table.Cell>
-                  <Table.Cell>
-
-                    {x.data.FastestLap && (
-                      <span className="driver-box">
-                        {x.data.FastestLap.Time.time}
-                        <span className="lap-place-box">
-                          Lap:
-                          {x.data.FastestLap.lap}
-                          , Time rank:
-                          {x.data.FastestLap.rank}
-                        </span>
-                      </span>
-                    )}
-
-                  </Table.Cell>
-                  <Table.Cell>
-                    {x.data.FastestLap && (
-                      <span>
-                        {x.data.FastestLap.AverageSpeed.speed}
-                        {' '}
-                        <small>km/h</small>
-                      </span>
-                    )}
-                  </Table.Cell>
-                  <Table.Cell>{x.data.status}</Table.Cell>
-                </Table.Row>
-              ))
-              }
-
-            </Table.Body>
+            <DriverSeason />
           </Table>
         </Segment>
       </div>

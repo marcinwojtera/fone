@@ -58,6 +58,6 @@ export const statistics = (driverHistory) => {
     }
   }));
   return { won, second, third, pole, ret, status };
+};
 
-}
 export const maps = obj => Object.keys(obj).map(x => x);

@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Picker, List, Tabs } from 'antd-mobile';
-import { fetchData } from '../../client/actions';
 import { withRouter } from 'react-router-dom';
-import { map } from 'lodash';
+import { fetchData } from '../../client/actions';
 
-const Menu = ({history}) => {
+const Menu = ({ history }) => {
   const selectedTrack = useSelector(state => state.selectedTrack);
   const year = useSelector(state => state.navigation.year);
   const season = useSelector(state => state.navigation.season);
@@ -17,34 +16,33 @@ const Menu = ({history}) => {
   const [yearSelected, onChangeYear] = useState(year);
   const [trackSelected, onChangeTrack] = useState(season);
 
-  const loadData = () =>{
+  const loadData = () => {
     const url = `/race/${yearSelected}/${trackSelected}`;
     history.push(url);
     dispatch(fetchData(url));
-  }
+  };
 
   useEffect(() => {
-    if(yearSelected !== year || trackSelected !== season) {
-      loadData();
-    }
+    if (yearSelected !== year || trackSelected !== season) loadData();
   }, [trackSelected, yearSelected]);
 
-  const tracks = [seasonsList.map(x => ({ label: x.raceName, value: x.round}))];
-  const tabs = seasonsYears.map(year => ({ title: year, key: year }) );
+  const tracks = [seasonsList.map(x => ({ label: x.raceName, value: x.round }))];
+  const tabs = seasonsYears.map(year => ({ title: year, key: year }));
+  const track = seasonsYears.map(x => ({ title: x.raceName, key: x.round }));
 
-  const track = seasonsYears.map(x => ({ title: x.raceName, key: x.round }) );
-console.log()
   return (
     <div className="track-picker">
 
-      <Tabs tabs={tabs}
-            initialPage={year}
-            onTabClick={(year) => onChangeYear(year.title)}
+      <Tabs
+        tabs={tabs}
+        initialPage={year}
+        onTabClick={(year) => onChangeYear(year.title)}
       />
 
-      <Tabs tabs={track}
-            initialPage={selectedTrack.round}
-            onTabClick={(track) => onChangeTrack(track.key)}
+      <Tabs
+        tabs={track}
+        initialPage={selectedTrack.round}
+        onTabClick={(track) => onChangeTrack(track.key)}
       />
 
       <Picker

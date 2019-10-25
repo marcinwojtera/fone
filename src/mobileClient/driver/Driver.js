@@ -34,21 +34,22 @@ const Driver = () => {
 
       <div>
         <WhiteSpace />
-        <Tabs tabs={tabs}
-              initialPage={year}
-              onTabClick={(tab) => { selectChartYear(tab.title) }}
+        <Tabs
+          tabs={tabs}
+          initialPage={year}
+          onTabClick={(tab) => { selectChartYear(tab.title) }}
         />
         <WhiteSpace />
       </div>
       <div style={{overflowX: 'scroll', overflowY: 'hidden', width: '100%', background: '#fff' }}>
-      <div style={{width: '200%'}}>
-        <DriverChart
-          key={chartSelectedYears}
-          height={290}
-          mobile
-          data={chartData}
-        />
-      </div>
+        <div style={{ width: '200%' }}>
+          <DriverChart
+            key={chartSelectedYears}
+            height={290}
+            mobile
+            data={chartData}
+          />
+        </div>
       </div>
     </>
   ) : null;

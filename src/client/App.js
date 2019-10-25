@@ -1,12 +1,12 @@
 import React from 'react';
 import { Route, Switch, withRouter } from 'react-router-dom';
+import { Segment, Dimmer } from 'semantic-ui-react';
 import ErrorBoundary from './components/ErrorBoundry';
 import MenuComponent from './components/Menu';
 import HomePage from './pages/HomePage';
 import Race from './pages/Race';
 import Driver from './pages/Driver';
 import './app.scss';
-import { Segment, Dimmer } from 'semantic-ui-react';
 
 const App = () => (
   <div className="app-container">

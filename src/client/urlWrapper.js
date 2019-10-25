@@ -6,15 +6,11 @@ import { fetchData } from './actions';
 function UrlWrapper(HocComponent) {
   class Wrapp extends Component {
     componentDidMount() {
-      if (this.props.location.pathname !== this.props.navigation.path) {
-        this.setUrl(this.props.location.pathname );
-      }
+      if (this.props.location.pathname !== this.props.navigation.path) this.setUrl(this.props.location.pathname );
     }
 
     componentDidUpdate(prevProps) {
-      if ((prevProps.location.pathname.toString() !==  this.props.location.pathname.toString())) {
-        this.setUrl(this.props.location.pathname);
-      }
+      if ((prevProps.location.pathname.toString() !==  this.props.location.pathname.toString())) this.setUrl(this.props.location.pathname);
     }
 
     setUrl = (pathname) => this.props.dispatch(fetchData(pathname))

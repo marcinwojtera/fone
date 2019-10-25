@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux';
 import { Icon } from 'semantic-ui-react';
 import PerfectScrollbar from 'react-perfect-scrollbar';
-import { filter, map } from 'lodash';
+import { map } from 'lodash';
 
 const Timmings = () => {
   const seasonQualify = useSelector(state => state.data.seasonQualify.QualifyingResults);

@@ -16,7 +16,6 @@ const DriverRow = ({ driverId, history }) => {
   const dispatch = useDispatch();
 
   const loadDriver = () =>{
-    console.log(history)
     const url = `/driver/${driverId}/${year}`;
     history.push(url);
     dispatch(fetchData(url));

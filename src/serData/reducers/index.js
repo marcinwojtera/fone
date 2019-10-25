@@ -12,7 +12,6 @@ import {
   backStatsBySeason
 } from './reducers';
 
-// export default combineReducers(JSON.parse(json));
 export default combineReducers({
   seasons: backSeasons,
   constructors: backConstructors,

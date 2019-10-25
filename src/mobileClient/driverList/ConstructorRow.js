@@ -1,5 +1,4 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import { Badge, List } from 'antd-mobile';
 
 const Item = List.Item;
