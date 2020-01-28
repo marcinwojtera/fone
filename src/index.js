@@ -35,7 +35,7 @@ app.get(
     const values = [];
     for (let i = 0; i < 21; i++) {
       ((index) => {
-        const prepareFile = `${year || '2019'}-${index + 1 || '1'}.json`;
+        const prepareFile = `${year || '2020'}-${index + 1 || '1'}.json`;
         try {
           const dataJson = fs.readFileSync(path.resolve(`./build/jsons/${prepareFile}`));
           const jsonDataLoad = require(`./jsons/${prepareFile}`);
@@ -61,7 +61,7 @@ app.get(
 );
 
 app.get('/api/seasons', async (req, res) => {
-  const season = backstore.getState().seasons['2019'];
+  const season = backstore.getState().seasons['2020'];
   const years = backstore.getState().seasonsYear;
   res.json({ season, years });
 });

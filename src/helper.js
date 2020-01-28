@@ -77,7 +77,7 @@ export function pageDiscover(req, res, next) {
   const mobile = md.mobile();
 
   const splitPath = req.path.split('/');
-  const { driverId, year = 2019, season = 1 } = req.params;
+  const { driverId, year = 2020, season = 1 } = req.params;
   const { path } = req;
   const pageView = splitPath[1] || 'home';
   const navigation = { year, season, path, driverId, pageView, mobile };
