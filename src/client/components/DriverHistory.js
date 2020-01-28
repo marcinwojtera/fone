@@ -61,7 +61,6 @@ class DriverHistory extends Component {
   }
 
   render() {
-
     return (
       <div>
         {this.props.driverId && <HeaderDriverHistory />}

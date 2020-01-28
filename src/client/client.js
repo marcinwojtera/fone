@@ -13,7 +13,7 @@ delete window.__PRELOADED_STATE__;
 
 const store = createStore(reducers, state, composeWithDevTools(applyMiddleware(thunk)));
 
-ReactDOM.hydrate(
+ReactDOM.render(
   <Provider store={store}>
     <BrowserRouter>
       <App />

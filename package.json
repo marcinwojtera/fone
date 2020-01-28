@@ -37,16 +37,16 @@
     "perfect-scrollbar-react": "^1.0.1",
     "react": "16.8.2",
     "react-dom": "16.8.2",
-    "react-helmet": "5.2.0",
-    "react-perfect-scrollbar": "^1.5.3",
     "react-redux": "^7.1.1",
-    "react-router-dom": "4.3.1",
     "redux": "4.0.1",
+    "react-router-dom": "4.3.1",
     "redux-thunk": "2.3.0",
     "semantic-ui-css": "2.4.1",
     "semantic-ui-react": "0.87.2",
     "antd-mobile": "2.3.1",
-    "wait-for-stuff": "^1.4.0"
+    "wait-for-stuff": "^1.4.0",
+    "react-helmet": "5.2.0",
+    "react-perfect-scrollbar": "^1.5.3"
   },
   "devDependencies": {
     "@babel/core": "^7.3.3",
