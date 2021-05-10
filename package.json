@@ -30,7 +30,7 @@
     "core-js": "^3.2.1",
     "fetch": "^1.1.0",
     "fs": "^0.0.1-security",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.21",
     "memory-cache": "^0.2.0",
     "mobile-detect": "^1.4.4",
     "node-fetch": "^2.6.0",
