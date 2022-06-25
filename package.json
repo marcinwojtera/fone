@@ -33,7 +33,7 @@
     "lodash": "^4.17.11",
     "memory-cache": "^0.2.0",
     "mobile-detect": "^1.4.4",
-    "node-fetch": "^2.6.0",
+    "node-fetch": "^2.6.7",
     "perfect-scrollbar-react": "^1.0.1",
     "react": "16.8.2",
     "react-dom": "16.8.2",
